@@ -22,13 +22,15 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Pantallapalabras implements Serializable {
 
-	private static final long serialVersionUID = 43598006;
+	private static final long serialVersionUID = 1316254568;
 
 	private Integer palabraid;
 	private String  idioma;
 	private String  palabras;
 	private String  traduccion;
 	private String  tipo;
+	private String  nombretipo;
+	private String  nombretiempo;
 	private String  tiempo;
 
 	public Pantallapalabras() {}
@@ -39,6 +41,8 @@ public class Pantallapalabras implements Serializable {
 		this.palabras = value.palabras;
 		this.traduccion = value.traduccion;
 		this.tipo = value.tipo;
+		this.nombretipo = value.nombretipo;
+		this.nombretiempo = value.nombretiempo;
 		this.tiempo = value.tiempo;
 	}
 
@@ -48,6 +52,8 @@ public class Pantallapalabras implements Serializable {
 		String  palabras,
 		String  traduccion,
 		String  tipo,
+		String  nombretipo,
+		String  nombretiempo,
 		String  tiempo
 	) {
 		this.palabraid = palabraid;
@@ -55,6 +61,8 @@ public class Pantallapalabras implements Serializable {
 		this.palabras = palabras;
 		this.traduccion = traduccion;
 		this.tipo = tipo;
+		this.nombretipo = nombretipo;
+		this.nombretiempo = nombretiempo;
 		this.tiempo = tiempo;
 	}
 
@@ -96,6 +104,22 @@ public class Pantallapalabras implements Serializable {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getNombretipo() {
+		return this.nombretipo;
+	}
+
+	public void setNombretipo(String nombretipo) {
+		this.nombretipo = nombretipo;
+	}
+
+	public String getNombretiempo() {
+		return this.nombretiempo;
+	}
+
+	public void setNombretiempo(String nombretiempo) {
+		this.nombretiempo = nombretiempo;
 	}
 
 	public String getTiempo() {

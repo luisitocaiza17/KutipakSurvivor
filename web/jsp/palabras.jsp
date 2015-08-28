@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Palabras</title>
+        <title>Tiempos</title>
         <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="../css/Kendo/kendo.common.min.css" />
@@ -18,11 +18,8 @@
         <script src="../js/jquery.min.js"></script>
         <script src="../js/Kendo/kendo.all.min.js"></script>
         <script>
-            var tipoConsulta="";
             
-            $(document).ready(function () {
-                
-                var data = [
+            var data = [
                             "Albania",
                             "Andorra",
                             "Armenia",
@@ -75,16 +72,24 @@
                             "Vatican City"
                         ];
                         
-                        $("#traduccion").kendoAutoComplete({
+                        $("#traducion").kendoAutoComplete({
                         dataSource: data,
                         filter: "startswith",
                         placeholder: "Select country...",
                         separator: ", "
                     });
-                
+            
+            
+            
+            
+            var tipoConsulta="";
+            
+            $(document).ready(function () {
+                 
                 
                tipoConsulta="TodosTipos";
                cargaInicial(tipoConsulta);
+               
                $('#Contenidos').hide();
                
                $("#guardar").click(function () {
@@ -106,12 +111,14 @@
                                 var operacion="insertar";
                                 Procesos(operacion,idTiempo,tiempo,nemotecnico);
                                 tipoConsulta="TodosTipos";
-                                cargaInicial(tipoConsulta);
+                                location.reload();
+                                //cargaInicial(tipoConsulta);
                             }else{
                                 var operacion="actualizar";
                                 Procesos(operacion,idTiempo,tiempo,nemotecnico);
                                 tipoConsulta="TodosTipos";
-                                cargaInicial(tipoConsulta);
+                                location.reload();
+                                //cargaInicial(tipoConsulta);
                             }
                             
                         }
@@ -122,12 +129,28 @@
             });
                         
             function cargaInicial(tipoConsulta){
+                //DE KENDO
+        
+                
+                //FIN KENDO
                 $("#idTiempo").val("");
                 $('#Contenidos').hide();
                 $('#TablaTodos').show();
                 $('#nuevo').show();
-                $("#tiempo").val("");
                 $("#nemotecnico").val("");
+                $("#tiempo").val("");
+                $("#idioma").val("")
+                    .find('option')
+                    .remove()
+                    .end();
+                $("#tipo").val("")
+                    .find('option')
+                    .remove()
+                    .end();
+                $("#eltiempo").val("")
+                    .find('option')
+                    .remove()
+                    .end();
                 $.ajax({
                     url: '../Palabras_Controller',
                     data: {
@@ -137,21 +160,58 @@
                     type: 'POST',
                     datatype: 'json',
                     success: function (data) {
-                         var listadoTipos = data.listadoTiempos;
+                         var listadoPalabras = data.listadoPalabras;
                          var selogro=data.success;
                          if(selogro===true){
                                 $("#dataTable").children().remove();
-                                $.each(listadoTipos, function (index) {
+                                $.each(listadoPalabras, function (index) {
 
                                      $("#dataTable").append("<tr>" +
-                                     "<td style='width: 10%'><a onclick='redireccionaActualizar(&#39;"+listadoTipos[index].id+"&#39;,&#39;"+listadoTipos[index].tiempo+"&#39;,&#39;"+listadoTipos[index].nemotecnico+"&#39;);'>" + listadoTipos[index].tiempo + "</a></td>" +
-                                     "<td style='width: 10%'>" + listadoTipos[index].nemotecnico + "</td>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].idioma + "</td>" +        
+                                     "<td style='width: 10%'><a onclick='redireccionaActualizar(&#39;"+listadoPalabras[index].id+"&#39;,&#39;"+listadoPalabras[index].idioma+"&#39;,&#39;"+listadoPalabras[index].palabra+"&#39;,&#39;"+listadoPalabras[index].traducion+"&#39;,&#39;"+listadoPalabras[index].tipoP+"&#39;,&#39;"+listadoPalabras[index].tiempoP+"&#39;);'>" + listadoPalabras[index].palabra + "</a></td>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].traducion + "</td>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].tipo + "</td>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].tiempo + "</td>" +
                                      "</tr>");
                                  });
+                                 
+                                
+                                 $("#idioma").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
+                                    var listadoIdioma = data.listadoIdioma;
+                                    $.each(listadoIdioma, function (index) {
+                                        $("#idioma").append("<option value='" + listadoIdioma[index].idioma + "'>" +  listadoIdioma[index].idioma + "</option>");
+                                    });
+                                    
+                                $("#tipo").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
+                                    var listadoTipos = data.listadoTipos;
+                                    $.each(listadoTipos, function (index) {
+                                        $("#tipo").append("<option value='" + listadoTipos[index].tipo + "'>" +  listadoTipos[index].tipo + "</option>");
+                                    }); 
+                                
+                                $("#eltiempo").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
+                                    var listadoTiempos = data.listadoTiempos;
+                                    $.each(listadoTiempos, function (index) {
+                                        $("#eltiempo").append("<option value='" + listadoTiempos[index].tiempo + "'>" +  listadoTiempos[index].tiempo + "</option>");
+                                    }); 
+                                 
                              }else{
                                  alert ("no existe nada en la BD");
                              }
                     }
+                });
+                $("#gridInfo").kendoGrid({
+                        height: 500,
+                        filterable: true,
+                        sortable: true,
+                        scrollable: true,
+                        pageable: {
+                            input: true,
+                            numeric: true,
+                            pageSize: 20
+                        },
+                        groupable: true,
+                        navigatable: true
+                       
                 });
             }
             
@@ -161,11 +221,12 @@
                 $('#Contenidos').show();
                 $('#nuevo').hide();
                 $("#guardar").text("GUARDAR");
-                $('#eliminar').hide();    
+                $('#eliminar').hide();
+                
             
             }
             
-            function redireccionaActualizar(id, nombre, nemotecnico){
+            function redireccionaActualizar(id,idioma, palabra, traducion, tipo, tiempo){
                 
                 $('#TablaTodos').hide();
                 $('#Contenidos').show();
@@ -173,10 +234,12 @@
                 $('#eliminar').show();
                 if(id!==""){
                     $("#guardar").text("ACTUALIZAR");
-                    $("#tiempo").val(nombre);
-                    $("#nemotecnico").val(nemotecnico);
-                    $("#idTiempo").val(id);
-                    
+                    $("#palabra").val(palabra);
+                    $("#idioma").val(idioma);
+                    $("#tipo").val(tipo);
+                    $("#eltiempo").val(tiempo);
+                    $("#traducion").val(traducion);
+                    $("#idPalabra").val(id);
                     //Procesos("ACTUALIZAR",id, nombrePalabra,nemotecnico);
                     
                 }
@@ -186,14 +249,15 @@
             function eliminarRegistro(){
                 
                var seguro = confirm("Esta seguro que desea borrar el tiempo?");
-                if (seguro == true) {
+                if (seguro === true) {
                     var operacion="eliminar";
                     var idTipoPalabra=$("#idTiempo").val();
                     var nombrePalabra="";
                     var nemotecnico="";
                     Procesos(operacion,idTipoPalabra, nombrePalabra,nemotecnico);
                     var tipoConsulta="TodosTipos";
-                    cargaInicial(tipoConsulta);
+                    location.reload();
+                    //cargaInicial(tipoConsulta);
                 } 
                 
             }
@@ -232,7 +296,7 @@
                 type : 'POST',
                 datatype : 'json',
                 success : function(data) {   
-                    if (data.success == true){
+                    if (data.success === true){
                             window.location= "../index.jsp";
                     }
                 }
@@ -245,48 +309,6 @@
         }
             
         </script>
-        
-        
-        
-            <script>
-                
-//                http://demos.telerik.com/kendo-ui/grid/from-table
-                $(document).ready(function () {
-                    $("#grid").kendoGrid({
-                        dataSource: {
-                            type: "odata",
-                            transport: {
-                                read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
-                            },
-                            pageSize: 20
-                        },
-                        height: 550,
-                        groupable: true,
-                        sortable: true,
-                        pageable: {
-                            refresh: true,
-                            pageSizes: true,
-                            buttonCount: 5
-                        },
-                        columns: [{
-                            
-                            field: "Palabra",
-                            title: "Palabra",
-                            
-                        }, {
-                            field: "Traduccion",
-                            title: "Traduccion"
-                        }, {
-                            field: "Idioma",
-                            title: "Idioma"
-                        }, {
-                            field: "Tipo",
-                            title: "Tipo"
-                        }]
-                    });
-                });
-            </script>
-        
         
     </head>
     <body>
@@ -308,7 +330,7 @@
                 </button>
                 <a class="navbar-brand" href="../index.html">KUTIPAK UTC</a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling   -->
+            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -363,63 +385,53 @@
             <!-- Content Column -->
             <div class="col-md-9">
                 <h2>Palabras</h2>
-                <p>En la sección palabras, usted puede ingresar palabras al diccionario de Kutipak UTC, tanto la palabra como 
-                su significado se almacenaran en la base de datos para poder mostrar la misma en la base de datos</p>
+                <p>Los tiempos, son la forma en que se representa la oración y sus variantes a través del tiempo, estos son estándares por medio de los 
+                    cuales se traducirá la palabra en base al tiempo, lo que mejorara la calidad de traducción</p>
                 
                 <br>
                 <div align="right">
                     <button id="nuevo" type="button" class="btn btn-default" onclick="redireccionaInsertar();">Nuevo</button>
                 </div>
-                
+                <br />
+                <br />
                 <div id="TablaTodos" class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                                               
-<!--                        <div id="grid"></div>-->
-                        
-                        
-                        
-                        <kendo:grid name="products" pageable="true">
-                            <kendo:dataSource pageSize="10" serverPaging="true">
-                                    <kendo:dataSource-transport read="../Palabras_Controller">
-                                            <kendo:dataSource-transport-parameterMap>
-                                                    <script>
-                                                            function parameterMap() {
-                                                                    return {
-                                                                        tipoConsulta: "TodosTipos"                                                                         
-                                                                    };
-                                                            }
-                                                    </script>
-                                            </kendo:dataSource-transport-parameterMap>
-                                    </kendo:dataSource-transport>
-                                    <kendo:dataSource-schema data="Data" total="Total"></kendo:dataSource-schema>
-                            </kendo:dataSource>
-                            <kendo:grid-columns>
-                                    <kendo:grid-column title="TIEMPOSID" field="TIEMPOSID" />
-                                    <kendo:grid-column title="NOMBRETIEMPO" field="NOMBRETIEMPO" />
-                                    <kendo:grid-column title="NEMOTECNICOTIEMPO" field="NEMOTECNICOTIEMPO" />
-                                    
-                            </kendo:grid-columns>
-                    </kendo:grid>
-
-                        
-                        
-                        
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <table class="table table-hover table-bordered" id="gridInfo">
+                         <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th >Idioma</th>
+                                <th >Palabra</th>
+                                <th >Traducción</th>
+                                <th >Tipo</th>
+                                <th >Tiempo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTable">
+                        </tbody>
+                                
+                    </table>
                     </div>
-                    <div class="col-md-2"></div>
-                    
+                    <div class="col-md-1"></div>
                     
                 </div>
                 <div id="Contenidos" class="row">
                     <div align="left">
-                            <button id="regresar" type="button" class="btn btn-default" onclick="cargaInicial('TodosTipos');">Regresar</button>
+                            <button id="regresar" type="button" class="btn btn-default" onclick="javascript:location.reload();">Regresar</button>
                         </div>
                     <div align="right">
                             <button id="eliminar" type="button" class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
                     </div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <br>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-7">
+                         <br>
                         <form class="form-horizontal">
                                 <div class="form-group">
                                   <label for="palabra" class="col-sm-6 control-label">Palabra</label>
@@ -431,8 +443,7 @@
                                   <label for="idioma" class="col-sm-6 control-label">Idioma</label>
                                   <div class="col-sm-6">
                                     <select class="form-control required" id="idioma"> 
-                                        <option value='1'>Español</option>
-                                        <option value='2'>kitchwa</option>
+                                        
                                     </select>
                                   </div>
                                 </div>
@@ -441,8 +452,7 @@
                                   <label for="tipo" class="col-sm-6 control-label">Tipo</label>
                                   <div class="col-sm-6">
                                     <select class="form-control required" id="tipo"> 
-                                        <option value='1'>Español</option>
-                                        <option value='2'>kitchwa</option>
+                                       
                                     </select>
                                   </div>
                                 </div>
@@ -451,24 +461,24 @@
                                   <label for="eltiempo" class="col-sm-6 control-label">Tiempo</label>
                                   <div class="col-sm-6">
                                     <select class="form-control required" id="eltiempo"> 
-                                        <option value='1'>Español</option>
-                                        <option value='2'>kitchwa</option>
+                                        
                                     </select>
                                   </div>
                                 </div>
-                                 
+                                
                                 <div class="form-group">
-                                  <label for="traduccion" class="col-sm-6 control-label">Traducción</label>
+                                  <label for="traducion" class="col-sm-6 control-label">Traducción</label>
                                   <div class="col-sm-6">
                                     <div class="demo-section k-header"> 
-                                        <input id="traduccion" style="width: 100%;" />
+                                        <input id="traducion" style="width: 100%;" />
                                     </div>
                                   </div>
                                 </div>
                                 
-                                
+                                 <br>
                                 <div class="form-group">
                                   <div class="col-sm-offset-6 col-sm-10">
+                                    <input type="hidden" class="form-control" id="idPalabra">
                                     <button type="button" id="guardar" class="btn btn-primary">Guardar</button>
                                   </div>
                                 </div>

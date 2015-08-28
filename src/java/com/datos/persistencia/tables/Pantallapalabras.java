@@ -28,7 +28,7 @@ import persistencia.tables.records.PantallapalabrasRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Pantallapalabras extends TableImpl<PantallapalabrasRecord> {
 
-	private static final long serialVersionUID = 1541371930;
+	private static final long serialVersionUID = 2085695584;
 
 	/**
 	 * The reference instance of <code>kutipak.pantallapalabras</code>
@@ -67,6 +67,16 @@ public class Pantallapalabras extends TableImpl<PantallapalabrasRecord> {
 	 * The column <code>kutipak.pantallapalabras.TIPO</code>.
 	 */
 	public final TableField<PantallapalabrasRecord, String> TIPO = createField("TIPO", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
+
+	/**
+	 * The column <code>kutipak.pantallapalabras.NOMBRETIPO</code>.
+	 */
+	public final TableField<PantallapalabrasRecord, String> NOMBRETIPO = createField("NOMBRETIPO", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+
+	/**
+	 * The column <code>kutipak.pantallapalabras.NOMBRETIEMPO</code>.
+	 */
+	public final TableField<PantallapalabrasRecord, String> NOMBRETIEMPO = createField("NOMBRETIEMPO", org.jooq.impl.SQLDataType.VARCHAR.length(40), this, "");
 
 	/**
 	 * The column <code>kutipak.pantallapalabras.TIEMPO</code>.

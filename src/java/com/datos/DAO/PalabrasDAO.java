@@ -40,6 +40,8 @@ public class PalabrasDAO {
              palabrasEncontradas.setSinonimo(r.getValue(PALABRAS.SINONIMO));
              palabrasEncontradas.setTiemposid(r.getValue(PALABRAS.TIEMPOSID));
              palabrasEncontradas.setTipoid(r.getValue(PALABRAS.TIPOID));
+            
+             
              listadoPalabras.add(palabrasEncontradas);
          }
           conexion.close();

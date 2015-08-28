@@ -5,8 +5,11 @@
  */
 package com.negocios;
 
+import com.datos.DAO.IdiomasDAO;
 import com.datos.DAO.PalabrasDAO;
+import com.datos.DAO.PantallaPalabrasDAO;
 import com.datos.DAO.TiemposDAO;
+import com.datos.DAO.TiposPalabrasDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,8 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.util.List;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import persistencia.tables.records.IdiomasRecord;
 import persistencia.tables.records.PalabrasRecord;
+import persistencia.tables.records.PantallapalabrasRecord;
 import persistencia.tables.records.TiemposRecord;
+import persistencia.tables.records.TipospalabrasRecord;
 /**
  *
  * @author luisito
@@ -78,7 +86,133 @@ public class Palabras_Controller extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                   System.out.println("sie entra a palabras");
-        
+        JSONObject result = new JSONObject();
+		try {
+                    
+                        JSONObject planJSONObject = new JSONObject();
+                        String tipoConsulta = request.getParameter("tipoConsulta") == null ? "" : request.getParameter("tipoConsulta");
+			String operacion = request.getParameter("operacion") == null ? "" : request.getParameter("operacion");
+			String idTiempo = request.getParameter("idTiempo") == null ? "" : request.getParameter("idTiempo");
+			
+                        
+                        if(tipoConsulta.equals("TodosTipos")){
+                             PantallaPalabrasDAO TodasPalabras = new PantallaPalabrasDAO();
+                             List<PantallapalabrasRecord> results = TodasPalabras.ConsultarPalabras();
+                             JSONArray JSONArrayTipos = new JSONArray();  
+                             for(PantallapalabrasRecord rs : results){
+                                 planJSONObject.put("id", rs.getPalabraid());
+                                 planJSONObject.put("idioma", rs.getIdioma());
+                                 planJSONObject.put("palabra", rs.getPalabras());
+                                 planJSONObject.put("traducion", rs.getTraduccion());
+                                 planJSONObject.put("tipo", rs.getTipo());
+                                 planJSONObject.put("tiempo", rs.getTiempo());
+                                 planJSONObject.put("tipoP", rs.getNombretipo());
+                                 planJSONObject.put("tiempoP", rs.getNombretiempo());
+                                 JSONArrayTipos.add(planJSONObject);
+                             }
+                             result.put("listadoPalabras", JSONArrayTipos);
+                             
+                             
+                             JSONObject planJSONObjectTiempos = new JSONObject();
+                             IdiomasDAO todosIdiomas = new IdiomasDAO();
+                             List<IdiomasRecord> resultsIdiomas = todosIdiomas.ConsultarIdiomas();
+                             JSONArray JSONArrayIdioma = new JSONArray();  
+                             for(IdiomasRecord rs : resultsIdiomas){
+                                 planJSONObjectTiempos.put("id", rs.getIdiomaid());
+                                 planJSONObjectTiempos.put("idioma", rs.getNombre());
+                                 
+                                 JSONArrayIdioma.add(planJSONObjectTiempos);
+                             }
+                             result.put("listadoIdioma", JSONArrayIdioma);
+                             
+                             JSONObject planJSONObjectTiposP = new JSONObject();
+                             TiposPalabrasDAO todosTipos = new TiposPalabrasDAO();
+                             List<TipospalabrasRecord> resultsPalabras = todosTipos.ConsultarTiposPalabras();
+                             JSONArray JSONArrayTiposP = new JSONArray();  
+                             for(TipospalabrasRecord rs : resultsPalabras){
+                                 planJSONObjectTiposP.put("id", rs.getTipoid());
+                                 planJSONObjectTiposP.put("tipo", rs.getNombretipo());
+                                 
+                                 JSONArrayTiposP.add(planJSONObjectTiposP);
+                             }
+                             result.put("listadoTipos", JSONArrayTiposP);
+                             
+                             
+                             JSONObject planJSONObjectTiempo = new JSONObject();
+                             TiemposDAO todosTiempos = new TiemposDAO();
+                             List<TiemposRecord> resultsTiempos = todosTiempos.ConsultarTiempos();
+                             JSONArray JSONArrayTiempos= new JSONArray();  
+                             for(TiemposRecord rs : resultsTiempos){
+                                 planJSONObjectTiempo.put("id", rs.getTiemposid());
+                                 planJSONObjectTiempo.put("tiempo", rs.getNombretiempo());
+                                 
+                                 JSONArrayTiempos.add(planJSONObjectTiempo);
+                             }
+                             result.put("listadoTiempos", JSONArrayTiempos);
+                             
+                             result.put("success", Boolean.TRUE);
+                         }
+                        
+                        /*procesos con los datos*/
+                        if(operacion.toUpperCase().equals("INSERTAR")&& idTiempo.equals("")){
+                            
+                            String tiempo = request.getParameter("tiempo") == null ? "" : request.getParameter("tiempo");
+			    String nemotecnico = request.getParameter("nemotecnico") == null ? "" : request.getParameter("nemotecnico");
+			    
+                            TiemposRecord elTiempo= new TiemposRecord();
+                            elTiempo.setNombretiempo(tiempo.toUpperCase());
+                            elTiempo.setNemotecnicotiempo(nemotecnico.toUpperCase());
+                            TiemposDAO TiempoProceso = new TiemposDAO();
+                            
+                            List<TiemposRecord> results =TiempoProceso.ConsultarTiemposEspecifico(elTiempo);
+                            int existe=0;
+                            for(TiemposRecord rs : results){
+                                existe++;
+                            }
+                            if(existe==0){
+                                TiempoProceso.grabarTiempo(elTiempo);
+                                result.put("success", Boolean.TRUE);
+                                result.put("mensaje", "GUARDADO CORRECTO");
+                            }else{
+                                result.put("success", Boolean.FALSE);
+                                result.put("mensaje", "TIPO DE PALABRA DUPLICADA, YA EXISTE!!");
+                            }
+                            
+                        }
+                        if(operacion.toUpperCase().equals("ACTUALIZAR") && !idTiempo.equals("")){
+                            String tiempo = request.getParameter("tiempo") == null ? "" : request.getParameter("tiempo");
+			    String nemotecnico = request.getParameter("nemotecnico") == null ? "" : request.getParameter("nemotecnico");
+			    
+                            TiemposRecord elTiempo= new TiemposRecord();
+                            elTiempo.setNombretiempo(tiempo.toUpperCase());
+                            elTiempo.setNemotecnicotiempo(nemotecnico.toUpperCase());
+                            elTiempo.setTiemposid(Integer.parseInt(idTiempo));
+                            TiemposDAO TiemposProcesos = new TiemposDAO();
+                            TiemposProcesos.ActualizarTiempo(elTiempo);
+                            
+                            result.put("success", Boolean.TRUE);
+                            result.put("mensaje", "ACTUALIZADO CORRECTO");
+                        }
+                        
+                        if(operacion.toUpperCase().equals("ELIMINAR")){
+                            TiemposRecord elTiempo= new TiemposRecord();
+                            elTiempo.setTiemposid(Integer.parseInt(idTiempo));
+                            TiemposDAO tiposPalabrasProcesos = new TiemposDAO();
+                            tiposPalabrasProcesos.EliminarTiempos(elTiempo);
+                            result.put("success", Boolean.TRUE);
+                            result.put("mensaje", "ELIMINACION DE REGISTRO CORRECTA");
+                        }
+                        
+                         response.setContentType("application/json; charset=ISO-8859-1"); 
+                         result.write(response.getWriter());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+			result.put("success", Boolean.FALSE);
+			result.put("mensaje",e);
+			response.setContentType("application/json; charset=ISO-8859-1"); 
+			result.write(response.getWriter());
+                       
+                }
         
     }
 
