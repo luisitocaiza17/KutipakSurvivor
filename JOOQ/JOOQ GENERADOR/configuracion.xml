@@ -45,7 +45,7 @@ can be the owner, user, database name) to be generated -->
 
 <!-- especificar la ruta donde se va a almacenar -->
 
-<directory>C:\Users\luisito\Downloads\safds</directory>
+<directory>C:\KutipakSurvivor\src\java\com\datos</directory>
 </target>
 </generator>
 </configuration>

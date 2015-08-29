@@ -19,74 +19,9 @@
         <script src="../js/Kendo/kendo.all.min.js"></script>
         <script>
             
-            var data = [
-                            "Albania",
-                            "Andorra",
-                            "Armenia",
-                            "Austria",
-                            "Azerbaijan",
-                            "Belarus",
-                            "Belgium",
-                            "Bosnia & Herzegovina",
-                            "Bulgaria",
-                            "Croatia",
-                            "Cyprus",
-                            "Czech Republic",
-                            "Denmark",
-                            "Estonia",
-                            "Finland",
-                            "France",
-                            "Georgia",
-                            "Germany",
-                            "Greece",
-                            "Hungary",
-                            "Iceland",
-                            "Ireland",
-                            "Italy",
-                            "Kosovo",
-                            "Latvia",
-                            "Liechtenstein",
-                            "Lithuania",
-                            "Luxembourg",
-                            "Macedonia",
-                            "Malta",
-                            "Moldova",
-                            "Monaco",
-                            "Montenegro",
-                            "Netherlands",
-                            "Norway",
-                            "Poland",
-                            "Portugal",
-                            "Romania",
-                            "Russia",
-                            "San Marino",
-                            "Serbia",
-                            "Slovakia",
-                            "Slovenia",
-                            "Spain",
-                            "Sweden",
-                            "Switzerland",
-                            "Turkey",
-                            "Ukraine",
-                            "United Kingdom",
-                            "Vatican City"
-                        ];
-                        
-                        $("#traducion").kendoAutoComplete({
-                        dataSource: data,
-                        filter: "startswith",
-                        placeholder: "Select country...",
-                        separator: ", "
-                    });
-            
-            
-            
-            
             var tipoConsulta="";
-            
-            $(document).ready(function () {
-                 
-                
+            var dataP;
+            $(document).ready(function () {              
                tipoConsulta="TodosTipos";
                cargaInicial(tipoConsulta);
                
@@ -94,28 +29,39 @@
                
                $("#guardar").click(function () {
                         
+                       var palabra=$("#palabra").val();
+                       var idioma= $("#idioma").val();
+                       var tipo=$("#tipo").val();
+                       var tiempo= $("#eltiempo").val();
+                       var traducion= $("#traducion").val();
+                       var id= $("#idPalabra").val();
                        
-                        var idTiempo=$("#idTiempo").val();
-                        var tiempo=$("#tiempo").val();
-                        var nemotecnico=$("#nemotecnico").val();
-                        if(tiempo==="" || nemotecnico==="" ){
-                            if(tiempo===""){
+                        if(palabra==="" || traducion==="" || tipo==="-1" || tiempo==="-1" || idioma==="-1"){
+                            if(palabra===""){
+                                alert("Por favor ingrese la Palabra");
+                           }
+                           if(traducion===""){
+                                alert("Por favor ingrese el Significado");
+                           } 
+                           if(tipo==="-1"){
+                                alert("Por favor ingrese el Tipo de palabra");
+                           }
+                           if(tiempo==="-1"){
                                 alert("Por favor ingrese el Tiempo");
                            }
-                           if(nemotecnico===""){
-                                alert("Por favor ingrese el Nemoténico");
-                           } 
-                            
+                           if(idioma==="-1"){
+                                alert("Por favor ingrese el Idioma");
+                           }
                         }else{
-                            if(idTiempo===""){
+                            if(id===""){
                                 var operacion="insertar";
-                                Procesos(operacion,idTiempo,tiempo,nemotecnico);
+                                Procesos(operacion,id,palabra,idioma,tipo,tiempo,traducion);
                                 tipoConsulta="TodosTipos";
                                 location.reload();
                                 //cargaInicial(tipoConsulta);
                             }else{
                                 var operacion="actualizar";
-                                Procesos(operacion,idTiempo,tiempo,nemotecnico);
+                                Procesos(operacion,id,palabra,idioma,tipo,tiempo,traducion);
                                 tipoConsulta="TodosTipos";
                                 location.reload();
                                 //cargaInicial(tipoConsulta);
@@ -124,8 +70,6 @@
                         }
                         
                    });
-                
-               
             });
                         
             function cargaInicial(tipoConsulta){
@@ -133,12 +77,12 @@
         
                 
                 //FIN KENDO
-                $("#idTiempo").val("");
+                
                 $('#Contenidos').hide();
                 $('#TablaTodos').show();
                 $('#nuevo').show();
                 $("#nemotecnico").val("");
-                $("#tiempo").val("");
+                
                 $("#idioma").val("")
                     .find('option')
                     .remove()
@@ -179,19 +123,31 @@
                                  $("#idioma").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
                                     var listadoIdioma = data.listadoIdioma;
                                     $.each(listadoIdioma, function (index) {
-                                        $("#idioma").append("<option value='" + listadoIdioma[index].idioma + "'>" +  listadoIdioma[index].idioma + "</option>");
+                                        $("#idioma").append("<option value='" + listadoIdioma[index].id + "'>" +  listadoIdioma[index].idioma + "</option>");
                                     });
                                     
                                 $("#tipo").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
                                     var listadoTipos = data.listadoTipos;
                                     $.each(listadoTipos, function (index) {
-                                        $("#tipo").append("<option value='" + listadoTipos[index].tipo + "'>" +  listadoTipos[index].tipo + "</option>");
+                                        $("#tipo").append("<option value='" + listadoTipos[index].id + "'>" +  listadoTipos[index].tipo + "</option>");
                                     }); 
-                                
+                                //toma el array y la combierte em JS    
+                                var dataP = [];
+                                var lista=data.listadoTraducciones;
+                                $.each( lista, function( key, value ) {
+                                    dataP.push( value );    
+                                });
+                                //Fim
+                                $("#traducion").kendoAutoComplete({
+                                        dataSource: dataP,
+                                        filter: "startswith",
+                                        placeholder: "SIGNIFICADO...",
+                                        
+                                    }); 
                                 $("#eltiempo").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
                                     var listadoTiempos = data.listadoTiempos;
                                     $.each(listadoTiempos, function (index) {
-                                        $("#eltiempo").append("<option value='" + listadoTiempos[index].tiempo + "'>" +  listadoTiempos[index].tiempo + "</option>");
+                                        $("#eltiempo").append("<option value='" + listadoTiempos[index].id + "'>" +  listadoTiempos[index].tiempo + "</option>");
                                     }); 
                                  
                              }else{
@@ -223,7 +179,6 @@
                 $("#guardar").text("GUARDAR");
                 $('#eliminar').hide();
                 
-            
             }
             
             function redireccionaActualizar(id,idioma, palabra, traducion, tipo, tiempo){
@@ -262,15 +217,18 @@
                 
             }
             
-            function Procesos(operacion,idTiempo, tiempo,nemotecnico){
+            function Procesos(operacion,id,palabra,idioma,tipo,tiempo,traducion){
                 
                 $.ajax({
-                    url: '../Tiempos_Controller',
+                    url: '../Palabras_Controller',
                     data: {
                         "operacion": operacion,
-                        "idTiempo":idTiempo,
+                        "id":id,
+                        "palabra":palabra,
+                        "idioma":idioma,
+                        "tipo":tipo,
                         "tiempo":tiempo,
-                        "nemotecnico":nemotecnico
+                        "traducion":traducion
                     },
                     async: false,
                     type: 'POST',
@@ -280,6 +238,7 @@
                          var mensaje=data.mensaje;
                           if(selogro===true){
                                     alert (""+mensaje);
+                                    
                               }else{
                                  alert ("PROCESO INCORRECTO ERROR:"+mensaje);
                              }
@@ -288,6 +247,27 @@
                     
                 });
                 
+            }
+            
+            function cargaTraduccion(palabra,tipoConsulta){
+                $.ajax({
+                    url: '../Palabras_Controller',
+                    data: {
+                        "tipoConsulta": tipoConsulta,
+                        "palabra":palabra,
+                    },
+                    async: false,
+                    type: 'POST',
+                    datatype: 'json',
+                    success: function (data) {
+                        var listadoPalabrasE = data.listadoPalabrasE;
+                        $.each(listadoPalabrasE, function (index) {
+                            $("#tipo").append("<option value='" + listadoTipos[index].tipo + "'>" +  listadoTipos[index].tipo + "</option>");
+                        });
+                          
+                    }
+                    
+                });
             }
             
             function cerrarSesion(){
@@ -436,7 +416,7 @@
                                 <div class="form-group">
                                   <label for="palabra" class="col-sm-6 control-label">Palabra</label>
                                   <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="palabra" placeholder="auto,casa">
+                                    <input type="text" class="form-control" id="palabra" placeholder="auto,casa" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" >
                                   </div>
                                 </div>
                                 <div class="form-group">
@@ -469,8 +449,8 @@
                                 <div class="form-group">
                                   <label for="traducion" class="col-sm-6 control-label">Traducción</label>
                                   <div class="col-sm-6">
-                                    <div class="demo-section k-header"> 
-                                        <input id="traducion" style="width: 100%;" />
+                                     
+                                        <input id="traducion" class="form-control required" style="width: 100%;" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                     </div>
                                   </div>
                                 </div>
@@ -482,9 +462,9 @@
                                     <button type="button" id="guardar" class="btn btn-primary">Guardar</button>
                                   </div>
                                 </div>
+                                 
                               </form>
-                                
-                    </table>
+                         
                     </div>
                     <div class="col-md-3"></div>
                     
@@ -508,4 +488,8 @@
     </div>
     <!-- /.container -->
     </body>
+      <script>
+   
+       </script>
+               
 </html>

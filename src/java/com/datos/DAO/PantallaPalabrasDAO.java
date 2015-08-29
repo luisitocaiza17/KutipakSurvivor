@@ -16,6 +16,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import static persistencia.tables.Pantallapalabras.PANTALLAPALABRAS;
+
 import persistencia.tables.records.PantallapalabrasRecord;
 
 /**
@@ -29,17 +30,40 @@ public class PantallaPalabrasDAO {
         List<PantallapalabrasRecord> listadoPalabras= new ArrayList<PantallapalabrasRecord>();
         Connection conexion= con.realiza_conexion();
         DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
-        Result<Record> result = create.select().from(PANTALLAPALABRAS).fetch();
+        Result<Record> result = create.select().from(PANTALLAPALABRAS)
+                .orderBy(PANTALLAPALABRAS.IDIOMA,PANTALLAPALABRAS.TIEMPO,PANTALLAPALABRAS.TIPO) .fetch();
         for(Record r : result){
             PantallapalabrasRecord palabras = new PantallapalabrasRecord();
-            palabras.setPalabraid(r.getValue(PANTALLAPALABRAS.PALABRAID));
+             palabras.setIdioma(r.getValue(PANTALLAPALABRAS.IDIOMA));
+             palabras.setNombretiempo(r.getValue(PANTALLAPALABRAS.NOMBRETIEMPO));
+             palabras.setNombretipo(r.getValue(PANTALLAPALABRAS.NOMBRETIPO));
+             palabras.setPalabraid(r.getValue(PANTALLAPALABRAS.PALABRAID));
+             palabras.setPalabras(r.getValue(PANTALLAPALABRAS.PALABRAS));
+             palabras.setSignificado(r.getValue(PANTALLAPALABRAS.SIGNIFICADO));
+             palabras.setTiempo(r.getValue(PANTALLAPALABRAS.TIEMPO));
+             palabras.setTipo(r.getValue(PANTALLAPALABRAS.TIPO));
+             listadoPalabras.add(palabras);
+        }
+        conexion.close();
+        return listadoPalabras;
+    }
+    
+    public List<PantallapalabrasRecord> ConsultarPalabrasEspecifica(String palabra) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<PantallapalabrasRecord> listadoPalabras= new ArrayList<PantallapalabrasRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(PANTALLAPALABRAS).where(PANTALLAPALABRAS.PALABRAS.equal(palabra)).fetch();
+        for(Record r : result){
+            PantallapalabrasRecord palabras = new PantallapalabrasRecord();
             palabras.setIdioma(r.getValue(PANTALLAPALABRAS.IDIOMA));
-            palabras.setPalabras(r.getValue(PANTALLAPALABRAS.PALABRAS));
-            palabras.setTraduccion(r.getValue(PANTALLAPALABRAS.TRADUCCION));
-            palabras.setTipo(r.getValue(PANTALLAPALABRAS.TIPO));
-            palabras.setTiempo(r.getValue(PANTALLAPALABRAS.TIEMPO));
-            palabras.setNombretiempo(r.getValue(PANTALLAPALABRAS.NOMBRETIEMPO));
-            palabras.setNombretipo(r.getValue(PANTALLAPALABRAS.NOMBRETIPO));
+             palabras.setNombretiempo(r.getValue(PANTALLAPALABRAS.NOMBRETIEMPO));
+             palabras.setNombretipo(r.getValue(PANTALLAPALABRAS.NOMBRETIPO));
+             palabras.setPalabraid(r.getValue(PANTALLAPALABRAS.PALABRAID));
+             palabras.setPalabras(r.getValue(PANTALLAPALABRAS.PALABRAS));
+             palabras.setSignificado(r.getValue(PANTALLAPALABRAS.SIGNIFICADO));
+             palabras.setTiempo(r.getValue(PANTALLAPALABRAS.TIEMPO));
+             palabras.setTipo(r.getValue(PANTALLAPALABRAS.TIPO));
             listadoPalabras.add(palabras);
         }
         conexion.close();

@@ -22,15 +22,15 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Palabras implements Serializable {
 
-	private static final long serialVersionUID = -1258121944;
+	private static final long serialVersionUID = 1729146616;
 
 	private Integer palabraid;
 	private Integer idiomaid;
 	private Integer tipoid;
-	private Integer palPalabraid;
 	private Integer tiemposid;
 	private String  nombrepalabra;
 	private String  sinonimo;
+	private String  significado;
 
 	public Palabras() {}
 
@@ -38,28 +38,28 @@ public class Palabras implements Serializable {
 		this.palabraid = value.palabraid;
 		this.idiomaid = value.idiomaid;
 		this.tipoid = value.tipoid;
-		this.palPalabraid = value.palPalabraid;
 		this.tiemposid = value.tiemposid;
 		this.nombrepalabra = value.nombrepalabra;
 		this.sinonimo = value.sinonimo;
+		this.significado = value.significado;
 	}
 
 	public Palabras(
 		Integer palabraid,
 		Integer idiomaid,
 		Integer tipoid,
-		Integer palPalabraid,
 		Integer tiemposid,
 		String  nombrepalabra,
-		String  sinonimo
+		String  sinonimo,
+		String  significado
 	) {
 		this.palabraid = palabraid;
 		this.idiomaid = idiomaid;
 		this.tipoid = tipoid;
-		this.palPalabraid = palPalabraid;
 		this.tiemposid = tiemposid;
 		this.nombrepalabra = nombrepalabra;
 		this.sinonimo = sinonimo;
+		this.significado = significado;
 	}
 
 	public Integer getPalabraid() {
@@ -86,14 +86,6 @@ public class Palabras implements Serializable {
 		this.tipoid = tipoid;
 	}
 
-	public Integer getPalPalabraid() {
-		return this.palPalabraid;
-	}
-
-	public void setPalPalabraid(Integer palPalabraid) {
-		this.palPalabraid = palPalabraid;
-	}
-
 	public Integer getTiemposid() {
 		return this.tiemposid;
 	}
@@ -116,5 +108,13 @@ public class Palabras implements Serializable {
 
 	public void setSinonimo(String sinonimo) {
 		this.sinonimo = sinonimo;
+	}
+
+	public String getSignificado() {
+		return this.significado;
+	}
+
+	public void setSignificado(String significado) {
+		this.significado = significado;
 	}
 }

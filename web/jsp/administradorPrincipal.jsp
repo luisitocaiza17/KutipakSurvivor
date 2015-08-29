@@ -321,13 +321,13 @@
                                 <div class="form-group">
                                   <label for="tipoPalabra" class="col-sm-6 control-label">TIPO DE PALABRA</label>
                                   <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="tipoPalabra" placeholder="Sujeto,Verbo,etc ">
+                                    <input type="text" class="form-control" id="tipoPalabra" placeholder="Sujeto,Verbo,etc " style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"   >
                                   </div>
                                 </div>
                                 <div class="form-group">
                                   <label for="nemotecnico" class="col-sm-6 control-label">NEMOTÉCNICO</label>
                                   <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="nemotecnico" placeholder="SUJ,VER,etc">
+                                    <input type="text" class="form-control" id="nemotecnico" placeholder="SUJ,VER,etc" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  >
                                     <input type="hidden" class="form-control" id="idTipoPalabra">
                                   </div>
                                 </div>

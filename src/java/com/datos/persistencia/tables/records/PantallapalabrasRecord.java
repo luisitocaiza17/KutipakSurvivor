@@ -27,7 +27,7 @@ import persistencia.tables.Pantallapalabras;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PantallapalabrasRecord extends TableRecordImpl<PantallapalabrasRecord> implements Record8<Integer, String, String, String, String, String, String, String> {
 
-	private static final long serialVersionUID = 1128913173;
+	private static final long serialVersionUID = 629199467;
 
 	/**
 	 * Setter for <code>kutipak.pantallapalabras.palabraid</code>.
@@ -72,16 +72,16 @@ public class PantallapalabrasRecord extends TableRecordImpl<PantallapalabrasReco
 	}
 
 	/**
-	 * Setter for <code>kutipak.pantallapalabras.TRADUCCION</code>.
+	 * Setter for <code>kutipak.pantallapalabras.SIGNIFICADO</code>.
 	 */
-	public void setTraduccion(String value) {
+	public void setSignificado(String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>kutipak.pantallapalabras.TRADUCCION</code>.
+	 * Getter for <code>kutipak.pantallapalabras.SIGNIFICADO</code>.
 	 */
-	public String getTraduccion() {
+	public String getSignificado() {
 		return (String) getValue(3);
 	}
 
@@ -190,7 +190,7 @@ public class PantallapalabrasRecord extends TableRecordImpl<PantallapalabrasReco
 	 */
 	@Override
 	public Field<String> field4() {
-		return Pantallapalabras.PANTALLAPALABRAS.TRADUCCION;
+		return Pantallapalabras.PANTALLAPALABRAS.SIGNIFICADO;
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class PantallapalabrasRecord extends TableRecordImpl<PantallapalabrasReco
 	 */
 	@Override
 	public String value4() {
-		return getTraduccion();
+		return getSignificado();
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class PantallapalabrasRecord extends TableRecordImpl<PantallapalabrasReco
 	 */
 	@Override
 	public PantallapalabrasRecord value4(String value) {
-		setTraduccion(value);
+		setSignificado(value);
 		return this;
 	}
 
@@ -391,13 +391,13 @@ public class PantallapalabrasRecord extends TableRecordImpl<PantallapalabrasReco
 	/**
 	 * Create a detached, initialised PantallapalabrasRecord
 	 */
-	public PantallapalabrasRecord(Integer palabraid, String idioma, String palabras, String traduccion, String tipo, String nombretipo, String nombretiempo, String tiempo) {
+	public PantallapalabrasRecord(Integer palabraid, String idioma, String palabras, String significado, String tipo, String nombretipo, String nombretiempo, String tiempo) {
 		super(Pantallapalabras.PANTALLAPALABRAS);
 
 		setValue(0, palabraid);
 		setValue(1, idioma);
 		setValue(2, palabras);
-		setValue(3, traduccion);
+		setValue(3, significado);
 		setValue(4, tipo);
 		setValue(5, nombretipo);
 		setValue(6, nombretiempo);

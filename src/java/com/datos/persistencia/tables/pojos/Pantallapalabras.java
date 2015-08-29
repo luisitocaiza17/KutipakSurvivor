@@ -22,12 +22,12 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Pantallapalabras implements Serializable {
 
-	private static final long serialVersionUID = 1316254568;
+	private static final long serialVersionUID = -951904244;
 
 	private Integer palabraid;
 	private String  idioma;
 	private String  palabras;
-	private String  traduccion;
+	private String  significado;
 	private String  tipo;
 	private String  nombretipo;
 	private String  nombretiempo;
@@ -39,7 +39,7 @@ public class Pantallapalabras implements Serializable {
 		this.palabraid = value.palabraid;
 		this.idioma = value.idioma;
 		this.palabras = value.palabras;
-		this.traduccion = value.traduccion;
+		this.significado = value.significado;
 		this.tipo = value.tipo;
 		this.nombretipo = value.nombretipo;
 		this.nombretiempo = value.nombretiempo;
@@ -50,7 +50,7 @@ public class Pantallapalabras implements Serializable {
 		Integer palabraid,
 		String  idioma,
 		String  palabras,
-		String  traduccion,
+		String  significado,
 		String  tipo,
 		String  nombretipo,
 		String  nombretiempo,
@@ -59,7 +59,7 @@ public class Pantallapalabras implements Serializable {
 		this.palabraid = palabraid;
 		this.idioma = idioma;
 		this.palabras = palabras;
-		this.traduccion = traduccion;
+		this.significado = significado;
 		this.tipo = tipo;
 		this.nombretipo = nombretipo;
 		this.nombretiempo = nombretiempo;
@@ -90,12 +90,12 @@ public class Pantallapalabras implements Serializable {
 		this.palabras = palabras;
 	}
 
-	public String getTraduccion() {
-		return this.traduccion;
+	public String getSignificado() {
+		return this.significado;
 	}
 
-	public void setTraduccion(String traduccion) {
-		this.traduccion = traduccion;
+	public void setSignificado(String significado) {
+		this.significado = significado;
 	}
 
 	public String getTipo() {

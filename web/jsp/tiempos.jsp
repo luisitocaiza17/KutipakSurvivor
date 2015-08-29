@@ -326,13 +326,13 @@
                                 <div class="form-group">
                                   <label for="tiempo" class="col-sm-6 control-label">TIEMPO</label>
                                   <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="tiempo" placeholder="Presente, Pasado, etc ">
+                                    <input type="text" class="form-control" id="tiempo" placeholder="Presente, Pasado, etc " style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  >
                                   </div>
                                 </div>
                                 <div class="form-group">
                                   <label for="nemotecnico" class="col-sm-6 control-label">NEMOTÉCNICO</label>
                                   <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="nemotecnico" placeholder="PRE, PAS">
+                                    <input type="text" class="form-control" id="nemotecnico" placeholder="PRE, PAS" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  >
                                     <input type="hidden" class="form-control" id="idTiempo">
                                   </div>
                                 </div>

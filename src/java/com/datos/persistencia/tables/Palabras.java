@@ -35,7 +35,7 @@ import persistencia.tables.records.PalabrasRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Palabras extends TableImpl<PalabrasRecord> {
 
-	private static final long serialVersionUID = -902871927;
+	private static final long serialVersionUID = -619054962;
 
 	/**
 	 * The reference instance of <code>kutipak.palabras</code>
@@ -58,32 +58,32 @@ public class Palabras extends TableImpl<PalabrasRecord> {
 	/**
 	 * The column <code>kutipak.palabras.IDIOMAID</code>.
 	 */
-	public final TableField<PalabrasRecord, Integer> IDIOMAID = createField("IDIOMAID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<PalabrasRecord, Integer> IDIOMAID = createField("IDIOMAID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>kutipak.palabras.TIPOID</code>.
 	 */
-	public final TableField<PalabrasRecord, Integer> TIPOID = createField("TIPOID", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>kutipak.palabras.PAL_PALABRAID</code>.
-	 */
-	public final TableField<PalabrasRecord, Integer> PAL_PALABRAID = createField("PAL_PALABRAID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<PalabrasRecord, Integer> TIPOID = createField("TIPOID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>kutipak.palabras.TIEMPOSID</code>.
 	 */
-	public final TableField<PalabrasRecord, Integer> TIEMPOSID = createField("TIEMPOSID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<PalabrasRecord, Integer> TIEMPOSID = createField("TIEMPOSID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>kutipak.palabras.NOMBREPALABRA</code>.
 	 */
-	public final TableField<PalabrasRecord, String> NOMBREPALABRA = createField("NOMBREPALABRA", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+	public final TableField<PalabrasRecord, String> NOMBREPALABRA = createField("NOMBREPALABRA", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
 
 	/**
 	 * The column <code>kutipak.palabras.SINONIMO</code>.
 	 */
 	public final TableField<PalabrasRecord, String> SINONIMO = createField("SINONIMO", org.jooq.impl.SQLDataType.VARCHAR.length(40), this, "");
+
+	/**
+	 * The column <code>kutipak.palabras.SIGNIFICADO</code>.
+	 */
+	public final TableField<PalabrasRecord, String> SIGNIFICADO = createField("SIGNIFICADO", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
 
 	/**
 	 * Create a <code>kutipak.palabras</code> table reference
@@ -136,7 +136,7 @@ public class Palabras extends TableImpl<PalabrasRecord> {
 	 */
 	@Override
 	public List<ForeignKey<PalabrasRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<PalabrasRecord, ?>>asList(Keys.FK_IDIOMASPALABRAS, Keys.FK_TIPOPALABRAS, Keys.FK_KEOEK, Keys.FK_TIEMPOSPALABRAS);
+		return Arrays.<ForeignKey<PalabrasRecord, ?>>asList(Keys.FK_IDIOMASPALABRAS, Keys.FK_TIPOPALABRAS, Keys.FK_TIEMPOSPALABRAS);
 	}
 
 	/**
