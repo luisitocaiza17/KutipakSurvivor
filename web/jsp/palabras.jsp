@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Tiempos</title>
+        <title>Pala○8ras</title>
         <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="../css/Kendo/kendo.common.min.css" />
@@ -24,6 +24,7 @@
             $(document).ready(function () {              
                tipoConsulta="TodosTipos";
                cargaInicial(tipoConsulta);
+               
                
                $('#Contenidos').hide();
                
@@ -120,34 +121,23 @@
                                  });
                                  
                                 
-                                 $("#idioma").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
+                                 $("#idioma").append("<option selected  value='-1'>Seleccione el idioma</option>");
                                     var listadoIdioma = data.listadoIdioma;
                                     $.each(listadoIdioma, function (index) {
-                                        $("#idioma").append("<option value='" + listadoIdioma[index].id + "'>" +  listadoIdioma[index].idioma + "</option>");
+                                        $("#idioma").append("<option value='" + listadoIdioma[index].idioma + "'>" +  listadoIdioma[index].idioma + "</option>");
                                     });
                                     
-                                $("#tipo").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
+                                $("#tipo").append("<option selected  value='-1'>Seleccione el tipo de palabra</option>");
                                     var listadoTipos = data.listadoTipos;
                                     $.each(listadoTipos, function (index) {
-                                        $("#tipo").append("<option value='" + listadoTipos[index].id + "'>" +  listadoTipos[index].tipo + "</option>");
+                                        $("#tipo").append("<option value='" + listadoTipos[index].tipo + "'>" +  listadoTipos[index].tipo + "</option>");
                                     }); 
-                                //toma el array y la combierte em JS    
-                                var dataP = [];
-                                var lista=data.listadoTraducciones;
-                                $.each( lista, function( key, value ) {
-                                    dataP.push( value );    
-                                });
-                                //Fim
-                                $("#traducion").kendoAutoComplete({
-                                        dataSource: dataP,
-                                        filter: "startswith",
-                                        placeholder: "SIGNIFICADO...",
-                                        
-                                    }); 
-                                $("#eltiempo").append("<option selected  value='-1'>Seleccione una opci&oacute;n</option>");
+                                
+                                
+                                $("#eltiempo").append("<option selected  value='-1'>Seleccione el tiempo</option>");
                                     var listadoTiempos = data.listadoTiempos;
                                     $.each(listadoTiempos, function (index) {
-                                        $("#eltiempo").append("<option value='" + listadoTiempos[index].id + "'>" +  listadoTiempos[index].tiempo + "</option>");
+                                        $("#eltiempo").append("<option value='" + listadoTiempos[index].tiempo + "'>" +  listadoTiempos[index].tiempo + "</option>");
                                     }); 
                                  
                              }else{
@@ -206,7 +196,7 @@
                var seguro = confirm("Esta seguro que desea borrar el tiempo?");
                 if (seguro === true) {
                     var operacion="eliminar";
-                    var idTipoPalabra=$("#idTiempo").val();
+                    var idTipoPalabra=$("#idPalabra").val();
                     var nombrePalabra="";
                     var nemotecnico="";
                     Procesos(operacion,idTipoPalabra, nombrePalabra,nemotecnico);
@@ -249,22 +239,33 @@
                 
             }
             
-            function cargaTraduccion(palabra,tipoConsulta){
+            function cargaTraduccion(idioma,tipoConsulta){
+               
                 $.ajax({
                     url: '../Palabras_Controller',
                     data: {
                         "tipoConsulta": tipoConsulta,
-                        "palabra":palabra,
+                        "idioma":idioma
                     },
                     async: false,
                     type: 'POST',
                     datatype: 'json',
                     success: function (data) {
-                        var listadoPalabrasE = data.listadoPalabrasE;
-                        $.each(listadoPalabrasE, function (index) {
-                            $("#tipo").append("<option value='" + listadoTipos[index].tipo + "'>" +  listadoTipos[index].tipo + "</option>");
-                        });
-                          
+                        
+                        //toma el array y la combierte em JS    
+                                var dataP = [];
+                                var lista=data.listadoTraducciones;
+                                $.each( lista, function( key, value ) {
+                                    dataP.push( value );    
+                                });
+                                //Fim 
+                                $("#traducion").kendoAutoComplete({
+                                        dataSource: dataP,
+                                        filter: "startswith",
+                                        placeholder: "SIGNIFICADO..."
+                                        
+                                }); 
+                                
                     }
                     
                 });
@@ -285,6 +286,11 @@
          
          function abreCambio(){
              var agente = window.open("cambioContrasenia.jsp","ventana1","directories=no,width=500,height=500,resizable=no,scrollbars=yes,top=0,left=260,status=1");
+             agente.opener = self;
+        }
+        
+        function CargarExcel(){
+             var agente = window.open("CargaExcel.jsp","ventana1","directories=no,width=500,height=500,resizable=no,scrollbars=yes,top=0,left=260,status=1");
              agente.opener = self;
         }
             
@@ -368,10 +374,17 @@
                 <p>Los tiempos, son la forma en que se representa la oración y sus variantes a través del tiempo, estos son estándares por medio de los 
                     cuales se traducirá la palabra en base al tiempo, lo que mejorara la calidad de traducción</p>
                 
+               
                 <br>
+                 <div align="left">
+                            <button id="CargarExcel" type="button" class="btn btn-primary" onclick="CargarExcel();">Cargar desde Excel</button>
+                        </div>
+                 <br>
+                 
                 <div align="right">
                     <button id="nuevo" type="button" class="btn btn-default" onclick="redireccionaInsertar();">Nuevo</button>
                 </div>
+                  <br>
                 <br />
                 <br />
                 <div id="TablaTodos" class="row">
@@ -422,7 +435,7 @@
                                 <div class="form-group">
                                   <label for="idioma" class="col-sm-6 control-label">Idioma</label>
                                   <div class="col-sm-6">
-                                    <select class="form-control required" id="idioma"> 
+                                    <select class="form-control required" id="idioma"onchange="carga(this)"  > 
                                         
                                     </select>
                                   </div>
@@ -489,7 +502,24 @@
     <!-- /.container -->
     </body>
       <script>
-   
+          function carga(a) {
+            var idIdioma = (a.value || a.options[a.selectedIndex].value);  //crossbrowser solution =)
+            
+            if(idIdioma==="1"){
+                var idioma="ESPAÑOL";
+                
+            }else{
+                var idioma="KITCHWA";
+                
+            }
+            var Significados="Significados";
+            cargaTraduccion(idioma,Significados);
+            
+        }
+        
+        
+        
+        
        </script>
                
 </html>

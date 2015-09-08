@@ -57,6 +57,21 @@ public class IdiomasDAO {
           return listadoIdiomas;
     }
     
+    public IdiomasRecord ConsultarIdiomasEspecificosId(String Idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(IDIOMAS).where(IDIOMAS.NOMBRE.equal(Idioma)).fetch();
+        IdiomasRecord IdiomasEncontrados= new IdiomasRecord(); 
+        for(Record r : result){
+             IdiomasEncontrados.setIdiomaid(r.getValue(IDIOMAS.IDIOMAID));
+             IdiomasEncontrados.setNombre(r.getValue(IDIOMAS.NOMBRE));
+         }
+          conexion.close();
+          return IdiomasEncontrados;
+    }
+    
     public boolean GrabarIdioma(IdiomasRecord misIdiomas) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();

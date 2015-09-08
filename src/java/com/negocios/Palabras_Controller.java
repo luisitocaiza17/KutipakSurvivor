@@ -121,7 +121,7 @@ public class Palabras_Controller extends HttpServlet {
                              JSONArray JSONArrayIdioma = new JSONArray();  
                              for(IdiomasRecord rs : resultsIdiomas){
                                  planJSONObjectTiempos.put("id", rs.getIdiomaid());
-                                 planJSONObjectTiempos.put("idioma",rs.getIdiomaid()+" "+ rs.getNombre());
+                                 planJSONObjectTiempos.put("idioma", rs.getNombre());
                                  
                                  JSONArrayIdioma.add(planJSONObjectTiempos);
                              }
@@ -133,7 +133,7 @@ public class Palabras_Controller extends HttpServlet {
                              JSONArray JSONArrayTiposP = new JSONArray();  
                              for(TipospalabrasRecord rs : resultsPalabras){
                                  planJSONObjectTiposP.put("id", rs.getTipoid());
-                                 planJSONObjectTiposP.put("tipo", rs.getTipoid()+" "+rs.getNombretipo());
+                                 planJSONObjectTiposP.put("tipo", rs.getNombretipo());
                                  
                                  JSONArrayTiposP.add(planJSONObjectTiposP);
                              }
@@ -146,7 +146,7 @@ public class Palabras_Controller extends HttpServlet {
                              JSONArray JSONArrayTiempos= new JSONArray();  
                              for(TiemposRecord rs : resultsTiempos){
                                  planJSONObjectTiempo.put("id", rs.getTiemposid());
-                                 planJSONObjectTiempo.put("tiempo",rs.getTiemposid()+" "+ rs.getNombretiempo());
+                                 planJSONObjectTiempo.put("tiempo",rs.getNombretiempo());
                                  
                                  JSONArrayTiempos.add(planJSONObjectTiempo);
                              }
@@ -155,6 +155,26 @@ public class Palabras_Controller extends HttpServlet {
                              result.put("success", Boolean.TRUE);
                          }
                         
+                        if(tipoConsulta.equals("Significados")){
+                            String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
+			    PantallaPalabrasDAO TodasPalabras = new PantallaPalabrasDAO();
+                             List<PantallapalabrasRecord> results = TodasPalabras.ConsultarPalabrasEspecificaIdioma(idioma);
+                             JSONArray JSONArrayTipos = new JSONArray();
+                             JSONArray JSONTraducciones = new JSONArray(); 
+                             for(PantallapalabrasRecord rs : results){
+                                 planJSONObject.put("id", rs.getPalabraid());
+                                 planJSONObject.put("idioma", rs.getIdioma());
+                                 planJSONObject.put("palabra", rs.getPalabras());
+                                 planJSONObject.put("traducion", rs.getSignificado());
+                                 planJSONObject.put("tipo", rs.getTipo());
+                                 planJSONObject.put("tiempo", rs.getTiempo());
+                                 planJSONObject.put("tipoP", rs.getNombretipo());
+                                 planJSONObject.put("tiempoP", rs.getNombretiempo());
+                                 JSONTraducciones.add(rs.getSignificado());
+                             }
+                             
+                             result.put("listadoTraducciones",JSONTraducciones);
+                        }
                        
                         /*procesos con los datos*/
                         if(operacion.toUpperCase().equals("INSERTAR")&& id.equals("")){
@@ -165,33 +185,21 @@ public class Palabras_Controller extends HttpServlet {
 			    String tiempo = request.getParameter("tiempo") == null ? "" : request.getParameter("tiempo");
 			    String traducion = request.getParameter("traducion") == null ? "" : request.getParameter("traducion");
 			    /*transforma los ids */
-                            int tipoID=0;
-                            try{
-                                tipoID=Integer.parseInt(tipo);
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
-                            int tiempoID=0;
-                            try{
-                                tiempoID=Integer.parseInt(tiempo);
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
-                            int idiomaID=0;
-                            try{
-                                idiomaID=Integer.parseInt(idioma);
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
+                            IdiomasDAO idiomabuqueda = new IdiomasDAO();
+                            IdiomasRecord idiomaId = idiomabuqueda.ConsultarIdiomasEspecificosId(idioma);
+                            TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO();  
+                            TipospalabrasRecord tipoId= tiposbusqueda.ConsultarIdiomasEspecificosId(tipo);
+                            TiemposDAO tiemposbusqueda = new TiemposDAO();
+                            TiemposRecord tiemposId= tiemposbusqueda.ConsultarIdiomasEspecificosId(tiempo);
                             
                             PalabrasDAO procesosPalabras = new PalabrasDAO();
                             PalabrasRecord palabraIngreso = new PalabrasRecord();
                             
                             palabraIngreso.setNombrepalabra(palabra);
                             palabraIngreso.setSignificado(traducion);
-                            palabraIngreso.setIdiomaid(idiomaID);
-                            palabraIngreso.setTiemposid(tiempoID);
-                            palabraIngreso.setTipoid(tipoID);
+                            palabraIngreso.setIdiomaid(idiomaId.getIdiomaid());
+                            palabraIngreso.setTiemposid(tiemposId.getTiemposid());
+                            palabraIngreso.setTipoid(tipoId.getTipoid());
                             
                             List<PalabrasRecord> resultsPalabras = procesosPalabras.ConsultarPalabrasExiste(palabraIngreso);
                             int contador=0;
@@ -213,29 +221,65 @@ public class Palabras_Controller extends HttpServlet {
                             
                         }
                         if(operacion.toUpperCase().equals("ACTUALIZAR") && !id.equals("")){
-                            String tiempo = request.getParameter("tiempo") == null ? "" : request.getParameter("tiempo");
-			    String nemotecnico = request.getParameter("nemotecnico") == null ? "" : request.getParameter("nemotecnico");
+                            String palabra = request.getParameter("palabra") == null ? "" : request.getParameter("palabra");
+			    String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
+			    String tipo = request.getParameter("tipo") == null ? "" : request.getParameter("tipo");
+			    String tiempo = request.getParameter("tiempo") == null ? "" : request.getParameter("tiempo");
+			    String traducion = request.getParameter("traducion") == null ? "" : request.getParameter("traducion");
 			    
-                            TiemposRecord elTiempo= new TiemposRecord();
-                            elTiempo.setNombretiempo(tiempo.toUpperCase());
-                            elTiempo.setNemotecnicotiempo(nemotecnico.toUpperCase());
-                            elTiempo.setTiemposid(Integer.parseInt(id));
-                            TiemposDAO TiemposProcesos = new TiemposDAO();
-                            TiemposProcesos.ActualizarTiempo(elTiempo);
+                            /*transforma los ids */
+                            IdiomasDAO idiomabuqueda = new IdiomasDAO();
+                            IdiomasRecord idiomaId = idiomabuqueda.ConsultarIdiomasEspecificosId(idioma);
+                            TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO();  
+                            TipospalabrasRecord tipoId= tiposbusqueda.ConsultarIdiomasEspecificosId(tipo);
+                            TiemposDAO tiemposbusqueda = new TiemposDAO();
+                            TiemposRecord tiemposId= tiemposbusqueda.ConsultarIdiomasEspecificosId(tiempo);
                             
-                            result.put("success", Boolean.TRUE);
-                            result.put("mensaje", "ACTUALIZADO CORRECTO");
+                            PalabrasDAO procesosPalabras = new PalabrasDAO();
+                            PalabrasRecord palabraIngreso = new PalabrasRecord();
+                            
+                            palabraIngreso.setNombrepalabra(palabra);
+                            palabraIngreso.setSignificado(traducion);
+                            palabraIngreso.setIdiomaid(idiomaId.getIdiomaid());
+                            palabraIngreso.setTiemposid(tiemposId.getTiemposid());
+                            palabraIngreso.setTipoid(tipoId.getTipoid());
+                            try{
+                                palabraIngreso.setPalabraid(Integer.parseInt(id));
+                                 List<PalabrasRecord> resultsPalabras = procesosPalabras.ConsultarPalabrasExiste(palabraIngreso);
+                            int contador=0;
+                            for(PalabrasRecord rs : resultsPalabras){
+                                contador++;
+                                break;
+                            }
+                            if(contador==0){
+                               procesosPalabras.ActualizarPalabras(palabraIngreso);
+                               result.put("success", Boolean.TRUE);
+                               result.put("mensaje", "ACTUALIZADO CORRECTO");
+                            }else{
+                               result.put("success", Boolean.FALSE);
+                               result.put("mensaje", " PALABRA DUPLICADA, YA EXISTE!!"); 
+                            }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                result.put("success", Boolean.FALSE);
+                                result.put("mensaje",e);
+                            }
                         }
                         
                         if(operacion.toUpperCase().equals("ELIMINAR")){
-                            TiemposRecord elTiempo= new TiemposRecord();
-                            elTiempo.setTiemposid(Integer.parseInt(id));
-                            TiemposDAO tiposPalabrasProcesos = new TiemposDAO();
-                            tiposPalabrasProcesos.EliminarTiempos(elTiempo);
-                            result.put("success", Boolean.TRUE);
-                            result.put("mensaje", "ELIMINACION DE REGISTRO CORRECTA");
+                            PalabrasRecord palabra= new PalabrasRecord();
+                            try{
+                                 palabra.setPalabraid(Integer.parseInt(id));
+                                PalabrasDAO PalabrasProcesos = new PalabrasDAO();
+                                PalabrasProcesos.EliminarPalabras(palabra);
+                                result.put("success", Boolean.TRUE);
+                                result.put("mensaje", "ELIMINACION DE REGISTRO CORRECTA");
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                result.put("success", Boolean.FALSE);
+                                result.put("mensaje",e);
+                            }
                         }
-                        
                          response.setContentType("application/json; charset=ISO-8859-1"); 
                          result.write(response.getWriter());
                     } catch (Exception e) {

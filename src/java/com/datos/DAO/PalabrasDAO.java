@@ -129,7 +129,7 @@ public class PalabrasDAO {
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();
 	DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
-        create.delete(PALABRAS).where(PALABRAS.PALABRAID.equal(palabras.getPalabraid()));
+        create.delete(PALABRAS).where(PALABRAS.PALABRAID.equal(palabras.getPalabraid())).execute();
         return true;
     }
    

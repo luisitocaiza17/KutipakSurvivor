@@ -43,6 +43,22 @@ public class TiemposDAO {
         return listadoTiempos;
     }
     
+    public TiemposRecord ConsultarIdiomasEspecificosId(String tiempo) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(TIEMPOS).where(TIEMPOS.NOMBRETIEMPO.equal(tiempo)).fetch();
+        TiemposRecord TiemposEncontrados= new TiemposRecord(); 
+        for(Record r : result){
+             TiemposEncontrados.setTiemposid(r.getValue(TIEMPOS.TIEMPOSID));
+             TiemposEncontrados.setNombretiempo(r.getValue(TIEMPOS.NOMBRETIEMPO));
+             TiemposEncontrados.setNemotecnicotiempo(r.getValue(TIEMPOS.NEMOTECNICOTIEMPO));
+         }
+          conexion.close();
+          return TiemposEncontrados;
+    }
+    
     /*Metodo que trae un tiempo Especifico*/
     public List<TiemposRecord> ConsultarTiemposEspecifico(TiemposRecord TiempoIngreso) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
