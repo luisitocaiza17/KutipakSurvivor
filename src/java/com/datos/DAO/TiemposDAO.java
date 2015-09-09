@@ -43,7 +43,7 @@ public class TiemposDAO {
         return listadoTiempos;
     }
     
-    public TiemposRecord ConsultarIdiomasEspecificosId(String tiempo) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+    public TiemposRecord ConsultarTiempoEspecificosId(String tiempo) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         
         Connection conexion= con.realiza_conexion();
@@ -57,6 +57,21 @@ public class TiemposDAO {
          }
           conexion.close();
           return TiemposEncontrados;
+    }
+    
+    public String ConsultarTiempoId(String tiempo) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(TIEMPOS).where(TIEMPOS.NEMOTECNICOTIEMPO.equal(tiempo)).fetch();
+        String id="";
+        for(Record r : result){
+             id=""+(r.getValue(TIEMPOS.TIEMPOSID));
+             
+         }
+          conexion.close();
+          return id;
     }
     
     /*Metodo que trae un tiempo Especifico*/

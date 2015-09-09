@@ -6,6 +6,10 @@
 package com.negocios;
 
 
+import com.datos.DAO.IdiomasDAO;
+import com.datos.DAO.PalabrasDAO;
+import com.datos.DAO.TiemposDAO;
+import com.datos.DAO.TiposPalabrasDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -154,10 +158,58 @@ public class CargaExcel_Controller extends HttpServlet {
                                 return;
                             }
                         }
+                        int contador=0;
                        while (filas.hasNext()) {
+                           contador++;
                            Row row = filas.next();
-                           String Marca = "" + row.getCell(0);
-                           System.out.println("Marca:"+Marca);
+                           if(contador>=6){
+                                String palabra = "" + row.getCell(2);
+                                if(palabra.equals("")||palabra.equals(null))
+                                    break;
+                                
+                                /*Procesos con las palabras*/
+                                int contadorErrores=0;
+                                
+                                //buscar por IDS
+                               
+                                String idioma=""+row.getCell(4);
+                                idioma=idioma.toUpperCase();
+                                IdiomasDAO idiomabuqueda = new IdiomasDAO();
+                                String idiomaId=idiomabuqueda.ConsultarIdiomaId(idioma);
+                                if(idiomaId.equals("")||idiomaId.equals(null)){
+                                    contadorErrores++;
+                                    continue;
+                                }
+                                
+                                String tiempo=""+row.getCell(5);
+                                tiempo=tiempo.toUpperCase();
+                                TiemposDAO tiemposbusqueda = new TiemposDAO();
+                                String tiempoId=tiemposbusqueda.ConsultarTiempoId(tiempo);
+                                if(tiempoId.equals("")||tiempoId.equals(null)){
+                                    contadorErrores++;
+                                    continue;
+                                }
+                                    
+                                String tipo=""+row.getCell(6);
+                                tipo=tipo.toUpperCase();
+                                TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO(); 
+                                String tipoId=tiposbusqueda.ConsultarTiposPalabrasId(tipo);
+                                if(tipoId.equals("")||tipoId.equals(null)){
+                                    contadorErrores++;
+                                    continue;
+                                }
+                                
+                                String traduccion=""+row.getCell(7);
+                                
+                                System.out.println("Palabra:"+palabra);
+                                System.out.println("Idioma:"+idiomaId);
+                                System.out.println("Tiempo:"+tiempoId);
+                                System.out.println("tipo:"+tipoId);
+                                System.out.println("Traductor:"+traduccion);
+                                
+                               
+                           }
+                           
                        }
                           
                         

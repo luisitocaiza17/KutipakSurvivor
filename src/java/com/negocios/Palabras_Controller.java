@@ -188,9 +188,9 @@ public class Palabras_Controller extends HttpServlet {
                             IdiomasDAO idiomabuqueda = new IdiomasDAO();
                             IdiomasRecord idiomaId = idiomabuqueda.ConsultarIdiomasEspecificosId(idioma);
                             TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO();  
-                            TipospalabrasRecord tipoId= tiposbusqueda.ConsultarIdiomasEspecificosId(tipo);
+                            TipospalabrasRecord tipoId= tiposbusqueda.ConsultarPalabraEspecificosId(tipo);
                             TiemposDAO tiemposbusqueda = new TiemposDAO();
-                            TiemposRecord tiemposId= tiemposbusqueda.ConsultarIdiomasEspecificosId(tiempo);
+                            TiemposRecord tiemposId= tiemposbusqueda.ConsultarTiempoEspecificosId(tiempo);
                             
                             PalabrasDAO procesosPalabras = new PalabrasDAO();
                             PalabrasRecord palabraIngreso = new PalabrasRecord();
@@ -231,9 +231,9 @@ public class Palabras_Controller extends HttpServlet {
                             IdiomasDAO idiomabuqueda = new IdiomasDAO();
                             IdiomasRecord idiomaId = idiomabuqueda.ConsultarIdiomasEspecificosId(idioma);
                             TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO();  
-                            TipospalabrasRecord tipoId= tiposbusqueda.ConsultarIdiomasEspecificosId(tipo);
+                            TipospalabrasRecord tipoId= tiposbusqueda.ConsultarPalabraEspecificosId(tipo);
                             TiemposDAO tiemposbusqueda = new TiemposDAO();
-                            TiemposRecord tiemposId= tiemposbusqueda.ConsultarIdiomasEspecificosId(tiempo);
+                            TiemposRecord tiemposId= tiemposbusqueda.ConsultarTiempoEspecificosId(tiempo);
                             
                             PalabrasDAO procesosPalabras = new PalabrasDAO();
                             PalabrasRecord palabraIngreso = new PalabrasRecord();

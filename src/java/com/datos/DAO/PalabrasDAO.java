@@ -75,6 +75,20 @@ public class PalabrasDAO {
           return listadoPalabras;
     } 
     
+     public String ConsultarPalabrasExisteId(String palabra) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<PalabrasRecord>listadoPalabras= new ArrayList<PalabrasRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(PALABRAS).where((PALABRAS.NOMBREPALABRA.equal(palabra))).fetch();
+        String id="";
+        for(Record r : result){
+            id=""+(r.getValue(PALABRAS.PALABRAID));
+        }
+          conexion.close();
+          return id;
+    }
+   
     public List<PalabrasRecord> ConsultarPalabrasExiste(PalabrasRecord misPalabras) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         List<PalabrasRecord>listadoPalabras= new ArrayList<PalabrasRecord>();
