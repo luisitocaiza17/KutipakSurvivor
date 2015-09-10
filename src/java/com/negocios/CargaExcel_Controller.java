@@ -8,6 +8,7 @@ package com.negocios;
 
 import com.datos.DAO.IdiomasDAO;
 import com.datos.DAO.PalabrasDAO;
+import com.datos.DAO.PantallaPalabrasDAO;
 import com.datos.DAO.TiemposDAO;
 import com.datos.DAO.TiposPalabrasDAO;
 import java.io.IOException;
@@ -37,6 +38,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import persistencia.tables.records.PantallapalabrasRecord;
 
 
 /**
@@ -159,11 +161,13 @@ public class CargaExcel_Controller extends HttpServlet {
                             }
                         }
                         int contador=0;
+                        PantallaPalabrasDAO existePalabra = new PantallaPalabrasDAO();
                        while (filas.hasNext()) {
                            contador++;
                            Row row = filas.next();
                            if(contador>=6){
                                 String palabra = "" + row.getCell(2);
+                                palabra=palabra.toUpperCase();
                                 if(palabra.equals("")||palabra.equals(null))
                                     break;
                                 
@@ -176,30 +180,36 @@ public class CargaExcel_Controller extends HttpServlet {
                                 idioma=idioma.toUpperCase();
                                 IdiomasDAO idiomabuqueda = new IdiomasDAO();
                                 String idiomaId=idiomabuqueda.ConsultarIdiomaId(idioma);
-                                if(idiomaId.equals("")||idiomaId.equals(null)){
+                                if(idiomaId.equals("")||idiomaId.equals(null))
                                     contadorErrores++;
-                                    continue;
-                                }
-                                
+                                    
                                 String tiempo=""+row.getCell(5);
                                 tiempo=tiempo.toUpperCase();
                                 TiemposDAO tiemposbusqueda = new TiemposDAO();
                                 String tiempoId=tiemposbusqueda.ConsultarTiempoId(tiempo);
-                                if(tiempoId.equals("")||tiempoId.equals(null)){
+                                if(tiempoId.equals("")||tiempoId.equals(null))
                                     contadorErrores++;
-                                    continue;
-                                }
-                                    
+                                   
                                 String tipo=""+row.getCell(6);
                                 tipo=tipo.toUpperCase();
                                 TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO(); 
                                 String tipoId=tiposbusqueda.ConsultarTiposPalabrasId(tipo);
-                                if(tipoId.equals("")||tipoId.equals(null)){
+                                if(tipoId.equals("")||tipoId.equals(null))
                                     contadorErrores++;
-                                    continue;
-                                }
-                                
+                                   
                                 String traduccion=""+row.getCell(7);
+                                traduccion=traduccion.toUpperCase();
+                                
+                                PantallapalabrasRecord pantallaPalabra = new PantallapalabrasRecord();
+                                pantallaPalabra.setIdioma(idioma);
+                                pantallaPalabra.setTiempo(tiempo);
+                                pantallaPalabra.setTipo(tipo);
+                                pantallaPalabra.setPalabras(palabra);
+                                pantallaPalabra.setSignificado(traduccion);
+                                if(existePalabra.ConsultarPalabrasExistente(pantallaPalabra))
+                                    contadorErrores++;
+                                    
+                                    
                                 
                                 System.out.println("Palabra:"+palabra);
                                 System.out.println("Idioma:"+idiomaId);
@@ -207,17 +217,33 @@ public class CargaExcel_Controller extends HttpServlet {
                                 System.out.println("tipo:"+tipoId);
                                 System.out.println("Traductor:"+traduccion);
                                 
+                              if(contadorErrores!=0){
+                                   out.println("<script>alert('Error al cargar la palabra, por favor revise la fila "+(contador+2)+" :( ' )</script>");
+                                   continue;
+                              }  
+                                
                                
                            }
                            
                        }
-                          
+                       
+                                      
                         
              }
-          
+             out.println("<script>confirm('Carga Completa :)' )</script>");
+            //response.sendRedirect("/KUTIPAKUTC/jsp/CargaExcel.jsp");
       
    }catch(Exception ex) {
        System.out.println(ex);
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Erro Inesperado</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<p>Ocurrio un error inesperado "+ex+"</p>");
+        out.println("</body>");
+        out.println("</html>");
+        return;
    }
         
         

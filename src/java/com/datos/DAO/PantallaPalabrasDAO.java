@@ -92,5 +92,21 @@ public class PantallaPalabrasDAO {
         return listadoPalabras;
     }
     
-    
+    public boolean ConsultarPalabrasExistente(PantallapalabrasRecord palabra) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<PantallapalabrasRecord> listadoPalabras= new ArrayList<PantallapalabrasRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(PANTALLAPALABRAS).where(PANTALLAPALABRAS.IDIOMA.equal(palabra.getIdioma()).
+                and(PANTALLAPALABRAS.TIEMPO.equal(palabra.getTiempo()).and(PANTALLAPALABRAS.TIPO.equal(palabra.getTipo())
+                        .and(PANTALLAPALABRAS.SIGNIFICADO.equal(palabra.getSignificado())))))
+                .orderBy(PANTALLAPALABRAS.IDIOMA,PANTALLAPALABRAS.TIEMPO,PANTALLAPALABRAS.TIPO) .fetch();
+        boolean existe=false;
+        for(Record r : result){
+            existe=true;
+            break;
+        }
+        conexion.close();
+        return existe;
+    }
 }
