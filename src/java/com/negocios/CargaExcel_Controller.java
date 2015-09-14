@@ -38,6 +38,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import persistencia.tables.records.PalabrasRecord;
 import persistencia.tables.records.PantallapalabrasRecord;
 
 
@@ -104,14 +105,14 @@ public class CargaExcel_Controller extends HttpServlet {
         
          isMultipart = ServletFileUpload.isMultipartContent(request);
       response.setContentType("text/html");
-      java.io.PrintWriter out = response.getWriter( );
+      PrintWriter out = response.getWriter();
       if( !isMultipart ){
          out.println("<html>");
          out.println("<head>");
          out.println("<title>Servlet upload</title>");  
          out.println("</head>");
          out.println("<body>");
-         out.println("<p>No file uploaded</p>"); 
+         out.println("<p>no se pudo cargar el archivo, extension incorrecta</p>"); 
          out.println("</body>");
          out.println("</html>");
          return;
@@ -132,6 +133,7 @@ public class CargaExcel_Controller extends HttpServlet {
             FileItemIterator iter = upload.getItemIterator(request);
             FileItemStream item;
             InputStream stream;
+             
              while (iter.hasNext()) {
                  
                  item = iter.next();
@@ -171,7 +173,7 @@ public class CargaExcel_Controller extends HttpServlet {
                                 if(palabra.equals("")||palabra.equals(null))
                                     break;
                                 
-                                /*Procesos con las palabras*/
+                               /*Procesos con las palabras*/
                                 int contadorErrores=0;
                                 
                                 //buscar por IDS
@@ -208,42 +210,51 @@ public class CargaExcel_Controller extends HttpServlet {
                                 pantallaPalabra.setSignificado(traduccion);
                                 if(existePalabra.ConsultarPalabrasExistente(pantallaPalabra))
                                     contadorErrores++;
+                                if(contadorErrores!=0){
+                                    out.println("<script type=\"text/javascript\">");
+                                    out.println("alert('Error al cargar la palabra "+palabra+" con traduccion "+traduccion+", por favor revise la fila "+(contador+2)+" :( ' );");
+                                    out.println("location='/KUTIPAKUTC/jsp/CargaExcel.jsp';");
+                                    out.println("</script>");
+                                   continue;
+                                }else{
+                                    PalabrasDAO ingresoPalabras = new PalabrasDAO();
+                                    PalabrasRecord palabraIngreso = new PalabrasRecord ();
+                                    palabraIngreso.setIdiomaid(Integer.parseInt(idiomaId));
+                                    palabraIngreso.setTiemposid(Integer.parseInt(tiempoId));
+                                    palabraIngreso.setTipoid(Integer.parseInt(tipoId));
+                                    palabraIngreso.setNombrepalabra(palabra);
+                                    palabraIngreso.setSignificado(traduccion);
+                                    if(!ingresoPalabras.GrabarPalabras(palabraIngreso)){
+                                        out.println("<script type=\"text/javascript\">");
+                                        out.println("alert('Error al cargar la palabra "+palabra+" con traduccion "+traduccion+", por favor revise la fila "+(contador+2)+" :( ' );");
+                                        out.println("location='/KUTIPAKUTC/jsp/CargaExcel.jsp';");
+                                        out.println("</script>");
+                                        continue;
+                                    }
                                     
-                                    
-                                
+                                }      
+                                  
                                 System.out.println("Palabra:"+palabra);
                                 System.out.println("Idioma:"+idiomaId);
                                 System.out.println("Tiempo:"+tiempoId);
                                 System.out.println("tipo:"+tipoId);
                                 System.out.println("Traductor:"+traduccion);
-                                
-                              if(contadorErrores!=0){
-                                   out.println("<script>alert('Error al cargar la palabra, por favor revise la fila "+(contador+2)+" :( ' )</script>");
-                                   continue;
-                              }  
-                                
-                               
+                              
                            }
                            
                        }
-                       
-                                      
-                        
              }
-             out.println("<script>confirm('Carga Completa :)' )</script>");
-            //response.sendRedirect("/KUTIPAKUTC/jsp/CargaExcel.jsp");
+             
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert(' Proceso Terminado :) ' );");
+                out.println("location='/KUTIPAKUTC/jsp/CargaExcel.jsp';");
+                out.println("</script>");
+             
+             
       
    }catch(Exception ex) {
-       System.out.println(ex);
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Erro Inesperado</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<p>Ocurrio un error inesperado "+ex+"</p>");
-        out.println("</body>");
-        out.println("</html>");
-        return;
+      ex.printStackTrace();
+        
    }
         
         
