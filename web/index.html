@@ -13,7 +13,8 @@
   <link href="Cliente/css/main.css" rel="stylesheet">
   <link id="css-preset" href="Cliente/css/presets/preset1.css" rel="stylesheet">
   <link href="Cliente/css/responsive.css" rel="stylesheet">
-
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+     <script type="text/javascript" src="js/jquery.js"></script>
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -21,6 +22,28 @@
   
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" href="Cliente/images/favicon.ico">
+  <script>
+    $(document).ready(function () {              
+              $("#cambiar").click(function () {
+                  var idioma=$("#original2").text();
+                  if (idioma===" Kichwa ") {
+                    $("#original2").text(" Español ");
+                    $("#traduccion2").text(" Kichwa ");
+                    
+                  }else{
+                    $("#original2").text(" Kichwa ");
+                    $("#traduccion2").text(" Español ");
+                    
+                  }
+                       
+                     
+                        
+                   });
+            });
+    
+    
+            
+  </script>
 </head><!--/head-->
 
 <body>
@@ -90,48 +113,72 @@
         <div class="row">
           <div class="text-center col-sm-8 col-sm-offset-2">
             <h2>KUTIPAK UTC  <span>TRADUCTOR ONLINE </span></h2>
-            <p>Somos el traductor Espa&ntilde;ol - Kitchwa (Ecuatoriano) Numero uno del mundo</p>
+            <p>Somos el traductor Espa&ntilde;ol - Kichwa (Ecuatoriano) Numero uno del mundo</p>
           </div>
         </div> 
       </div>
       <div class="text-center our-services">
           <div class="row">
-              <div class="col-md-4">.col-md-8</div>
-              <div class="col-md-4">
-          <form class="form-horizontal" >
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Remember me
-                  </label>
+              <div class="col-md-2"></div>
+              <div class="col-md-8">
+              <form class="form-horizontal" >
+                
+                <div class="form-group">
+                 
+                  <div class="col-sm-4">
+                      <div class="btn-group" role="group" aria-label="...">
+                      <button type="button" id="original" class="btn btn-primary" disabled="disabled">
+                         <span class="glyphicon glyphicon-list-alt" id="original2" aria-hidden="true"> Espa&ntilde;ol </span> 
+                        </button>
+                  </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" id="cambiar" class="btn btn-success">
+                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"> Cambiar</span>  
+                    </button>
+                  </div>  
+                  <div class="col-sm-">
+                      <div class="btn-group"  role="group" aria-label="..." >
+                      <button type="button" id="traduccion" class="btn btn-primary" disabled="disabled">
+                        <span class="glyphicon glyphicon-list-alt" id="traduccion2" aria-hidden="true"> Kichwa </span> 
+                        </button>                      
+                    </div>
+                  </div>
+                 
                 </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Sign in</button>
-              </div>
-            </div>
-          </form>
+                
+                <div class="form-group">
+                 
+                  <div class="col-sm-6">
+                  <textarea class="form-control" rows="3" id="contenedorOriginal" placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
+                  </div>
+                  
+                  <div class="col-sm-6">
+                  <textarea class="form-control" rows="3" id="contenedorTraducido" placeholder="RESULTADO PALABRA YA TRADUCIDA"></textarea>
+                  </div>
+                 
+                </div>
+                
+                <div class="form-group">                 
+                  <div class="col-sm-4">
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary active">
+                      <span class="glyphicon glyphicon-random active" aria-hidden="true"> <B> TRADUCIR </B></span> 
+                      </button>
+                  </div>
+                  <div class="col-sm-4">
+                 </div>                 
+                </div>
+              </form>
           </div>
-          <div class="col-md-8">.col-md-8</div>
+          <div class="col-md-2"></div>
         </div>
       </div>
     </div>
   </section><!--/#services-->
+
+  <!--/#services-->
   <section id="about-us" class="parallax">
     <div class="container">
       <div class="row">
