@@ -23,24 +23,55 @@
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" href="Cliente/images/favicon.ico">
   <script>
-    $(document).ready(function () {              
-              $("#cambiar").click(function () {
+    $(document).ready(function () { 
+                $("#idioma").val("1");
+                $("#cambiar").click(function () {
                   var idioma=$("#original2").text();
                   if (idioma===" Kichwa ") {
                     $("#original2").text(" Español ");
                     $("#traduccion2").text(" Kichwa ");
-                    
+                    $("#idioma").val("1");
                   }else{
                     $("#original2").text(" Kichwa ");
                     $("#traduccion2").text(" Español ");
-                    
-                  }
-                       
-                     
-                        
-                   });
+                    $("#idioma").val("2");
+                  }   
             });
-    
+            
+            $("#traducir").click(function () {
+                     var palabra=$("#contenedorOriginal").val();
+                     var idioma=$("#idioma").val();
+                     alert("palabra "+palabra+ " tipo "+idioma);
+                     ProcesoTraduccion(palabra,idioma);
+                     
+            });
+     });
+     
+    function ProcesoTraduccion(palabra,idioma){
+        $.ajax({
+            url: 'ProcesoTraduccion_Controller',
+            data: {
+                "palabra": palabra,
+                "idioma":idioma
+            },
+            async: false,
+            type: 'POST',
+            datatype: 'json',
+            success: function (data) {
+                         var selogro=data.success;
+                         var mensaje=data.mensaje;
+                         var listadoPalabras = data.ListadoSignificados;
+                          if(selogro===true){
+                              $.each(listadoPalabras, function (index) { 
+                                  $("#contenedorTraducido").val(listadoPalabras[index].traduccion);
+                                 
+                               });     
+                              }else{
+                                 alert ("Ups!! tuvimos un problema inesperado, por favor espera unos segundos estamos trabajando:"+mensaje);
+                             }                          
+                    }                    
+                });
+    } 
     
             
   </script>
@@ -134,7 +165,8 @@
                   </div>
                   <div class="col-sm-4">
                     <button type="button" id="cambiar" class="btn btn-success">
-                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"> Cambiar</span>  
+                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"> Cambiar</span> 
+                        <input type="hidden" id="idioma">
                     </button>
                   </div>  
                   <div class="col-sm-">
@@ -163,7 +195,7 @@
                   <div class="col-sm-4">
                   </div>
                   <div class="col-sm-4">
-                    <button type="button" class="btn btn-primary active">
+                    <button type="button" class="btn btn-primary active" id="traducir">
                       <span class="glyphicon glyphicon-random active" aria-hidden="true"> <B> TRADUCIR </B></span> 
                       </button>
                   </div>

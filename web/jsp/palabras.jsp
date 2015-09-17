@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Pala○8ras</title>
+        <title>Palabras</title>
         <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="../css/Kendo/kendo.common.min.css" />
