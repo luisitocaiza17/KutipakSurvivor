@@ -6,6 +6,7 @@
 package com.negocios;
 
 import com.datos.DAO.PalabrasDAO;
+import com.motorTraduccion.Descompositor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -89,7 +90,20 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
 	palabraObjeto.setNombrepalabra(palabra);
         palabraObjeto.setIdiomaid(Integer.parseInt(idioma));
         try{
-            JSONObject planJSONObject = new JSONObject();
+            Descompositor descompositor = new Descompositor();
+            String oraciones[]= descompositor.descompositorOraciones(palabra);
+            for (String a : oraciones)
+            {
+                String palabras[]= descompositor.descompositorPalabras(a);
+                descompositor.identificadorNombres(palabras);
+//                for (String palabraDescompuesta : oraciones)
+//                {
+//                    descompositor.identificadorNombres(palabraDescompuesta);
+//                }
+            }
+            
+            
+            /*JSONObject planJSONObject = new JSONObject();
             if(!palabraProcesos.ConsultarPalabrasExisteId(palabra).equals(""))
             {
                 JSONArray JSONArrayPalabraSignificado = new JSONArray();
@@ -108,7 +122,7 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
                 response.setContentType("application/json; charset=ISO-8859-1"); 
                 result.write(response.getWriter());
             }
-            
+            */
             
         }catch(Exception e){
             e.printStackTrace();
