@@ -98,7 +98,8 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
             {
                 String palabras[]= descompositor.descompositorPalabras(a);
                 /***2) PROCESO DE IDENTIFICACION DE PALABRAS (ESTRUCTURA GRAMATICAL)***/
-                IdentificadorEstructura.identificadorNombres(palabras);
+                IdentificadorEstructura identificadorEstructura = new IdentificadorEstructura();
+                identificadorEstructura.identificadorGenericoPalabras(palabras);
             
             }
             
