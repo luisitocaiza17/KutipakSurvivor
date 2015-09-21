@@ -7,6 +7,7 @@ package com.negocios;
 
 import com.datos.DAO.PalabrasDAO;
 import com.motorTraduccion.Descompositor;
+import com.motorTraduccion.IdentificadorEstructura;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -83,23 +84,22 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
         String palabra = request.getParameter("palabra") == null ? "" : request.getParameter("palabra");
         String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
         
-        palabra= palabra.toUpperCase();
+        //palabra= palabra.toUpperCase();
         
         PalabrasDAO palabraProcesos= new PalabrasDAO();
         PalabrasRecord palabraObjeto = new PalabrasRecord();
 	palabraObjeto.setNombrepalabra(palabra);
         palabraObjeto.setIdiomaid(Integer.parseInt(idioma));
         try{
+            /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
             Descompositor descompositor = new Descompositor();
             String oraciones[]= descompositor.descompositorOraciones(palabra);
             for (String a : oraciones)
             {
                 String palabras[]= descompositor.descompositorPalabras(a);
-                descompositor.identificadorNombres(palabras);
-//                for (String palabraDescompuesta : oraciones)
-//                {
-//                    descompositor.identificadorNombres(palabraDescompuesta);
-//                }
+                /***2) PROCESO DE IDENTIFICACION DE PALABRAS (ESTRUCTURA GRAMATICAL)***/
+                IdentificadorEstructura.identificadorNombres(palabras);
+            
             }
             
             
