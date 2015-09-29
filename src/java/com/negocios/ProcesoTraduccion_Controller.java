@@ -6,8 +6,10 @@
 package com.negocios;
 
 import com.datos.DAO.PalabrasDAO;
+import com.motorTraduccion.ComposicionEstructural;
 import com.motorTraduccion.Descompositor;
 import com.motorTraduccion.IdentificadorEstructura;
+import com.motorTraduccion.IdentificadorEstructurasBD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -84,7 +86,7 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
         String palabra = request.getParameter("palabra") == null ? "" : request.getParameter("palabra");
         String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
         
-        //palabra= palabra.toUpperCase();
+        palabra= palabra.toUpperCase();
         
         PalabrasDAO palabraProcesos= new PalabrasDAO();
         PalabrasRecord palabraObjeto = new PalabrasRecord();
@@ -98,9 +100,53 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
             {
                 String palabras[]= descompositor.descompositorPalabras(a);
                 /***2) PROCESO DE IDENTIFICACION DE PALABRAS (ESTRUCTURA GRAMATICAL)***/
-                IdentificadorEstructura identificadorEstructura = new IdentificadorEstructura();
-                identificadorEstructura.identificadorGenericoPalabras(palabras);
-            
+                IdentificadorEstructurasBD  identificador = new IdentificadorEstructurasBD();
+                String[][] palabraTipos=identificador.PalabrasTipos(palabras,palabraObjeto.getIdiomaid());
+                for(int i=0;i<palabraTipos.length;i++){
+                    //Almacenamiento de estructura de la Oracion
+                     System.out.println("significado: "+palabraTipos[i][0]+ " tipo palabra: "+palabraTipos[i][1]);
+                }
+                
+                /*PROCESO DE ANALISIS ESTRUCTURAL, TRADUCCION Y RESOLUCION DE AMBIGUEDADES*/
+                String [][] procesosETA=new String[palabraTipos.length][palabraTipos[0].length];
+                
+                 if(palabraTipos[0].length>0){
+                    for(int i=0;i<palabraTipos.length;i++){
+                    //Almacenamiento de estructura de la Oracion
+                     int contadorNormal=0;
+                    for(int ambiguedad=0; ambiguedad<palabraTipos[0].length;ambiguedad=ambiguedad+2){
+                        
+                        String significado=""+palabraTipos[i][ambiguedad];
+                        String tipo=""+palabraTipos[i][ambiguedad+1];
+                        if(tipo.equals("null")){
+                            significado=palabraTipos[i][0];
+                            tipo=palabraTipos[i][1];
+                        }
+                        procesosETA[i][contadorNormal]=significado;
+                        contadorNormal++;
+                        procesosETA[i][contadorNormal]=tipo;
+                        contadorNormal++;
+                        //System.out.println("significado2: "+significado+ " tipo palabra2: "+tipo);
+                        
+                     }                   
+                  }
+                }
+                /*for(int i=0;i<ambiguedades.length;i++){
+                    for(int j=0;j<ambiguedades[0].length;j=j+2){
+                        //Almacenamiento de estructura de la Oracion
+                        System.out.println("significado: "+ambiguedades[i][j]+ " tipo palabra: "+ambiguedades[i][j+1]);
+                    }
+                    
+                }*/
+                
+                for(int i=0;i<procesosETA[0].length;i=i+2){
+                    for(int j=0;j<procesosETA.length;j++){
+                        System.out.println("palabra"+procesosETA[j][i]);
+                    }
+                }
+                
+                ComposicionEstructural compocion = new ComposicionEstructural();
+                compocion.realizarComposicion(procesosETA);
             }
             
             
