@@ -18,7 +18,7 @@ public class IdentificadorEstructurasBD {
     
     /*Proceso de identificacion de tipo de palabras*/
     public String[][] PalabrasTipos(String[] palabras,int idiomaId) throws Exception{
-        String[][] palabraTipos = new String[palabras.length][palabras.length];
+        String[][] palabraTipos = new String[palabras.length][10];
         int ambiguedad = 0;
         for (int i=0; i<palabras.length;i++){
             PalabrasDAO palabraProcesos= new PalabrasDAO();
@@ -47,9 +47,7 @@ public class IdentificadorEstructurasBD {
             for(int j=0;j<ambiguedad;j++){
                 palabraEncontradas[i][j]=palabraTipos[i][j];
             }
-        }
-        
-        
+        }      
         return palabraEncontradas;
     } 
     

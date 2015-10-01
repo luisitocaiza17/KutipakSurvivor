@@ -146,7 +146,7 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
                 }
                 
                 ComposicionEstructural compocion = new ComposicionEstructural();
-                compocion.realizarComposicion(procesosETA);
+                compocion.realizarComposicion(procesosETA,Integer.parseInt(idioma));
             }
             
             
