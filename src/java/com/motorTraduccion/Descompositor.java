@@ -21,29 +21,32 @@ import opennlp.tools.tokenize.TokenizerModel;
  */
 public class Descompositor {
 
-    public String[] descompositorOraciones(String oraciones) throws FileNotFoundException, IOException {
+    public String[] descompositorOraciones(String oraciones,int idioma) throws FileNotFoundException, IOException, Exception {
         String paragraph = oraciones;
         InputStream is = new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-sent.bin");
         SentenceModel model = new SentenceModel(is);
         SentenceDetectorME sdetector = new SentenceDetectorME(model);
         String sentences[] = sdetector.sentDetect(paragraph);
+        String resultado[]=null;
         for (String a : sentences) {
-            System.out.println(a);
+            /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
+            resultado=descompositorPalabras(a,idioma);
         }
         is.close();
-        return sentences;
+        return resultado;
     }
 
-    public String[] descompositorPalabras(String oraciones) throws FileNotFoundException, IOException {
+    public String[] descompositorPalabras(String oraciones, int idioma) throws FileNotFoundException, IOException, Exception {
         InputStream is = new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-token.bin");
         TokenizerModel model = new TokenizerModel(is);
         Tokenizer tokenizer = new TokenizerME(model);
         String tokens[] = tokenizer.tokenize(oraciones);
-        for (String a : tokens) {
-            System.out.println(a);
-        }
+        String resultado[]=null;
+        /*2) PROCESO DE IDENTIFICACION DE PALABRAS (ESTRUCTURA GRAMATICAL)***/
+        IdentificadorEstructurasBD  identificador = new IdentificadorEstructurasBD();
+        resultado=identificador.PalabrasTipos(tokens,idioma);
         is.close();
-        return tokens;
+        return resultado;
     }
 
 }

@@ -212,7 +212,6 @@ public class IdentificadorEstructura {
             NameFinderME nameFinder
                     = new NameFinderME(
                             new TokenNameFinderModel(new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-ner-date.bin")));
-
             //String tokens[] = tokenizer.tokenize(documentStr);
             Span nameSpans[] = nameFinder.find(tokens);
             ArrayList IndicesDespreciados = new ArrayList();      
@@ -234,7 +233,6 @@ public class IdentificadorEstructura {
             NameFinderME nameFinder
                     = new NameFinderME(
                             new TokenNameFinderModel(new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\es-ner-organization.bin")));
-
             //String tokens[] = tokenizer.tokenize(documentStr);
             Span nameSpans[] = nameFinder.find(tokens);
             ArrayList IndicesDespreciados = new ArrayList();      
@@ -256,7 +254,6 @@ public class IdentificadorEstructura {
             NameFinderME nameFinder
                     = new NameFinderME(
                             new TokenNameFinderModel(new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-ner-organization.bin")));
-
             //String tokens[] = tokenizer.tokenize(documentStr);
             Span nameSpans[] = nameFinder.find(tokens);
             ArrayList IndicesDespreciados = new ArrayList();      
@@ -278,7 +275,6 @@ public class IdentificadorEstructura {
             NameFinderME nameFinder
                     = new NameFinderME(
                             new TokenNameFinderModel(new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\es-ner-misc.bin")));
-
             //String tokens[] = tokenizer.tokenize(documentStr);
             Span nameSpans[] = nameFinder.find(tokens);
             ArrayList IndicesDespreciados = new ArrayList();      
@@ -300,7 +296,6 @@ public class IdentificadorEstructura {
             NameFinderME nameFinder
                     = new NameFinderME(
                             new TokenNameFinderModel(new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-ner-money.bin")));
-
             //String tokens[] = tokenizer.tokenize(documentStr);
             Span nameSpans[] = nameFinder.find(tokens);
             ArrayList IndicesDespreciados = new ArrayList();      
@@ -322,7 +317,6 @@ public class IdentificadorEstructura {
             NameFinderME nameFinder
                     = new NameFinderME(
                             new TokenNameFinderModel(new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-ner-time.bin")));
-
             //String tokens[] = tokenizer.tokenize(documentStr);
             Span nameSpans[] = nameFinder.find(tokens);
             ArrayList IndicesDespreciados = new ArrayList();      

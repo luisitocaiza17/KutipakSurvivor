@@ -22,12 +22,13 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Estructura implements Serializable {
 
-	private static final long serialVersionUID = -283800685;
+	private static final long serialVersionUID = -924994490;
 
 	private Integer estructuraid;
 	private Integer idiomaid;
 	private String  nombreestructura;
 	private String  formula;
+	private String  formulasalida;
 
 	public Estructura() {}
 
@@ -36,18 +37,21 @@ public class Estructura implements Serializable {
 		this.idiomaid = value.idiomaid;
 		this.nombreestructura = value.nombreestructura;
 		this.formula = value.formula;
+		this.formulasalida = value.formulasalida;
 	}
 
 	public Estructura(
 		Integer estructuraid,
 		Integer idiomaid,
 		String  nombreestructura,
-		String  formula
+		String  formula,
+		String  formulasalida
 	) {
 		this.estructuraid = estructuraid;
 		this.idiomaid = idiomaid;
 		this.nombreestructura = nombreestructura;
 		this.formula = formula;
+		this.formulasalida = formulasalida;
 	}
 
 	public Integer getEstructuraid() {
@@ -80,5 +84,13 @@ public class Estructura implements Serializable {
 
 	public void setFormula(String formula) {
 		this.formula = formula;
+	}
+
+	public String getFormulasalida() {
+		return this.formulasalida;
+	}
+
+	public void setFormulasalida(String formulasalida) {
+		this.formulasalida = formulasalida;
 	}
 }

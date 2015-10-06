@@ -35,7 +35,7 @@ import persistencia.tables.records.EstructuraRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Estructura extends TableImpl<EstructuraRecord> {
 
-	private static final long serialVersionUID = 929384772;
+	private static final long serialVersionUID = 180111335;
 
 	/**
 	 * The reference instance of <code>kutipak.estructura</code>
@@ -69,6 +69,11 @@ public class Estructura extends TableImpl<EstructuraRecord> {
 	 * The column <code>kutipak.estructura.FORMULA</code>.
 	 */
 	public final TableField<EstructuraRecord, String> FORMULA = createField("FORMULA", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+
+	/**
+	 * The column <code>kutipak.estructura.FORMULASALIDA</code>.
+	 */
+	public final TableField<EstructuraRecord, String> FORMULASALIDA = createField("FORMULASALIDA", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>kutipak.estructura</code> table reference

@@ -17,18 +17,53 @@ import persistencia.tables.records.PalabrasRecord;
 public class IdentificadorEstructurasBD {
     
     /*Proceso de identificacion de tipo de palabras*/
-    public String[][] PalabrasTipos(String[] palabras,int idiomaId) throws Exception{
-        String[][] palabraTipos = new String[palabras.length][10];
-        int ambiguedad = 0;
+    public String[] PalabrasTipos(String[] palabras,int idiomaId) throws Exception{
+        String[][] palabraTipos = new String[palabras.length][2];
+        String resultado[]=null;
         for (int i=0; i<palabras.length;i++){
             PalabrasDAO palabraProcesos= new PalabrasDAO();
             PalabrasRecord palabraObjeto = new PalabrasRecord();
+            //primero verifica si la palabra existe
             if(!palabraProcesos.ConsultarPalabrasExisteId(palabras[i]).equals(""))
             {
                 palabraObjeto.setNombrepalabra(palabras[i]);
                 palabraObjeto.setIdiomaid(idiomaId);
                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
                 /*Proceso de resolucion de ambiguedades*/
+                int contador = 0;
+                for(PalabrasRecord rs : results){
+                    palabraTipos[i][contador]=rs.getSignificado();
+                     contador++;
+                    palabraTipos[i][contador]=""+rs.getTipoid();
+                     contador++;
+                     break;
+                }
+            }
+            else{
+                    palabraTipos[i][0]=palabras[i];
+                    palabraTipos[i][1]="1";
+            }
+        }
+        //Proceso de verificacion estructural
+        ComposicionEstructural comp = new ComposicionEstructural();
+        resultado=comp.realizarComposicion(palabraTipos,idiomaId);
+        
+        return resultado;
+    } 
+    /*Proceso de identificacion de tipo de palabras*/
+    /*public String[] PalabrasTipos(String[] palabras,int idiomaId) throws Exception{
+        String[][] palabraTipos = new String[palabras.length][10];
+        int ambiguedad;
+        for (int i=0; i<palabras.length;i++){
+            PalabrasDAO palabraProcesos= new PalabrasDAO();
+            PalabrasRecord palabraObjeto = new PalabrasRecord();
+            //primero verifica si la palabra existe
+            if(!palabraProcesos.ConsultarPalabrasExisteId(palabras[i]).equals(""))
+            {
+                palabraObjeto.setNombrepalabra(palabras[i]);
+                palabraObjeto.setIdiomaid(idiomaId);
+                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
+                /*Proceso de resolucion de ambiguedades*//*
                 ambiguedad = 0;
                 for(PalabrasRecord rs : results){
                     palabraTipos[i][ambiguedad]=rs.getSignificado();
@@ -49,6 +84,6 @@ public class IdentificadorEstructurasBD {
             }
         }      
         return palabraEncontradas;
-    } 
+    } */
     
 }
