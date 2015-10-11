@@ -34,7 +34,7 @@ import persistencia.tables.records.TipospalabrasRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tipospalabras extends TableImpl<TipospalabrasRecord> {
 
-	private static final long serialVersionUID = -2125226448;
+	private static final long serialVersionUID = -803323553;
 
 	/**
 	 * The reference instance of <code>kutipak.tipospalabras</code>
@@ -63,6 +63,11 @@ public class Tipospalabras extends TableImpl<TipospalabrasRecord> {
 	 * The column <code>kutipak.tipospalabras.NEMOTECNICO</code>.
 	 */
 	public final TableField<TipospalabrasRecord, String> NEMOTECNICO = createField("NEMOTECNICO", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
+
+	/**
+	 * The column <code>kutipak.tipospalabras.CODIGOKTPAK</code>.
+	 */
+	public final TableField<TipospalabrasRecord, String> CODIGOKTPAK = createField("CODIGOKTPAK", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
 
 	/**
 	 * Create a <code>kutipak.tipospalabras</code> table reference

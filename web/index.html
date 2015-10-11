@@ -59,19 +59,15 @@
             success: function (data) {
                          var selogro=data.success;
                          var mensaje=data.mensaje;
-                         var listadoPalabras = data.ListadoSignificados;
+                         var traduccion = data.traduccion;
                           if(selogro===true){
-                              $.each(listadoPalabras, function (index) { 
-                                  $("#contenedorTraducido").val(listadoPalabras[index].traduccion);
-                                 
-                               });     
+                                 $("#contenedorTraducido").text(traduccion);
                               }else{
                                  alert ("Ups!! tuvimos un problema inesperado, por favor espera unos segundos estamos trabajando:"+mensaje);
                              }                          
                     }                    
                 });
     } 
-    
             
   </script>
 </head><!--/head-->
@@ -181,7 +177,7 @@
                 <div class="form-group">
                  
                   <div class="col-sm-6">
-                  <textarea class="form-control" rows="3" id="contenedorOriginal" placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
+                  <textarea class="form-control" rows="3" id="contenedorOriginal" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
                   </div>
                   
                   <div class="col-sm-6">

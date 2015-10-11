@@ -22,11 +22,12 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tipospalabras implements Serializable {
 
-	private static final long serialVersionUID = -2126221009;
+	private static final long serialVersionUID = 1162333038;
 
 	private Integer tipoid;
 	private String  nombretipo;
 	private String  nemotecnico;
+	private String  codigoktpak;
 
 	public Tipospalabras() {}
 
@@ -34,16 +35,19 @@ public class Tipospalabras implements Serializable {
 		this.tipoid = value.tipoid;
 		this.nombretipo = value.nombretipo;
 		this.nemotecnico = value.nemotecnico;
+		this.codigoktpak = value.codigoktpak;
 	}
 
 	public Tipospalabras(
 		Integer tipoid,
 		String  nombretipo,
-		String  nemotecnico
+		String  nemotecnico,
+		String  codigoktpak
 	) {
 		this.tipoid = tipoid;
 		this.nombretipo = nombretipo;
 		this.nemotecnico = nemotecnico;
+		this.codigoktpak = codigoktpak;
 	}
 
 	public Integer getTipoid() {
@@ -68,5 +72,13 @@ public class Tipospalabras implements Serializable {
 
 	public void setNemotecnico(String nemotecnico) {
 		this.nemotecnico = nemotecnico;
+	}
+
+	public String getCodigoktpak() {
+		return this.codigoktpak;
+	}
+
+	public void setCodigoktpak(String codigoktpak) {
+		this.codigoktpak = codigoktpak;
 	}
 }

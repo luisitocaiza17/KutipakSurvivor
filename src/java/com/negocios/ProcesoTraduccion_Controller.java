@@ -6,19 +6,14 @@
 package com.negocios;
 
 import com.datos.DAO.PalabrasDAO;
-import com.motorTraduccion.ComposicionEstructural;
 import com.motorTraduccion.Descompositor;
-import com.motorTraduccion.IdentificadorEstructura;
-import com.motorTraduccion.IdentificadorEstructurasBD;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import persistencia.tables.records.PalabrasRecord;
 
@@ -95,7 +90,12 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
         try{
             /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
             Descompositor descompositor = new Descompositor();
-            String oraciones[]= descompositor.descompositorOraciones(palabra,Integer.parseInt(idioma));
+            String traduccionCompleta= descompositor.descompositorOraciones(palabra,Integer.parseInt(idioma));
+            result.put("success", Boolean.TRUE);
+            result.put("mensaje", " PROCESO CORRECTO "); 
+            result.put("traduccion", traduccionCompleta); 
+            response.setContentType("application/json; charset=ISO-8859-1"); 
+            result.write(response.getWriter());
             
         }catch(Exception e){
             e.printStackTrace();

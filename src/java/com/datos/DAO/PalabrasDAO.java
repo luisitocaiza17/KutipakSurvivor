@@ -90,6 +90,7 @@ public class PalabrasDAO {
         return id;
     }
     
+    
     public List<PalabrasRecord> ConsultarPalabrasTraduccion(PalabrasRecord misPalabras) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         List<PalabrasRecord>listadoPalabras= new ArrayList<PalabrasRecord>();

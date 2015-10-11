@@ -18,8 +18,8 @@ import persistencia.tables.records.EstructuraRecord;
  * @author luisito
  */
 public class ComposicionEstructural {
-    public String[] realizarComposicion(String[][] traduccionTipos, int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
-        String resultado[]=null;
+    public String realizarComposicion(String[][] traduccionTipos, int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        String resultado=null;
         String codigoEntrante="";
         for(int i=1;i<traduccionTipos[0].length;i=i+2){
             for(int j=0;j<traduccionTipos.length;j++){
@@ -31,25 +31,25 @@ public class ComposicionEstructural {
         return resultado;
     }
     
-    public String[]  DecodificardorEstructural(String[][] palabraEstructura, int idioma,String codigo) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
-        String result[]=null;
+    public String DecodificardorEstructural(String[][] palabraEstructura, int idioma,String codigo) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        String resultado=null;
         EstructuraDAO estructura = new EstructuraDAO();
         EstructuraRecord estructuraEntrante= new EstructuraRecord();
         estructuraEntrante.setFormula(codigo);
         estructuraEntrante.setIdiomaid(idioma);
-        List<EstructuraRecord> resultado = estructura.ConsultarEstructuraEspecificaIdioma(estructuraEntrante);
+        List<EstructuraRecord> result = estructura.ConsultarEstructuraEspecificaIdioma(estructuraEntrante);
         String codigoResultante=codigo;
         
-        for(EstructuraRecord rs :resultado){
+        for(EstructuraRecord rs :result){
            codigoResultante=rs.getFormulasalida();
            break;
         }
         
-        return result=ArmadoEstructural(palabraEstructura, codigo,codigoResultante);
+        return resultado=ArmadoEstructural(palabraEstructura, codigo,codigoResultante,idioma);
     }
     
-    public String[] ArmadoEstructural(String[][] palabraEstructura,String codigoE,String codigoS) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
-        String resultado[]=null;
+    public String ArmadoEstructural(String[][] palabraEstructura,String codigoE,String codigoS,int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        String resultado=null;
         
         String[] numerosComoArray = codigoE.split("||");
         String[][] codigoIndices= new String[numerosComoArray.length][2];
@@ -96,63 +96,11 @@ public class ComposicionEstructural {
         //proceso de cambio de indices distintos
         String[]noIgualesRecorrer= new String[contadorDesiguales];
         
-        
-        
         for(int j=0; j<numerosComoArray2.length;j++){
             System.out.println("codigoSaliete "+codigoIndices2[j][0]+" imdice "+codigoIndices2[j][1]);
         }
-            
+        ProcesadorResultados proceso = new ProcesadorResultados();
+        resultado=proceso.ResultadoTraduccion(palabraEstructura,codigoIndices2,idioma);    
         return resultado;
     }
-    /*
-    public String[] realizarComposicion(String[][] traduccionTipos, int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
-        
-        String codigoEntrante="";
-        for(int i=1;i<traduccionTipos[0].length;i=i+2){
-            for(int j=0;j<traduccionTipos.length;j++){
-                codigoEntrante=codigoEntrante+""+traduccionTipos[j][i];
-            }
-            codigoEntrante=codigoEntrante+"-";
-        }
-        System.out.println("codigoEntrante "+codigoEntrante);
-        String[] codigosArray = codigoEntrante.split("-");
-        
-        for (int i = 0; i < codigosArray.length; i++) {
-            String codigoSaliente=DecodificardorEstructural(codigosArray[i],idioma);
-            
-            if(codigoSaliente==null||codigoSaliente.equals(""))
-                System.out.println(codigosArray[i]);
-            else
-                System.out.println(codigoSaliente);
-        }
-        return null;
-    }
-    */
-    
-    /*
-    
-    */
-    
-    /*public String[][] realizarComposicion(String[][] traduccionTipos, int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
-        
-        String codigoEntrante="";
-        for(int i=1;i<traduccionTipos[0].length;i=i+2){
-            for(int j=0;j<traduccionTipos.length;j++){
-                codigoEntrante=codigoEntrante+""+traduccionTipos[j][i];
-            }
-            codigoEntrante=codigoEntrante+"-";
-        }
-        System.out.println("codigoEntrante "+codigoEntrante);
-        String[] codigosArray = codigoEntrante.split("-");
-        
-        for (int i = 0; i < codigosArray.length; i++) {
-            String codigoSaliente=DecodificardorEstructural(codigosArray[i],idioma);
-            
-            if(codigoSaliente==null||codigoSaliente.equals(""))
-                System.out.println(codigosArray[i]);
-            else
-                System.out.println(codigoSaliente);
-        }
-        return null;
-    }*/
 }
