@@ -78,6 +78,23 @@ public class TiposPalabrasDAO {
     }
     
     /*Metodo que trae el listado de todos los tipos palabras*/
+    public String ConsultarTiposPalabrasId2(String tipospalabra) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<TipospalabrasRecord> listadoTiposPalabras= new ArrayList<TipospalabrasRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(TIPOSPALABRAS).where(TIPOSPALABRAS.NEMOTECNICO.equal(tipospalabra)).fetch();
+        String id=""; 
+        for(Record r : result){
+            TipospalabrasRecord tipos = new TipospalabrasRecord();
+            id=""+r.getValue(TIPOSPALABRAS.TIPOID);
+            
+        }
+        conexion.close();
+        return id;
+    }
+    
+    /*Metodo que trae el listado de todos los tipos palabras*/
     public List<TipospalabrasRecord> ConsultarTiposPalabrasEspecificas(TipospalabrasRecord tipospalabras) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         List<TipospalabrasRecord> listadoTiposPalabras= new ArrayList<TipospalabrasRecord>();

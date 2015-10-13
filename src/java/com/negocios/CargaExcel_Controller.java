@@ -50,8 +50,8 @@ import persistencia.tables.records.PantallapalabrasRecord;
 public class CargaExcel_Controller extends HttpServlet {
     private boolean isMultipart;
     private String filePath="C:\\kutipak\\";
-    private int maxFileSize = 50 * 1024;
-    private int maxMemSize = 4 * 1024;
+    private int maxFileSize = 200 * 1024;
+    private int maxMemSize = 20 * 1024;
     private File file ;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -195,7 +195,7 @@ public class CargaExcel_Controller extends HttpServlet {
                                 String tipo=""+row.getCell(6);
                                 tipo=tipo.toUpperCase();
                                 TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO(); 
-                                String tipoId=tiposbusqueda.ConsultarTiposPalabrasId(tipo);
+                                String tipoId=tiposbusqueda.ConsultarTiposPalabrasId2(tipo);
                                 if(tipoId.equals("")||tipoId.equals(null))
                                     contadorErrores++;
                                    
