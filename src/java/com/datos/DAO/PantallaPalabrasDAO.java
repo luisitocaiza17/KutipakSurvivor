@@ -100,7 +100,7 @@ public class PantallaPalabrasDAO {
         Result<Record> result = create.select().from(PANTALLAPALABRAS).where(PANTALLAPALABRAS.IDIOMA.equal(palabra.getIdioma()).
                 and(PANTALLAPALABRAS.TIEMPO.equal(palabra.getTiempo()).and(PANTALLAPALABRAS.TIPO.equal(palabra.getTipo())
                         .and(PANTALLAPALABRAS.SIGNIFICADO.equal(palabra.getSignificado())))))
-                .orderBy(PANTALLAPALABRAS.IDIOMA,PANTALLAPALABRAS.TIEMPO,PANTALLAPALABRAS.TIPO) .fetch();
+                .orderBy(PANTALLAPALABRAS.IDIOMA,PANTALLAPALABRAS.TIEMPO,PANTALLAPALABRAS.TIPO).fetch();
         boolean existe=false;
         for(Record r : result){
             existe=true;
