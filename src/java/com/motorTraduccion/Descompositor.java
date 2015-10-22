@@ -30,7 +30,20 @@ public class Descompositor {
         String resultado="";
         for (String a : sentences) {
             /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
-            resultado=resultado+descompositorPalabras(a,idioma)+" ";
+            a=a+" ";
+            if(idioma==2){
+                String palabraBuscar="KA ";
+                boolean existePlural=a.contains(palabraBuscar);
+                if(!existePlural){
+                   System.out.println("no es plural");  
+                   resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }
+                else{
+                    System.out.println("Es plural");
+                    
+                }                     
+            }else
+                resultado=resultado+descompositorPalabras(a,idioma)+" ";
         }
         is.close();
         return resultado;
