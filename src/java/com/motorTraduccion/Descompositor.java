@@ -40,7 +40,17 @@ public class Descompositor {
                 }
                 else{
                     System.out.println("Es plural");
-                    
+                    String[] cadenasPlural = a.split("KA "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+" KA ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                    resultado=resultado+descompositorPalabras(a,idioma)+" ";
                 }                     
             }else
                 resultado=resultado+descompositorPalabras(a,idioma)+" ";
