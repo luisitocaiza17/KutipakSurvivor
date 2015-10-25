@@ -25,7 +25,7 @@ import persistencia.tables.records.PalabrasRecord;
 public class IdentificadorEstructura {
     
     /*PROCESO MEDIANTE EL CUAL CADA PALABRA ES IDENTIFICADA POR SU ESTRUCTURA GRAMACTICAL*/
-    public void identificadorGenericoPalabras(String[] palabras)throws Exception{
+    public void identificadorGenericoPalabras(String[] palabras, int idiomaId)throws Exception{
         /*1) Proceso de identificacion de los pronombrespropios que no se podran traducir */
         //proceso de carga masiva de identificadores.
          ArrayList IndicesDespreciados = new ArrayList();  
@@ -99,18 +99,18 @@ public class IdentificadorEstructura {
             System.out.println(it11.next());                  
         }
         /*Proceso de identificacion de los tipos de palabras*/
-        String[][] palabraTipos=ProcesoTiposPalabras(palabras,IndicesDespreciados);
+        String[][] palabraTipos=ProcesoTiposPalabras(palabras,IndicesDespreciados,idiomaId);
         for(int i=0;i<palabraTipos.length;i++){
             System.out.println("significado: "+palabraTipos[i][0]+ " tipo palabra: "+palabraTipos[i][1]);
         }
     }
     
-    public String[][] ProcesoTiposPalabras(String[] palabras, ArrayList indices ) throws Exception{
+    public String[][] ProcesoTiposPalabras(String[] palabras, ArrayList indices, int idiomaId ) throws Exception{
         String[][] palabraTipos = new String[palabras.length][palabras.length];
         for (int i=0; i<palabras.length;i++){
             PalabrasDAO palabraProcesos= new PalabrasDAO();
             PalabrasRecord palabraObjeto = new PalabrasRecord();
-            if(!palabraProcesos.ConsultarPalabrasExisteId(palabras[i]).equals(""))
+            if(!palabraProcesos.ConsultarPalabrasExisteId(palabras[i],idiomaId).equals(""))
             {
                 palabraObjeto.setNombrepalabra(palabras[i]);
                 palabraObjeto.setIdiomaid(2);

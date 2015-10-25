@@ -26,7 +26,7 @@ public class IdentificadorEstructurasBD {
             PalabrasDAO palabraProcesos = new PalabrasDAO();
             PalabrasRecord palabraObjeto = new PalabrasRecord();
             //primero verifica si la palabra existe
-            if (!palabraProcesos.ConsultarPalabrasExisteId(palabras[i]).equals("")) {
+            if (!palabraProcesos.ConsultarPalabrasExisteId(palabras[i],idiomaId).equals("")) {
                 palabraObjeto.setNombrepalabra(palabras[i]);
                 palabraObjeto.setIdiomaid(idiomaId);
                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
@@ -45,10 +45,11 @@ public class IdentificadorEstructurasBD {
                     //IDIOMA ESPAÑOL
                     /*Proceso de plurales*/
                     String palabra = palabras[i];
+                    if(palabra.length()>3){
                     String ultimaLetra = "" + palabra.substring((palabra.length() - 3), (palabra.length()));
-                    if (ultimaLetra.equals("CES")) {
+                    if (ultimaLetra.equals("CES") ) {
                         String sSubCadena = palabra.substring(0, (palabra.length() - 3))+"Z";
-                        if (!palabraProcesos.ConsultarPalabrasExisteId(sSubCadena).equals("")) {
+                        if (!palabraProcesos.ConsultarPalabrasExisteId(sSubCadena,idiomaId).equals("")) {
                             palabraObjeto.setNombrepalabra(sSubCadena);
                             palabraObjeto.setIdiomaid(idiomaId);
                             List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
@@ -71,7 +72,7 @@ public class IdentificadorEstructurasBD {
                         ultimaLetra = "" + palabra.substring((palabra.length() - 2), (palabra.length()));
                         if (ultimaLetra.equals("ES")) {
                             String sSubCadena = palabra.substring(0, (palabra.length() - 2));
-                            if (!palabraProcesos.ConsultarPalabrasExisteId(sSubCadena).equals("")) {
+                            if (!palabraProcesos.ConsultarPalabrasExisteId(sSubCadena,idiomaId).equals("")) {
                                 palabraObjeto.setNombrepalabra(sSubCadena);
                                 palabraObjeto.setIdiomaid(idiomaId);
                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
@@ -94,7 +95,7 @@ public class IdentificadorEstructurasBD {
                             ultimaLetra=""+palabra.charAt(palabra.length()-1);
                             if (ultimaLetra.equals("S")) {
                                 String sSubCadena = palabra.substring(0,(palabra.length()-1));
-                                if (!palabraProcesos.ConsultarPalabrasExisteId(sSubCadena).equals("")) {
+                                if (!palabraProcesos.ConsultarPalabrasExisteId(sSubCadena,idiomaId).equals("")) {
                                     palabraObjeto.setNombrepalabra(sSubCadena);
                                     palabraObjeto.setIdiomaid(idiomaId);
                                     List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
@@ -116,7 +117,12 @@ public class IdentificadorEstructurasBD {
                                 palabraTipos[i][0] = palabras[i];
                                 palabraTipos[i][1] = "0";
                             }
+                            
                         }
+                    }
+                    }else{
+                        palabraTipos[i][0] = palabras[i];
+                        palabraTipos[i][1] = "0";
                     }
                 } else {
                     //IDIOMA KIYWA

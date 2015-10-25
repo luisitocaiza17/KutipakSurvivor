@@ -50,7 +50,7 @@ import persistencia.tables.records.PantallapalabrasRecord;
 public class CargaExcel_Controller extends HttpServlet {
     private boolean isMultipart;
     private String filePath="C:\\kutipak\\";
-    private int maxFileSize = 200 * 1024;
+    private int maxFileSize = 1200 * 1024;
     private int maxMemSize = 20 * 1024;
     private File file ;
     /**
@@ -165,9 +165,11 @@ public class CargaExcel_Controller extends HttpServlet {
                         int contador=0;
                         PantallaPalabrasDAO existePalabra = new PantallaPalabrasDAO();
                        while (filas.hasNext()) {
+                         
                            contador++;
                            Row row = filas.next();
                            if(contador>=6){
+                              try{
                                 String palabra = "" + row.getCell(2);
                                 palabra=palabra.toUpperCase();
                                 if(palabra.equals("")||palabra.equals(null))
@@ -239,8 +241,11 @@ public class CargaExcel_Controller extends HttpServlet {
                                 System.out.println("Tiempo:"+tiempoId);
                                 System.out.println("tipo:"+tipoId);
                                 System.out.println("Traductor:"+traduccion);
-                              
+                              }catch(Exception e){
+                                      System.out.println("error"+e);
+                              }
                            }
+                              
                            
                        }
              }
