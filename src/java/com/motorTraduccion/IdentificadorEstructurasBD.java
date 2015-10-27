@@ -126,8 +126,38 @@ public class IdentificadorEstructurasBD {
                     }
                 } else {
                     //IDIOMA KIYWA
-                    palabraTipos[i][0] = palabras[i];
-                    palabraTipos[i][1] = "0";
+                    String palabra=palabras[i];
+                    String palabraBuscar="KUNA ";
+                    boolean existePlural=palabra.contains(palabraBuscar);
+                    if(!existePlural){
+                       palabraTipos[i][0] = palabras[i];
+                       palabraTipos[i][1] = "0";
+                    }
+                    else{    
+                        String[] cadenasPlural = palabra.split("KUNA"); 
+                        for (int h = 0; h < cadenasPlural.length; h++) {
+                            palabra=cadenasPlural[0];
+                            System.out.println("La palabra esecencial kitchwa es: "+palabra);
+                            if (!palabraProcesos.ConsultarPalabrasExisteId(palabra,idiomaId).equals("")) {
+                                palabraObjeto.setNombrepalabra(palabra);
+                                palabraObjeto.setIdiomaid(idiomaId);
+                                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
+                                /*Proceso de resolucion de ambiguedades*/
+                                int contador = 0;
+                                for (PalabrasRecord rs : results) {
+                                    palabraTipos[i][contador] = rs.getSignificado();
+                                    contador++;
+                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                    palabraTipos[i][contador] = "" + codigo;
+                                    contador++;
+                                    break;
+                                }
+                            }else{
+                                palabraTipos[i][0] = palabras[i];
+                                palabraTipos[i][1] = "0";
+                            }
+                        }
+                    }
                 }
 
             }
