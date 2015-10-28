@@ -126,7 +126,7 @@ public class IdentificadorEstructurasBD {
                     }
                 } else {
                     //IDIOMA KIYWA
-                    String palabra=palabras[i];
+                    String palabra=palabras[i]+" ";
                     String palabraBuscar="KUNA ";
                     boolean existePlural=palabra.contains(palabraBuscar);
                     if(!existePlural){
@@ -145,10 +145,30 @@ public class IdentificadorEstructurasBD {
                                 /*Proceso de resolucion de ambiguedades*/
                                 int contador = 0;
                                 for (PalabrasRecord rs : results) {
-                                    palabraTipos[i][contador] = rs.getSignificado();
-                                    contador++;
-                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
-                                    palabraTipos[i][contador] = "" + codigo;
+                                    String significado=rs.getSignificado();
+                                    String ultimas=significado.substring(significado.length()-1,significado.length());
+                                    if(significado.length()>3){
+                                        if(ultimas.equals("A")||ultimas.equals("E")||ultimas.equals("O")){
+                                            significado=significado+"S";
+                                        }else{
+                                            if(ultimas.equals("Z")){
+                                                significado=significado.substring(0,significado.length()-1)+"CES";
+                                            }
+                                            else{
+                                                significado=significado+"ES";
+                                            }
+                                        }
+                                        palabraTipos[i][contador] = significado;
+                                        contador++;
+                                        String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                        palabraTipos[i][contador] = "" + codigo;
+                                    }else{
+                                        palabraTipos[i][contador] = rs.getSignificado()+"S";
+                                        contador++;
+                                        String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                        palabraTipos[i][contador] = "" + codigo;
+                                    }
+                                    
                                     contador++;
                                     break;
                                 }
