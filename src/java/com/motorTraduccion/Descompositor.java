@@ -70,6 +70,25 @@ public class Descompositor {
                         System.out.println("palabra : "+a); 
                     }
                 }
+                //ESTAR ANDO
+                palabraBuscar="KUNA ";
+                existeDesde=a.contains(palabraBuscar);
+                if(!existeDesde){
+                   System.out.println("No es ANDO");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es ANDO ");
+                    String[] cadenasPlural = a.split("KUNA "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+"NA KU";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
                 
                 resultado=resultado+descompositorPalabras(a,idioma)+" ";
             }else

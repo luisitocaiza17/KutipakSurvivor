@@ -44,7 +44,12 @@ public class ComposicionEstructural {
            codigoResultante=rs.getFormulasalida();
            break;
         }
-        
+        if(idioma==1){
+            codigoResultante=codigoResultante.replace("21","12");
+            codigoResultante=codigoResultante.replace("30", "03");
+           
+        }
+        //comfigurar la respues em codigo em el resultado de salida, com el . remplace
         return resultado=ArmadoEstructural(palabraEstructura, codigo,codigoResultante,idioma);
     }
     
