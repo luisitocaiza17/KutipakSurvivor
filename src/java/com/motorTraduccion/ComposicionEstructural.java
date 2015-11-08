@@ -48,6 +48,11 @@ public class ComposicionEstructural {
             codigoResultante=codigoResultante.replace("21","12");
             codigoResultante=codigoResultante.replace("30", "03");
            
+        }else{
+            codigoResultante=codigoResultante.replace("6S", "S6");
+            codigoResultante=codigoResultante.replace("4S", "S4");
+            codigoResultante=codigoResultante.replace("1S", "S1");
+            codigoResultante=codigoResultante.replace("12","21");
         }
         //comfigurar la respues em codigo em el resultado de salida, com el . remplace
         return resultado=ArmadoEstructural(palabraEstructura, codigo,codigoResultante,idioma);

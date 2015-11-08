@@ -82,7 +82,7 @@ public class Descompositor {
                     a="";
                     for (int i = 0; i < cadenasPlural.length; i++) {
                         if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+"NA KU";
+                            a=a+cadenasPlural[i]+"NA KU ";
                         } 
                         else
                             a=a+cadenasPlural[i];
@@ -91,8 +91,47 @@ public class Descompositor {
                 }
                 
                 resultado=resultado+descompositorPalabras(a,idioma)+" ";
-            }else
+            }else{
+                //idioma español
+                String palabraBuscar="ANDO ";
+                String palabraBuscar2="ENDO ";
+                boolean existeANDO=a.contains(palabraBuscar);
+                boolean existeENDO=a.contains(palabraBuscar2);
+                if(!existeANDO){
+                   System.out.println("No es ANDO");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es ANDO ");
+                    String[] cadenasPlural = a.split("ANDO "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+"ANDO ANDO ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
+                 if(!existeENDO){
+                   System.out.println("No es ENDO");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es ENDO ");
+                    String[] cadenasPlural = a.split("ENDO "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+"ENDO ENDO ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
+                System.out.println("oraciom salida : "+a); 
                 resultado=resultado+descompositorPalabras(a,idioma)+" ";
+            }    
         }
         is.close();
         return resultado;
