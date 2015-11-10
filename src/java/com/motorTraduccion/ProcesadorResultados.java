@@ -17,9 +17,10 @@ public class ProcesadorResultados {
                 if(i<estructuraSaliente.length-1){
                     String valorEstructura=estructuraSaliente[i][0]+estructuraSaliente[i+1][0];
                     System.out.println("Estrucutura: "+valorEstructura);
-                    if(valorEstructura.equals("12")||valorEstructura.equals("0M")||valorEstructura.equals("61")){
+                    if(valorEstructura.equals("12")||valorEstructura.equals("0M")||valorEstructura.equals("61")
+                            ||valorEstructura.equals("1M")){
                         
-                        if(valorEstructura.equals("12")||valorEstructura.equals("0M")){
+                        if(valorEstructura.equals("12")||valorEstructura.equals("0M")||valorEstructura.equals("1M")){
                             cadena=cadena+palabraTraducida[indice][0];
                         }
                         //amdo emdo

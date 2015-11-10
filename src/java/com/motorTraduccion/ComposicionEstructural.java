@@ -47,12 +47,15 @@ public class ComposicionEstructural {
         if(idioma==1){
             codigoResultante=codigoResultante.replace("21","12");
             codigoResultante=codigoResultante.replace("30", "03");
-           
+            codigoResultante=codigoResultante.replace("M0", "0M");
+            codigoResultante=codigoResultante.replace("M1", "1M");
         }else{
             codigoResultante=codigoResultante.replace("6S", "S6");
             codigoResultante=codigoResultante.replace("4S", "S4");
             codigoResultante=codigoResultante.replace("1S", "S1");
             codigoResultante=codigoResultante.replace("12","21");
+            codigoResultante=codigoResultante.replace("0M","M0");
+            codigoResultante=codigoResultante.replace("1M", "M1");
         }
         //comfigurar la respues em codigo em el resultado de salida, com el . remplace
         return resultado=ArmadoEstructural(palabraEstructura, codigo,codigoResultante,idioma);

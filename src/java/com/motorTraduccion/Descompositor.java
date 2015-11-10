@@ -89,12 +89,66 @@ public class Descompositor {
                         System.out.println("palabra : "+a); 
                     }
                 }
-                
+                palabraBuscar="PI ";
+                boolean existePi=a.contains(palabraBuscar);
+                if(!existePi){
+                   System.out.println("No es PI");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es PI ");
+                    String[] cadenasPlural = a.split("PI "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+" PI ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
+                palabraBuscar="PAK ";
+                boolean existePak=a.contains(palabraBuscar);
+                if(!existePak){
+                   System.out.println("No es Pak");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es Pak ");
+                    String[] cadenasPlural = a.split("PAK "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+" PAK ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
+                palabraBuscar="YUK ";
+                boolean existeYuk=a.contains(palabraBuscar);
+                if(!existeYuk){
+                   System.out.println("No es yuk");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es yuk ");
+                    String[] cadenasPlural = a.split("YUK "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+" YUK ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
                 resultado=resultado+descompositorPalabras(a,idioma)+" ";
             }else{
                 //idioma español
                 String palabraBuscar="ANDO ";
                 String palabraBuscar2="ENDO ";
+                
                 boolean existeANDO=a.contains(palabraBuscar);
                 boolean existeENDO=a.contains(palabraBuscar2);
                 if(!existeANDO){
