@@ -10,6 +10,7 @@ import com.datos.DAO.EstructuraPalabrasDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import persistencia.tables.records.EstructuraRecord;
 
@@ -63,7 +64,7 @@ public class ComposicionEstructural {
     
     public String ArmadoEstructural(String[][] palabraEstructura,String codigoE,String codigoS,int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         String resultado=null;
-        
+        /*
         String[] numerosComoArray = codigoE.split("||");
         String[][] codigoIndices= new String[numerosComoArray.length][2];
         for(int i=0; i<numerosComoArray.length;i++){
@@ -111,9 +112,45 @@ public class ComposicionEstructural {
         
         for(int j=0; j<numerosComoArray2.length;j++){
             System.out.println("codigoSaliete "+codigoIndices2[j][0]+" imdice "+codigoIndices2[j][1]);
+        }*/
+        
+        String[] ArrayEntrante  = codigoE.split("||");
+        String[] ArraySaliente  = codigoS.split("||");
+        String[] ArrayIndices=orderIntIndex(ArrayEntrante,ArraySaliente);
+        String[][] codigoIndices2= new String[ArraySaliente.length][2];
+        for(int i=0; i<ArraySaliente.length;i++){
+            codigoIndices2[i][0]=ArraySaliente[i];
+            codigoIndices2[i][1]=ArrayIndices[i];        
         }
+        
+        
         ProcesadorResultados proceso = new ProcesadorResultados();
         resultado=proceso.ResultadoTraduccion(palabraEstructura,codigoIndices2,idioma);    
         return resultado;
     }
+    
+    public static String[] orderIntIndex(String[] disorderArray, String[] orderArray) {
+	int lon = disorderArray.length;
+
+	String[] index = new String[lon];
+	Arrays.fill(index, "0");
+
+	boolean[] esta = new boolean[lon];
+	Arrays.fill(esta, false);
+
+	for (int i = 0; i < orderArray.length; i++) {
+		int in = 0;
+		boolean stay = false;
+		while (in < orderArray.length & !stay) {
+			if ((disorderArray[in].equals(orderArray[i])) & !esta[in]) {
+				esta[in] = true;
+				index[i] = ""+in;
+				stay = true;
+			} else {
+				in++;
+			}
+		}
+	}
+	return index;
+}
 }
