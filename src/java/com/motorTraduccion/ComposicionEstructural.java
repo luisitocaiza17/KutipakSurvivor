@@ -46,11 +46,13 @@ public class ComposicionEstructural {
            break;
         }
         if(idioma==1){
+            
             codigoResultante=codigoResultante.replace("21","12");
             codigoResultante=codigoResultante.replace("30", "03");
             codigoResultante=codigoResultante.replace("M0", "0M");
             codigoResultante=codigoResultante.replace("M1", "1M");
         }else{
+            
             codigoResultante=codigoResultante.replace("6S", "S6");
             codigoResultante=codigoResultante.replace("4S", "S4");
             codigoResultante=codigoResultante.replace("1S", "S1");

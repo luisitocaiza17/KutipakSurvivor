@@ -32,6 +32,7 @@ public class Descompositor {
             /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
             a=a+" ";
             if(idioma==2){
+                /***IDIOMA KICHWA****/
                 String palabraBuscar="KA ";
                 boolean existePlural=a.contains(palabraBuscar);
                 if(!existePlural){
@@ -52,7 +53,7 @@ public class Descompositor {
                     }
                     //resultado=resultado+descompositorPalabras(a,idioma)+" ";
                 }
-                palabraBuscar="MANTA ";
+                palabraBuscar="MANTA ";//DESDE
                 boolean existeDesde=a.contains(palabraBuscar);
                 if(!existeDesde){
                    System.out.println("No es desde");  
@@ -143,9 +144,28 @@ public class Descompositor {
                         System.out.println("palabra : "+a); 
                     }
                 }
+                palabraBuscar="CHU ";
+                boolean existeChu=a.contains(palabraBuscar);
+                if(!existeChu){
+                   System.out.println("No es Chu");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es Chu ");
+                    String[] cadenasPlural = a.split("CHU "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+" CHU ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
+                
                 resultado=resultado+descompositorPalabras(a,idioma)+" ";
             }else{
-                //idioma español
+                /*****IDIOMA ESPAÑOL*****/
                 String palabraBuscar="ANDO ";
                 String palabraBuscar2="ENDO ";
                 
