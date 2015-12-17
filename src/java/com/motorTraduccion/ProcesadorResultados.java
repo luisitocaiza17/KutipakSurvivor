@@ -52,7 +52,7 @@ public class ProcesadorResultados {
                 
                 //el imdice se lo realiza para atras por ello se comprueba que sea mas que uho
                 String interrogante=estructuraSaliente[i][0];
-                 if(interrogante.equals("I"));
+                 if(interrogante.equals("I"))
                    esInterrogante=true; 
                 if( i>=1){
                     String valorEstructura=estructuraSaliente[i-1][0]+estructuraSaliente[i][0];

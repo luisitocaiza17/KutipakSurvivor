@@ -90,6 +90,27 @@ public class Descompositor {
                         System.out.println("palabra : "+a); 
                     }
                 }
+                
+                //ESTAR HASTA
+                palabraBuscar="KAMA ";
+                existeDesde=a.contains(palabraBuscar);
+                if(!existeDesde){
+                   System.out.println("No es KAMA");  
+                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
+                }else{
+                    System.out.println("Si es KAMA ");
+                    String[] cadenasPlural = a.split("KAMA "); 
+                    a="";
+                    for (int i = 0; i < cadenasPlural.length; i++) {
+                        if(i<cadenasPlural.length-1 || i==0){
+                            a=a+cadenasPlural[i]+" KAMA ";
+                        } 
+                        else
+                            a=a+cadenasPlural[i];
+                        System.out.println("palabra : "+a); 
+                    }
+                }
+                
                 palabraBuscar="PI ";
                 boolean existePi=a.contains(palabraBuscar);
                 if(!existePi){
