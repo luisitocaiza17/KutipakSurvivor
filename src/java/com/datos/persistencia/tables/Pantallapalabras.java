@@ -28,7 +28,7 @@ import persistencia.tables.records.PantallapalabrasRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Pantallapalabras extends TableImpl<PantallapalabrasRecord> {
 
-	private static final long serialVersionUID = 1674703484;
+	private static final long serialVersionUID = 1690303446;
 
 	/**
 	 * The reference instance of <code>kutipak.pantallapalabras</code>
@@ -56,12 +56,12 @@ public class Pantallapalabras extends TableImpl<PantallapalabrasRecord> {
 	/**
 	 * The column <code>kutipak.pantallapalabras.PALABRAS</code>.
 	 */
-	public final TableField<PantallapalabrasRecord, String> PALABRAS = createField("PALABRAS", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
+	public final TableField<PantallapalabrasRecord, String> PALABRAS = createField("PALABRAS", org.jooq.impl.SQLDataType.VARCHAR.length(60).nullable(false), this, "");
 
 	/**
 	 * The column <code>kutipak.pantallapalabras.SIGNIFICADO</code>.
 	 */
-	public final TableField<PantallapalabrasRecord, String> SIGNIFICADO = createField("SIGNIFICADO", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
+	public final TableField<PantallapalabrasRecord, String> SIGNIFICADO = createField("SIGNIFICADO", org.jooq.impl.SQLDataType.VARCHAR.length(200).nullable(false), this, "");
 
 	/**
 	 * The column <code>kutipak.pantallapalabras.TIPO</code>.

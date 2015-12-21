@@ -17,6 +17,7 @@ import persistencia.tables.Estructura;
 import persistencia.tables.Estructurapalabras;
 import persistencia.tables.Idiomas;
 import persistencia.tables.Palabras;
+import persistencia.tables.Palabrassubfijosprefijos;
 import persistencia.tables.Pantallapalabras;
 import persistencia.tables.Personas;
 import persistencia.tables.Tiempos;
@@ -37,7 +38,7 @@ import persistencia.tables.Usuario;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Kutipak extends SchemaImpl {
 
-	private static final long serialVersionUID = -1969768495;
+	private static final long serialVersionUID = -758663102;
 
 	/**
 	 * The reference instance of <code>kutipak</code>
@@ -64,6 +65,7 @@ public class Kutipak extends SchemaImpl {
 			Estructurapalabras.ESTRUCTURAPALABRAS,
 			Idiomas.IDIOMAS,
 			Palabras.PALABRAS,
+			Palabrassubfijosprefijos.PALABRASSUBFIJOSPREFIJOS,
 			Pantallapalabras.PANTALLAPALABRAS,
 			Personas.PERSONAS,
 			Tiempos.TIEMPOS,

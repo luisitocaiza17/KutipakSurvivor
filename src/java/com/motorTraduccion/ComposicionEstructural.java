@@ -45,21 +45,30 @@ public class ComposicionEstructural {
            codigoResultante=rs.getFormulasalida();
            break;
         }
+        
+        EstructuraDAO estructuraDAO = new EstructuraDAO();
+        List<EstructuraRecord>  estructuraModificable= estructuraDAO.ConsultarEstruturaIdioma(idioma);
+        
+        for(EstructuraRecord rs: estructuraModificable){
+            codigoResultante=codigoResultante.replace(rs.getFormula(),rs.getFormulasalida());
+        }
+        
+        /*
         if(idioma==1){
-            
-            codigoResultante=codigoResultante.replace("21","12");
-            codigoResultante=codigoResultante.replace("30", "03");
+            //español-kichwa
+            codigoResultante=codigoResultante.replace("AZ","ZA");
+            codigoResultante=codigoResultante.replace("D0", "0D");
             codigoResultante=codigoResultante.replace("M0", "0M");
             codigoResultante=codigoResultante.replace("M1", "1M");
         }else{
-            
-            codigoResultante=codigoResultante.replace("6S", "S6");
-            codigoResultante=codigoResultante.replace("4S", "S4");
-            codigoResultante=codigoResultante.replace("1S", "S1");
-            codigoResultante=codigoResultante.replace("12","21");
+            //kichwa - español
+            codigoResultante=codigoResultante.replace("VS", "SV");
+            codigoResultante=codigoResultante.replace("BS", "SB");
+            codigoResultante=codigoResultante.replace("ZS", "SZ");
+            codigoResultante=codigoResultante.replace("ZA","AZ");
             codigoResultante=codigoResultante.replace("0M","M0");
-            codigoResultante=codigoResultante.replace("1M", "M1");
-        }
+            codigoResultante=codigoResultante.replace("ZM", "MZ");
+        }*/
         //comfigurar la respues em codigo em el resultado de salida, com el . remplace
         return resultado=ArmadoEstructural(palabraEstructura, codigo,codigoResultante,idioma);
     }

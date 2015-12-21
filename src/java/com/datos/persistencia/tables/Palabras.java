@@ -35,7 +35,7 @@ import persistencia.tables.records.PalabrasRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Palabras extends TableImpl<PalabrasRecord> {
 
-	private static final long serialVersionUID = -619054962;
+	private static final long serialVersionUID = -312339340;
 
 	/**
 	 * The reference instance of <code>kutipak.palabras</code>
@@ -73,7 +73,7 @@ public class Palabras extends TableImpl<PalabrasRecord> {
 	/**
 	 * The column <code>kutipak.palabras.NOMBREPALABRA</code>.
 	 */
-	public final TableField<PalabrasRecord, String> NOMBREPALABRA = createField("NOMBREPALABRA", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
+	public final TableField<PalabrasRecord, String> NOMBREPALABRA = createField("NOMBREPALABRA", org.jooq.impl.SQLDataType.VARCHAR.length(60).nullable(false), this, "");
 
 	/**
 	 * The column <code>kutipak.palabras.SINONIMO</code>.
@@ -83,7 +83,7 @@ public class Palabras extends TableImpl<PalabrasRecord> {
 	/**
 	 * The column <code>kutipak.palabras.SIGNIFICADO</code>.
 	 */
-	public final TableField<PalabrasRecord, String> SIGNIFICADO = createField("SIGNIFICADO", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
+	public final TableField<PalabrasRecord, String> SIGNIFICADO = createField("SIGNIFICADO", org.jooq.impl.SQLDataType.VARCHAR.length(200).nullable(false), this, "");
 
 	/**
 	 * Create a <code>kutipak.palabras</code> table reference

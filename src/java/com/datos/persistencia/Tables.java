@@ -10,6 +10,7 @@ import persistencia.tables.Estructura;
 import persistencia.tables.Estructurapalabras;
 import persistencia.tables.Idiomas;
 import persistencia.tables.Palabras;
+import persistencia.tables.Palabrassubfijosprefijos;
 import persistencia.tables.Pantallapalabras;
 import persistencia.tables.Personas;
 import persistencia.tables.Tiempos;
@@ -49,6 +50,11 @@ public class Tables {
 	 * The table kutipak.palabras
 	 */
 	public static final Palabras PALABRAS = persistencia.tables.Palabras.PALABRAS;
+
+	/**
+	 * The table kutipak.palabrassubfijosprefijos
+	 */
+	public static final Palabrassubfijosprefijos PALABRASSUBFIJOSPREFIJOS = persistencia.tables.Palabrassubfijosprefijos.PALABRASSUBFIJOSPREFIJOS;
 
 	/**
 	 * VIEW

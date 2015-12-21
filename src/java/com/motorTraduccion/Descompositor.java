@@ -5,15 +5,18 @@
  */
 package com.motorTraduccion;
 
+import com.datos.DAO.PalabrassubfijosprefijosDAO;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;              
+import persistencia.tables.records.PalabrassubfijosprefijosRecord;
 
 /**
  *
@@ -32,158 +35,26 @@ public class Descompositor {
             /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
             a=a+" ";
             if(idioma==2){
-                /***IDIOMA KICHWA****/
-                String palabraBuscar="KA ";
-                boolean existePlural=a.contains(palabraBuscar);
-                if(!existePlural){
-                   System.out.println("no es plural");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }
-                else{
-                    System.out.println("Es plural");
-                    String[] cadenasPlural = a.split("KA "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+" KA ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
-                    }
-                    //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }
-                palabraBuscar="MANTA ";//DESDE
-                boolean existeDesde=a.contains(palabraBuscar);
-                if(!existeDesde){
-                   System.out.println("No es desde");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }else{
-                    System.out.println("Si es desde ");
-                    String[] cadenasPlural = a.split("MANTA "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+" MANTA ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
+                 /***IDIOMA KICHWA****/
+                /*proceso de busqueda de los subfijos*/
+                PalabrassubfijosprefijosDAO prefijosProcesos = new PalabrassubfijosprefijosDAO();
+                List<PalabrassubfijosprefijosRecord> prefijos=prefijosProcesos.ConsultarPrefijosSubfijos(idioma);
+                for(PalabrassubfijosprefijosRecord rs :prefijos){
+                    String palabraBuscar=rs.getPalabra()+" ";
+                    boolean existe=a.contains(palabraBuscar);
+                    if(existe){
+                        String[] cadenasPlural = a.split(palabraBuscar); 
+                        a="";
+                        for (int i = 0; i < cadenasPlural.length; i++) {
+                            if(i<cadenasPlural.length-1 || i==0){
+                                a=a+cadenasPlural[i]+" "+palabraBuscar;
+                            } 
+                            else
+                                a=a+cadenasPlural[i];
+                            System.out.println("palabra : "+a); 
+                        }
                     }
                 }
-                //ESTAR ANDO
-                palabraBuscar="KUNA ";
-                existeDesde=a.contains(palabraBuscar);
-                if(!existeDesde){
-                   System.out.println("No es ANDO");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }else{
-                    System.out.println("Si es ANDO ");
-                    String[] cadenasPlural = a.split("KUNA "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+"NA KU ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
-                    }
-                }
-                
-                //ESTAR HASTA
-                palabraBuscar="KAMA ";
-                existeDesde=a.contains(palabraBuscar);
-                if(!existeDesde){
-                   System.out.println("No es KAMA");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }else{
-                    System.out.println("Si es KAMA ");
-                    String[] cadenasPlural = a.split("KAMA "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+" KAMA ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
-                    }
-                }
-                
-                palabraBuscar="PI ";
-                boolean existePi=a.contains(palabraBuscar);
-                if(!existePi){
-                   System.out.println("No es PI");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }else{
-                    System.out.println("Si es PI ");
-                    String[] cadenasPlural = a.split("PI "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+" PI ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
-                    }
-                }
-                palabraBuscar="PAK ";
-                boolean existePak=a.contains(palabraBuscar);
-                if(!existePak){
-                   System.out.println("No es Pak");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }else{
-                    System.out.println("Si es Pak ");
-                    String[] cadenasPlural = a.split("PAK "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+" PAK ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
-                    }
-                }
-                palabraBuscar="YUK ";
-                boolean existeYuk=a.contains(palabraBuscar);
-                if(!existeYuk){
-                   System.out.println("No es yuk");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }else{
-                    System.out.println("Si es yuk ");
-                    String[] cadenasPlural = a.split("YUK "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+" YUK ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
-                    }
-                }
-                palabraBuscar="CHU ";
-                boolean existeChu=a.contains(palabraBuscar);
-                if(!existeChu){
-                   System.out.println("No es Chu");  
-                   //resultado=resultado+descompositorPalabras(a,idioma)+" ";
-                }else{
-                    System.out.println("Si es Chu ");
-                    String[] cadenasPlural = a.split("CHU "); 
-                    a="";
-                    for (int i = 0; i < cadenasPlural.length; i++) {
-                        if(i<cadenasPlural.length-1 || i==0){
-                            a=a+cadenasPlural[i]+" CHU ";
-                        } 
-                        else
-                            a=a+cadenasPlural[i];
-                        System.out.println("palabra : "+a); 
-                    }
-                }
-                
                 resultado=resultado+descompositorPalabras(a,idioma)+" ";
             }else{
                 /*****IDIOMA ESPAÑOL*****/

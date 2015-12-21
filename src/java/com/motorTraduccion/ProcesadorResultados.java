@@ -22,14 +22,14 @@ public class ProcesadorResultados {
                     String valorEstructura=estructuraSaliente[i][0]+estructuraSaliente[i+1][0];
                     String valorEstructuraUnica=estructuraSaliente[i+1][0];
                     System.out.println("Estrucutura: "+valorEstructura);
-                    if(valorEstructura.equals("12")||valorEstructura.equals("0M")||valorEstructura.equals("61")
-                            ||valorEstructura.equals("1M")||valorEstructuraUnica.equals("I")){
+                    if(valorEstructura.equals("ZA")||valorEstructura.equals("0M")||valorEstructura.equals("VZ")
+                            ||valorEstructura.equals("ZM")||valorEstructuraUnica.equals("I")){
                         
-                        if(valorEstructura.equals("12")||valorEstructura.equals("0M")||valorEstructura.equals("1M")){
+                        if(valorEstructura.equals("ZA")||valorEstructura.equals("0M")||valorEstructura.equals("ZM")){
                             cadena=cadena+palabraTraducida[indice][0];
                         }
                         //amdo emdo
-                        if(valorEstructura.equals("61")){
+                        if(valorEstructura.equals("VZ")){
                             cadena=cadena+palabraTraducida[indice][0];
                         }
                         
@@ -56,7 +56,7 @@ public class ProcesadorResultados {
                    esInterrogante=true; 
                 if( i>=1){
                     String valorEstructura=estructuraSaliente[i-1][0]+estructuraSaliente[i][0];
-                     if(valorEstructura.equals("S6")||valorEstructura.equals("S1")||valorEstructura.equals("S4")){
+                     if(valorEstructura.equals("SV")||valorEstructura.equals("SZ")||valorEstructura.equals("SB")){
                          cadena=cadena+palabraTraducida[indice][0]+"ANDO ";
                      }else{
                         cadena=cadena+palabraTraducida[indice][0]+" ";
