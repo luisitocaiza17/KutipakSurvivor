@@ -113,6 +113,27 @@ public class PalabrasDAO {
           return listadoPalabras;
     } 
     
+    public List<PalabrasRecord> ConsultarPalabrasTraduccionSimilar(PalabrasRecord misPalabras) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<PalabrasRecord>listadoPalabras= new ArrayList<PalabrasRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(PALABRAS).where((PALABRAS.IDIOMAID.equal(misPalabras.getIdiomaid())
+                        .and(PALABRAS.NOMBREPALABRA.like(misPalabras.getNombrepalabra()+"%")))).fetch();
+         for(Record r : result){
+             PalabrasRecord palabrasEncontradas= new PalabrasRecord();
+             palabrasEncontradas.setPalabraid(r.getValue(PALABRAS.PALABRAID));
+             palabrasEncontradas.setIdiomaid(r.getValue(PALABRAS.IDIOMAID));
+             palabrasEncontradas.setNombrepalabra(r.getValue(PALABRAS.NOMBREPALABRA));
+             palabrasEncontradas.setSignificado(r.getValue(PALABRAS.SIGNIFICADO));
+             palabrasEncontradas.setSinonimo(r.getValue(PALABRAS.SINONIMO));
+             palabrasEncontradas.setTiemposid(r.getValue(PALABRAS.TIEMPOSID));
+             palabrasEncontradas.setTipoid(r.getValue(PALABRAS.TIPOID));
+             listadoPalabras.add(palabrasEncontradas);
+         }
+          conexion.close();
+          return listadoPalabras;
+    } 
    
     public List<PalabrasRecord> ConsultarPalabrasExiste(PalabrasRecord misPalabras) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();

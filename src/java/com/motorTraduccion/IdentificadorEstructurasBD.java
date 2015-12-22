@@ -44,7 +44,7 @@ public class IdentificadorEstructurasBD {
                 if (idiomaId == 1) {
                     //IDIOMA ESPAÑOL
                     /*Proceso de plurales*/
-                    String palabra = palabras[i];
+                    String palabra = palabras[i]  ;
                     if(palabra.length()>3){
                     String ultimaLetra = "" + palabra.substring((palabra.length() - 3), (palabra.length()));
                     if (ultimaLetra.equals("CES") ) {
@@ -64,8 +64,31 @@ public class IdentificadorEstructurasBD {
                                 break;
                             }
                         } else {
-                            palabraTipos[i][0] = palabras[i];
-                            palabraTipos[i][1] = "0";
+                            String palabraSimilar=palabraTipos[i][0] = palabras[i];
+                                if(palabraSimilar.length()>3){
+                                    bucle:
+                                    for(int a =palabraSimilar.length();a>2;a--){
+                                        PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                        palabraSimilar=palabraSimilar.substring(0,a);
+                                        palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                        palabraObjeto2.setIdiomaid(idiomaId);
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        for (PalabrasRecord rs : results) {
+                                             palabraTipos[i][0] = rs.getSignificado();
+                                             String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                             palabraTipos[i][1] = codigo;
+                                             break bucle;
+                                        }
+                                        if(a==3){
+                                            palabraTipos[i][0] = palabras[i];
+                                            palabraTipos[i][1] = "0";
+                                            break;
+                                        }
+                                    }
+                                }else{
+                                    palabraTipos[i][0] = palabras[i];
+                                    palabraTipos[i][1] = "0";
+                                }
                         }
                     } else {
                         palabra = palabras[i];
@@ -87,8 +110,31 @@ public class IdentificadorEstructurasBD {
                                     break;
                                 }
                             } else {
-                                palabraTipos[i][0] = palabras[i];
-                                palabraTipos[i][1] = "0";
+                                String palabraSimilar=palabraTipos[i][0] = palabras[i];
+                                if(palabraSimilar.length()>3){
+                                    bucle:
+                                    for(int a =palabraSimilar.length();a>2;a--){
+                                        PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                        palabraSimilar=palabraSimilar.substring(0,a);
+                                        palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                        palabraObjeto2.setIdiomaid(idiomaId);
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        for (PalabrasRecord rs : results) {
+                                             palabraTipos[i][0] = rs.getSignificado();
+                                             String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                             palabraTipos[i][1] = codigo;
+                                             break bucle;
+                                        }
+                                        if(a==3){
+                                            palabraTipos[i][0] = palabras[i];
+                                            palabraTipos[i][1] = "0";
+                                            break;
+                                        }
+                                    }
+                                }else{
+                                    palabraTipos[i][0] = palabras[i];
+                                    palabraTipos[i][1] = "0";
+                                }
                             }
                         } else {
                             palabra = palabras[i];
@@ -110,12 +156,58 @@ public class IdentificadorEstructurasBD {
                                         break;
                                     }
                                 } else {
+                                    String palabraSimilar=palabraTipos[i][0] = palabras[i];
+                                    if(palabraSimilar.length()>3){
+                                        bucle:
+                                        for(int a =palabraSimilar.length();a>2;a--){
+                                            PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                            palabraSimilar=palabraSimilar.substring(0,a);
+                                            palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                            palabraObjeto2.setIdiomaid(idiomaId);
+                                            List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                            for (PalabrasRecord rs : results) {
+                                                 palabraTipos[i][0] = rs.getSignificado();
+                                                 String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                                 palabraTipos[i][1] = codigo;
+                                                 break bucle;
+                                            }
+                                            if(a==3){
+                                                palabraTipos[i][0] = palabras[i];
+                                                palabraTipos[i][1] = "0";
+                                                break;
+                                            }
+                                        }
+                                    }else{
+                                        palabraTipos[i][0] = palabras[i];
+                                        palabraTipos[i][1] = "0";
+                                    }
+                                }
+                            }else{
+                                String palabraSimilar=palabraTipos[i][0] = palabras[i];
+                                if(palabraSimilar.length()>3){
+                                    bucle:
+                                    for(int a =palabraSimilar.length();a>2;a--){
+                                        PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                        palabraSimilar=palabraSimilar.substring(0,a);
+                                        palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                        palabraObjeto2.setIdiomaid(idiomaId);
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        for (PalabrasRecord rs : results) {
+                                             palabraTipos[i][0] = rs.getSignificado();
+                                             String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                             palabraTipos[i][1] = codigo;
+                                             break bucle;
+                                        }
+                                        if(a==3){
+                                            palabraTipos[i][0] = palabras[i];
+                                            palabraTipos[i][1] = "0";
+                                            break;
+                                        }
+                                    }
+                                }else{
                                     palabraTipos[i][0] = palabras[i];
                                     palabraTipos[i][1] = "0";
                                 }
-                            }else{
-                                palabraTipos[i][0] = palabras[i];
-                                palabraTipos[i][1] = "0";
                             }
                             
                         }
@@ -130,8 +222,31 @@ public class IdentificadorEstructurasBD {
                     String palabraBuscar="KUNA ";
                     boolean existePlural=palabra.contains(palabraBuscar);
                     if(!existePlural){
-                       palabraTipos[i][0] = palabras[i];
-                       palabraTipos[i][1] = "0";
+                       String palabraSimilar=palabraTipos[i][0] = palabras[i];
+                                if(palabraSimilar.length()>3){
+                                    bucle:
+                                    for(int a =palabraSimilar.length();a>2;a--){
+                                        PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                        palabraSimilar=palabraSimilar.substring(0,a);
+                                        palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                        palabraObjeto2.setIdiomaid(idiomaId);
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        for (PalabrasRecord rs : results) {
+                                             palabraTipos[i][0] = rs.getSignificado();
+                                             String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                             palabraTipos[i][1] = codigo;
+                                             break bucle;
+                                        }
+                                        if(a==3){
+                                            palabraTipos[i][0] = palabras[i];
+                                            palabraTipos[i][1] = "0";
+                                            break;
+                                        }
+                                    }
+                                }else{
+                                    palabraTipos[i][0] = palabras[i];
+                                    palabraTipos[i][1] = "0";
+                                };
                     }
                     else{    
                         String[] cadenasPlural = palabra.split("KUNA"); 
@@ -173,8 +288,31 @@ public class IdentificadorEstructurasBD {
                                     break;
                                 }
                             }else{
-                                palabraTipos[i][0] = palabras[i];
-                                palabraTipos[i][1] = "0";
+                                String palabraSimilar=palabraTipos[i][0] = palabras[i];
+                                if(palabraSimilar.length()>3){
+                                    bucle:
+                                    for(int a =palabraSimilar.length();a>2;a--){
+                                        PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                        palabraSimilar=palabraSimilar.substring(0,a);
+                                        palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                        palabraObjeto2.setIdiomaid(idiomaId);
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        for (PalabrasRecord rs : results) {
+                                             palabraTipos[i][0] = rs.getSignificado();
+                                             String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                             palabraTipos[i][1] = codigo;
+                                             break bucle;
+                                        }
+                                        if(a==3){
+                                            palabraTipos[i][0] = palabras[i];
+                                            palabraTipos[i][1] = "0";
+                                            break;
+                                        }
+                                    }
+                                }else{
+                                    palabraTipos[i][0] = palabras[i];
+                                    palabraTipos[i][1] = "0";
+                                }
                             }
                         }
                     }
