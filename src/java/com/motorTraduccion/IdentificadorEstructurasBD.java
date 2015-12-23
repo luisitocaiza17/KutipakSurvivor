@@ -72,7 +72,8 @@ public class IdentificadorEstructurasBD {
                                         palabraSimilar=palabraSimilar.substring(0,a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar);
                                         palabraObjeto2.setIdiomaid(idiomaId);
-                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        int tamanio=palabraSimilar.length()+3;
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2,tamanio);
                                         for (PalabrasRecord rs : results) {
                                              palabraTipos[i][0] = rs.getSignificado();
                                              String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
@@ -118,7 +119,8 @@ public class IdentificadorEstructurasBD {
                                         palabraSimilar=palabraSimilar.substring(0,a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar);
                                         palabraObjeto2.setIdiomaid(idiomaId);
-                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        int tamanio=palabraSimilar.length()+3;
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2,tamanio);
                                         for (PalabrasRecord rs : results) {
                                              palabraTipos[i][0] = rs.getSignificado();
                                              String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
@@ -164,7 +166,8 @@ public class IdentificadorEstructurasBD {
                                             palabraSimilar=palabraSimilar.substring(0,a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar);
                                             palabraObjeto2.setIdiomaid(idiomaId);
-                                            List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                            int tamanio=palabraSimilar.length()+3;
+                                            List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2,tamanio);
                                             for (PalabrasRecord rs : results) {
                                                  palabraTipos[i][0] = rs.getSignificado();
                                                  String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
@@ -191,7 +194,8 @@ public class IdentificadorEstructurasBD {
                                         palabraSimilar=palabraSimilar.substring(0,a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar);
                                         palabraObjeto2.setIdiomaid(idiomaId);
-                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        int tamanio=palabraSimilar.length()+3;
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2,tamanio);
                                         for (PalabrasRecord rs : results) {
                                              palabraTipos[i][0] = rs.getSignificado();
                                              String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
@@ -230,7 +234,8 @@ public class IdentificadorEstructurasBD {
                                         palabraSimilar=palabraSimilar.substring(0,a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar);
                                         palabraObjeto2.setIdiomaid(idiomaId);
-                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        int tamanio=palabraSimilar.length()+3;
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2,tamanio);
                                         for (PalabrasRecord rs : results) {
                                              palabraTipos[i][0] = rs.getSignificado();
                                              String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
@@ -296,7 +301,8 @@ public class IdentificadorEstructurasBD {
                                         palabraSimilar=palabraSimilar.substring(0,a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar);
                                         palabraObjeto2.setIdiomaid(idiomaId);
-                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2);
+                                        int tamanio=palabraSimilar.length()+3;
+                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2,tamanio);
                                         for (PalabrasRecord rs : results) {
                                              palabraTipos[i][0] = rs.getSignificado();
                                              String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
