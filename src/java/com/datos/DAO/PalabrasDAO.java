@@ -75,19 +75,25 @@ public class PalabrasDAO {
           return listadoPalabras;
     } 
     
-    public String ConsultarPalabrasExisteId(String palabra, int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+    public PalabrasRecord ConsultarPalabrasExisteId(String palabra, int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         List<PalabrasRecord>listadoPalabras= new ArrayList<PalabrasRecord>();
         Connection conexion= con.realiza_conexion();
         DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
         Result<Record> result = create.select().from(PALABRAS).where((PALABRAS.NOMBREPALABRA.equal(palabra)).and(PALABRAS.IDIOMAID.equal(idioma))).fetch();
-        String id="";
+        PalabrasRecord palabrasEncontradas= new PalabrasRecord();
         for(Record r : result){
-            id=""+(r.getValue(PALABRAS.PALABRAID));
+             palabrasEncontradas.setPalabraid(r.getValue(PALABRAS.PALABRAID));
+             palabrasEncontradas.setIdiomaid(r.getValue(PALABRAS.IDIOMAID));
+             palabrasEncontradas.setNombrepalabra(r.getValue(PALABRAS.NOMBREPALABRA));
+             palabrasEncontradas.setSignificado(r.getValue(PALABRAS.SIGNIFICADO));
+             palabrasEncontradas.setSinonimo(r.getValue(PALABRAS.SINONIMO));
+             palabrasEncontradas.setTiemposid(r.getValue(PALABRAS.TIEMPOSID));
+             palabrasEncontradas.setTipoid(r.getValue(PALABRAS.TIPOID));
             break;
         }
         conexion.close();
-        return id;
+        return palabrasEncontradas;
     }
     
     
