@@ -50,7 +50,7 @@ import persistencia.tables.records.PantallapalabrasRecord;
 public class CargaExcel_Controller extends HttpServlet {
     private boolean isMultipart;
     private String filePath="C:\\kutipak\\";
-    private int maxFileSize = 1200 * 1024;
+    private int maxFileSize = 8000 * 1024;
     private int maxMemSize = 20 * 1024;
     private File file ;
     /**
@@ -190,12 +190,13 @@ public class CargaExcel_Controller extends HttpServlet {
                                 String tiempo=""+row.getCell(5);
                                 tiempo=tiempo.toUpperCase();
                                 TiemposDAO tiemposbusqueda = new TiemposDAO();
-                                String tiempoId=tiemposbusqueda.ConsultarTiempoId(tiempo);
+                                String tiempoId=tiemposbusqueda.ConsultarTiempoId("PRE");
                                 if(tiempoId.equals("")||tiempoId.equals(null))
                                     contadorErrores++;
-                                   
+                                
+                                
                                 String tipo=""+row.getCell(6);
-                                tipo=tipo.toUpperCase();
+                                tipo=tipo.toUpperCase().trim();
                                 TiposPalabrasDAO tiposbusqueda = new TiposPalabrasDAO(); 
                                 String tipoId=tiposbusqueda.ConsultarTiposPalabrasId2(tipo);
                                 if(tipoId.equals("")||tipoId.equals(null))
@@ -206,10 +207,9 @@ public class CargaExcel_Controller extends HttpServlet {
                                 
                                 PantallapalabrasRecord pantallaPalabra = new PantallapalabrasRecord();
                                 pantallaPalabra.setIdioma(idioma);
-                                pantallaPalabra.setTiempo(tiempo);
                                 pantallaPalabra.setTipo(tipo);
                                 pantallaPalabra.setPalabras(palabra);
-                                pantallaPalabra.setSignificado(traduccion);
+                                pantallaPalabra.setSignificado (traduccion);
                                 if(existePalabra.ConsultarPalabrasExistente(pantallaPalabra))
                                     contadorErrores++;
                                 if(contadorErrores!=0){
@@ -222,10 +222,10 @@ public class CargaExcel_Controller extends HttpServlet {
                                     PalabrasDAO ingresoPalabras = new PalabrasDAO();
                                     PalabrasRecord palabraIngreso = new PalabrasRecord ();
                                     palabraIngreso.setIdiomaid(Integer.parseInt(idiomaId));
-                                    palabraIngreso.setTiemposid(Integer.parseInt(tiempoId));
                                     palabraIngreso.setTipoid(Integer.parseInt(tipoId));
                                     palabraIngreso.setNombrepalabra(palabra);
                                     palabraIngreso.setSignificado(traduccion);
+                                    palabraIngreso.setTiemposid(Integer.parseInt(tiempoId));
                                     if(!ingresoPalabras.GrabarPalabras(palabraIngreso)){
                                         out.println("<script type=\"text/javascript\">");
                                         out.println("alert('Error al cargar la palabra "+palabra+" con traduccion "+traduccion+", por favor revise la fila "+(contador+2)+" :( ' );");
@@ -238,7 +238,6 @@ public class CargaExcel_Controller extends HttpServlet {
                                   
                                 System.out.println("Palabra:"+palabra);
                                 System.out.println("Idioma:"+idiomaId);
-                                System.out.println("Tiempo:"+tiempoId);
                                 System.out.println("tipo:"+tipoId);
                                 System.out.println("Traductor:"+traduccion);
                               }catch(Exception e){

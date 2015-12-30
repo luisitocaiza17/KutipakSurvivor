@@ -31,7 +31,7 @@ CREATE TABLE `estructura` (
   PRIMARY KEY (`ESTRUCTURAID`),
   KEY `FK_IDIOMA_ESTRUCTURA` (`IDIOMAID`),
   CONSTRAINT `FK_IDIOMA_ESTRUCTURA` FOREIGN KEY (`IDIOMAID`) REFERENCES `idiomas` (`IDIOMAID`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `estructura` (
 
 LOCK TABLES `estructura` WRITE;
 /*!40000 ALTER TABLE `estructura` DISABLE KEYS */;
-INSERT INTO `estructura` VALUES (18,1,'1','AZ','ZA'),(19,1,'2','D0','0D'),(20,1,'3','M0','0M'),(21,1,'4','MD','DM'),(22,2,'5','VS','SV'),(23,2,'6','BS','SB'),(24,2,'7','ZS','SZ'),(25,2,'8','ZA','AZ'),(26,2,'9','0M','M0'),(27,2,'10','ZM','MZ'),(28,2,'11','0P','P0'),(29,1,'12','P0','0P'),(30,2,'13','AP','PA'),(31,2,'14','0P','AP'),(32,1,'15','PA','AP'),(33,1,'16','P0','0P');
+INSERT INTO `estructura` VALUES (18,1,'1','AZ','ZA'),(19,1,'2','D0','0D'),(20,1,'3','M0','0M'),(21,1,'4','MD','DM'),(22,2,'5','VS','SV'),(23,2,'6','BS','SB'),(24,2,'7','ZS','SZ'),(25,2,'8','ZA','AZ'),(26,2,'9','0M','M0'),(27,2,'10','ZM','MZ'),(28,2,'11','0P','P0'),(29,1,'12','P0','0P'),(30,2,'13','AP','PA'),(31,2,'14','0P','AP'),(32,1,'15','PA','AP'),(33,1,'16','P0','0P'),(34,2,'WAWAKA','AP','PA'),(35,2,'14','0P','AP'),(36,1,'15','PA','AP'),(37,1,'16','P0','0P');
 /*!40000 ALTER TABLE `estructura` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-28 22:01:41
+-- Dump completed on 2015-12-30  0:00:29
