@@ -47,11 +47,12 @@ public class IdentificadorEstructurasBD {
                     //IDIOMA ESPAÑOL
                     /*Proceso de plurales*/
                     String palabra = palabras[i];
+                                
                     if (palabra.length() > 3) {
                         String ultimaLetra = "" + palabra.substring((palabra.length() - 3), (palabra.length()));
                         if (ultimaLetra.equals("CES")) {
                             String sSubCadena = palabra.substring(0, (palabra.length() - 3)) + "Z";
-                            if (palabraProcesos.ConsultarPalabrasExisteId(palabra, idiomaId).getPalabraid() != null) {
+                            if (palabraProcesos.ConsultarPalabrasExisteId(sSubCadena, idiomaId).getPalabraid() != null) {
                                 palabraObjeto.setNombrepalabra(sSubCadena);
                                 palabraObjeto.setIdiomaid(idiomaId);
                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
@@ -96,9 +97,11 @@ public class IdentificadorEstructurasBD {
                         } else {
                             palabra = palabras[i];
                             ultimaLetra = "" + palabra.substring((palabra.length() - 2), (palabra.length()));
+                            String palabraExiste2=palabra.substring(0,(palabra.length() - 2));
+                                
                             if (ultimaLetra.equals("ES")) {
                                 String sSubCadena = palabra.substring(0, (palabra.length() - 2));
-                                if (palabraProcesos.ConsultarPalabrasExisteId(palabra, idiomaId).getPalabraid() != null) {
+                                if (palabraProcesos.ConsultarPalabrasExisteId(palabraExiste2, idiomaId).getPalabraid() != null) {
                                     palabraObjeto.setNombrepalabra(sSubCadena);
                                     palabraObjeto.setIdiomaid(idiomaId);
                                     List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
@@ -143,9 +146,11 @@ public class IdentificadorEstructurasBD {
                             } else {
                                 palabra = palabras[i];
                                 ultimaLetra = "" + palabra.charAt(palabra.length() - 1);
+                                String palabraExiste3=palabra.substring(0,(palabra.length() - 1));
+                                
                                 if (ultimaLetra.equals("S")) {
                                     String sSubCadena = palabra.substring(0, (palabra.length() - 1));
-                                    if (palabraProcesos.ConsultarPalabrasExisteId(palabra, idiomaId).getPalabraid() != null) {
+                                    if (palabraProcesos.ConsultarPalabrasExisteId(palabraExiste3, idiomaId).getPalabraid() != null) {
                                         palabraObjeto.setNombrepalabra(sSubCadena);
                                         palabraObjeto.setIdiomaid(idiomaId);
                                         List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccion(palabraObjeto);
