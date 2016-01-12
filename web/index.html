@@ -38,20 +38,201 @@
                   }   
             });
             
+            document.getElementById("TiempoResuesta").checked = true;
+            document.getElementById("Sirvio").checked = true;
+          
+            $("#recomendar").click(function () {
+                     var tiempoTraduccion;
+                     var sirvioTraduccion;
+                     var comentarioTraduccion=$("#Comentario").val();
+                     
+                     if(comentarioTraduccion===""||comentarioTraduccion===" "){
+                         alert("El comentario es obligatorio para poder continuar");
+                     }else{
+                     
+                     if( $("#Sirvio").prop('checked') ) {
+                        sirvioTraduccion="SI";
+                     }else{
+                         sirvioTraduccion="NO";
+                     }
+                     if( $("#TiempoResuesta").prop('checked') ) {
+                        tiempoTraduccion="SI";
+                     }else{
+                         tiempoTraduccion="NO";
+                     }
+                     guardarComentarios(tiempoTraduccion,sirvioTraduccion,comentarioTraduccion,"comentarios");
+                     $("#Comentario").val("");
+                }
+            });
+            
             $("#traducir").click(function () {
                      var palabra=$("#contenedorOriginal").val();
                      var idioma=$("#idioma").val();
+                     eliminar();
                      ProcesoTraduccion(palabra,idioma);
-                     
+                    cargar(palabra); 
             });
+            
+            $("#Correo").click(function () {
+                     var nombre=$("#nombre").val();
+                     var email=$("#email").val();
+                     var Asunto=$("#Asunto").val();
+                     var message=$("#message").val();
+                     enviarMail(nombre,email,Asunto,message);
+                  
+            });
+            
+           contador("contador");
+            
      });
+    
+    function eliminar() {
+        document.getElementById('contenedor').innerHTML='';
+   }
+   
+   function enviarMail(nombre,email,Asunto,message){
+        $.ajax({
+            url: 'ProcesoTraduccion_Controller',
+            data: {
+                "nombre":nombre,
+                "email":email,
+                "Asunto":Asunto,
+                "message":message,
+                "proceso":"correo"
+            },
+            async: false,
+            type: 'POST',
+            datatype: 'json',
+            success: function (data) {
+                        
+                         var selogro=data.success;
+                         if(selogro===true){
+                           alert("Correo Enviado muchas gracias ;)");
+                        }else{
+                           alert("Ups. tuvimos un problema por favor intentalo en unos minutos :(");
+                        }
+                    }                    
+            });
+   }
+   
+   function guardarComentarios(tiempo,sirvio,comentario,proceso){
+       $.ajax({
+            url: 'ProcesoTraduccion_Controller',
+            data: {
+                "tiempo":tiempo,
+                "sirvio":sirvio,
+                "comentario":comentario,
+                "proceso":proceso
+            },
+            async: false,
+            type: 'POST',
+            datatype: 'json',
+            success: function (data) {
+                        var comentariosRegitrados = data.comentariosRegitrados;
+                         var selogro=data.success;
+                         if(selogro===true){
+                             
+                            $("#susComentarios").children().remove();
+                            $.each(comentariosRegitrados, function (index) {
+
+                                 $("#susComentarios").append("<tr>" +
+                                 "<td style='width: 10%'>" + comentariosRegitrados[index].comentario + "</td>" +        
+                                 "</tr>");
+                             });
+                            $("#comentariosTotales").text(data.contadorSugerencias);
+                            $("#rapidas").text(data.rapidas);
+                            $("#comentariosBuenos").text(data.comentariosBuenos); 
+                            alert("Sugerencia Guardada muchas gracias ;)");
+                        }else{
+                            alert("Ups. tuvimos un problema por favor intentalo en unos minutos :(");
+                        }
+                    }                    
+            });
+   }
+   
+   function contador(proceso){
+        $.ajax({
+            url: 'ProcesoTraduccion_Controller',
+            data: {
+                "proceso":proceso
+            },
+            async: false,
+            type: 'POST',
+            datatype: 'json',
+            success: function (data) {
+                         var selogro=data.success;
+                         var comentariosRegitrados = data.comentariosRegitrados;
+                         
+                         $("#susComentarios").children().remove();
+                            $.each(comentariosRegitrados, function (index) {
+
+                                 $("#susComentarios").append("<tr>" +
+                                 "<td style='width: 10%'>" + comentariosRegitrados[index].comentario + "</td>" +        
+                                 "</tr>");
+                             });
+                         
+                            $("#contador").text(data.contador);
+                            $("#comentariosTotales").text(data.contadorSugerencias);
+                            $("#rapidas").text(data.rapidas);
+                            $("#comentariosBuenos").text(data.comentariosBuenos);
+                    }                    
+                });
+   }
+
+    function cargar(palabra){
+        
+        var letras= palabra;
+        var letrasSeparadas = letras.split(" ");
+        letras="";
+        for( var i=0;i<letrasSeparadas.length;i++){
+            $("#contenedor").append(letras + '<div id='+letrasSeparadas[i]+' value='+letrasSeparadas[i]+' onClick="muestraPalabra(this);" style="float: left" ><small>'+letrasSeparadas[i]+'&nbsp;</small></div>');
+           
+        }
+    }
+    
+    function muestraPalabra(palabra){
+        var val = $(palabra).attr("value");
+        var proceso="busquedaPalabras";
+        document.getElementById('alternativas').innerHTML='';
+        mostrarTraduccionIndividual(proceso,val);
+    }
+    
+    function mostrarTraduccionIndividual(proceso, letra){
+        var idioma=$("#idioma").val();
+        $.ajax({
+            url: 'ProcesoTraduccion_Controller',
+            data: {
+                "palabra": letra,
+                "idioma":idioma,
+                "proceso":proceso
+            },
+            async: false,
+            type: 'POST',
+            datatype: 'json',
+            success: function (data) {
+                        var listadoPalabras = data.listadoPalabras;
+                         var selogro=data.success;
+                         if(selogro===true){
+                             var listado="";
+                             listado="<ol>"
+                                $.each(listadoPalabras, function (index) {
+                                    listado=listado+"<li style='text-align: left'><h6>"+listadoPalabras[index]+"</h6></li>";            
+                                });
+                             listado=listado+"</ol>"
+                              $("#alternativas").append(listado);
+                      }
+                    }
+                });
+    }
      
     function ProcesoTraduccion(palabra,idioma){
+        var proceso="normal";
         $.ajax({
             url: 'ProcesoTraduccion_Controller',
             data: {
                 "palabra": palabra,
-                "idioma":idioma
+                "idioma":idioma,
+                "proceso":proceso
             },
             async: false,
             type: 'POST',
@@ -67,6 +248,7 @@
                              }                          
                     }                    
                 });
+       
     } 
             
   </script>
@@ -126,8 +308,9 @@
           <ul class="nav navbar-nav navbar-right">                 
             <li class="scroll active"><a href="#home">INICIO</a></li>
             <li class="scroll"><a href="#TRADUCTOR">TRADUCTOR</a></li> 
+            <li class="scroll"><a href="#MEJORANDO">MEJORANDO</a></li> 
             <li class="scroll"><a href="#about-us">NOSOTROS</a></li>                     
-            <li class="scroll"><a href="#portfolio">SUGERENCIAS</a></li>       
+            <li class="scroll"><a href="#contact">CONTACTANOS :)</a></li>       
           </ul>
         </div>
       </div>
@@ -139,14 +322,15 @@
         <div class="row">
           <div class="text-center col-sm-8 col-sm-offset-2">
             <h2>KUTIPAK UTC  <span>TRADUCTOR ONLINE </span></h2>
-            <p>Somos el traductor Espa&ntilde;ol - Kichwa (Ecuatoriano) Numero uno del mundo</p>
+            <p>Somos el traductor Espa&ntilde;ol - Kichwa (Ecuatoriano) N&uacutemero uno del mundo</p>
           </div>
         </div> 
       </div>
       <div class="text-center our-services">
           <div class="row">
-              <div class="col-md-2"></div>
+               <div class="col-md-2"></div>
               <div class="col-md-8">
+                  
               <form class="form-horizontal" >
                 
                 <div class="form-group">
@@ -173,15 +357,22 @@
                   </div>
                  
                 </div>
-                
+                  <br>
+                  <br>
+                  <br>
                 <div class="form-group">
                  
                   <div class="col-sm-6">
-                  <textarea class="form-control" rows="3" id="contenedorOriginal" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
+                    <textarea class="form-control" rows="3" id="contenedorOriginal" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
                   </div>
                   
-                  <div class="col-sm-6">
-                  <textarea class="form-control" rows="3" id="contenedorTraducido" placeholder="RESULTADO PALABRA YA TRADUCIDA"></textarea>
+                  <div  class="col-sm-6">
+                    <textarea class="form-control" rows="3" aria-describedby="helpBlock2" id="contenedorTraducido" placeholder="RESULTADO PALABRA YA TRADUCIDA"></textarea>
+                    <h6>clic sobre la palabra,para ver otras alternativas de traducción</h6>
+                    <div class="contenedor" id="contenedor"></div>
+                    <br>
+                    <br>
+                    <div class="alternativas" id="alternativas"></div>
                   </div>
                  
                 </div>
@@ -191,8 +382,10 @@
                   </div>
                   <div class="col-sm-4">
                     <button type="button" class="btn btn-primary active" id="traducir">
-                      <span class="glyphicon glyphicon-random active" aria-hidden="true"> <B> TRADUCIR </B></span> 
-                      </button>
+                      <span class="glyphicon glyphicon-random active" aria-hidden="true"> <B> TRADUCIR </B></span>
+                     </button>
+                      <br>
+                      <a href="#MEJORANDO"  class="scroll" >ayudanos a Mejorar</a>
                   </div>
                   <div class="col-sm-4">
                  </div>                 
@@ -204,42 +397,121 @@
       </div>
     </div>
   </section><!--/#services-->
-
+  
+  <section id="features" class="parallax">
+    <div class="container">
+      <div class="row count">
+        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms">
+          <i class="fa fa-user"></i>
+          <h3 class="timer" id="contador">gg</h3>
+          <p>Usuarios</p>
+        </div>
+        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
+          <i class="fa fa-desktop"></i>
+          <h3 class="timer" id="comentariosTotales">gg</h3>                    
+          <p>Comentarios</p>
+        </div> 
+        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="700ms">
+          <i class="fa fa-trophy"></i>
+          <h3 class="timer" id="rapidas">10</h3>                    
+          <p>Rapides en Tiempos</p>
+        </div> 
+        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="900ms">
+          <i class="fa fa-comment-o"></i>                    
+          <h3 class="timer" id="comentariosBuenos">gg</h3>
+          <p>Comentarios Buenos</p>
+        </div>                 
+      </div>
+    </div>
+  </section><!--/#features-->
+  
+  <!--Recoleccion de comentarios-->
+  <section id="MEJORANDO" >
+    <div class="container">
+      <div class="heading wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+        <div class="row">
+          <div class="text-center col-sm-8 col-sm-offset-2">
+            <h2>KUTIPAK UTC  <span>TRADUCTOR ONLINE </span></h2>
+            <p>Ayudanos a mejorar, todos tus sugerencias serán tomadas en cuenta</p>
+          </div>
+        </div> 
+      </div>
+      <div class="text-center our-services">
+          <div class="row">
+               <div class="col-md-4"></div>
+              <div class="col-md-4">                  
+              <form class="form-horizontal" >
+              
+                    <div class="form-group">
+                        <label for="TiempoResuesta" class="col-sm-9 control-label">Tu tiempo de traducción mejoro? ;)</label>
+                        <div class="col-sm-3">
+                            <input type="checkbox" id="TiempoResuesta">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Sirvio" class="col-sm-9 control-label">Te fue útil la traducción? ;)</label>
+                        <div class="col-sm-3">
+                            <input type="checkbox" id="Sirvio">
+                        </div>
+                    </div>
+                  <br>
+                    <div class="form-group">
+                      <textarea class="form-control" id="Comentario" rows="3" required="required"
+                                  placeholder="tu opinión es importante para nosotros, escribe lo que piensas sobre nuestra app"></textarea>
+                    </div>
+                    <button type="button" id ="recomendar" class="btn btn-primary" href="#features">Recomendar :D</button>
+             
+              </form>
+                  <br>
+                  <br>
+                  
+                    
+                  
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+           <table id="susComentarios" class="table table-hover">
+                      <th align="center">Comentarios Recientes</th>
+                  </table> 
+      </div>
+    </div>
+  </section>
+  
   <!--/#services-->
   <section id="about-us" class="parallax">
     <div class="container">
       <div class="row">
         <div class="col-sm-6">
           <div class="about-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <h2>About us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.Ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <h2>Nosotros</h2>
+            <p>Somos un grupo de tesistas que deseamos disminuir el tiempo que se invierte en el proceso de traduccion, del idioma español a kichwa por medio del uso de herramientas informaticas, que el usuario realize su tarea de la forma más rápida y precisa es nuestos objetivo, asi como fomentar el aprendisaje del idioma, como nuestro aporte a la cultura ansestral de nuestra nacion. </p>
+            <p>Todo se puede lograr con constancia, y este es uno de los proectos mas sobresalientes de los que hemos participado, y de los cuales creemos firmemente, por su benfecio social, por su buena actitud, y por que nos permite explotar nuestra habilidades en mejora, del idioma y de las personas que lo hablan, para que la cultura y la lengua permanesca muchos mas años recordandonos nuestro pasado, y guiando nuestro presente</p>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="our-skills wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
             <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-              <p class="lead">User Experiances</p>
+              <p class="lead">Experiencia con el Usuario</p>
               <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="95">95%</div>
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="90">90%</div>
               </div>
             </div>
             <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="400ms">
-              <p class="lead">Web Design</p>
+              <p class="lead">Diseño Web</p>
               <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="75">75%</div>
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="93">93%</div>
               </div>
             </div>
             <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
-              <p class="lead">Programming</p>
+              <p class="lead">Programación</p>
               <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="60">60%</div>
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="97">97%</div>
               </div>
             </div>
             <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-              <p class="lead">Fun</p>
+              <p class="lead">Divertida</p>
               <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="85">85%</div>
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="90">90%</div>
               </div>
             </div>
           </div>
@@ -252,8 +524,8 @@
     <div class="container">
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-          <h2>Our Portfolio</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
+          <h2>Nuestro Portafolio</h2>
+          <p>Centro Cultural de Idiomas Universidad Técncia de Cotopaxi</p>
         </div>
       </div> 
     </div>
@@ -439,8 +711,8 @@
     <div class="container">
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
-          <h2>The Team</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
+          <h2>Quienes lo hicimos posible</h2>
+          <p>El grupo de tesistas, y todos aquellos que de alguna u otra manera pusieron su granito de arena para hacer posible que este poryecto tenga existo</p>
         </div>
       </div>
       <div class="team-members">
@@ -534,243 +806,14 @@
     </div>
   </section><!--/#team-->
 
-  <section id="features" class="parallax">
-    <div class="container">
-      <div class="row count">
-        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms">
-          <i class="fa fa-user"></i>
-          <h3 class="timer">4000</h3>
-          <p>Happy Clients</p>
-        </div>
-        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
-          <i class="fa fa-desktop"></i>
-          <h3 class="timer">200</h3>                    
-          <p>Modern Websites</p>
-        </div> 
-        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="700ms">
-          <i class="fa fa-trophy"></i>
-          <h3 class="timer">10</h3>                    
-          <p>WINNING AWARDS</p>
-        </div> 
-        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="900ms">
-          <i class="fa fa-comment-o"></i>                    
-          <h3>24/7</h3>
-          <p>Fast Support</p>
-        </div>                 
-      </div>
-    </div>
-  </section><!--/#features-->
-
-  <section id="pricing">
-    <div class="container">
-      <div class="row">
-        <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
-          <h2>Pricing Table</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
-        </div>
-      </div>
-      <div class="pricing-table">
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
-              <h3>Basic</h3>
-              <div class="price">
-                $9<span>/Month</span>                          
-              </div>
-              <ul>
-                <li>Free Setup</li>
-                <li>10GB Storage</li>
-                <li>100GB Bandwith</li>
-                <li>5 Products</li>
-              </ul>
-              <a href="#" class="btn btn-lg btn-primary">Sign up</a>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
-              <h3>Standard</h3>
-              <div class="price">
-                $19<span>/Month</span>                                
-              </div>
-              <ul>
-                <li>Free Setup</li>
-                <li>10GB Storage</li>
-                <li>100GB Bandwith</li>
-                <li>5 Products</li>
-              </ul>
-              <a href="#" class="btn btn-lg btn-primary">Sign up</a>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-table featured wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
-              <h3>Featured</h3>
-              <div class="price">
-                $29<span>/Month</span>                                
-              </div>
-              <ul>
-                <li>Free Setup</li>
-                <li>10GB Storage</li>
-                <li>100GB Bandwith</li>
-                <li>5 Products</li>
-              </ul>
-              <a href="#" class="btn btn-lg btn-primary">Sign up</a>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
-              <h3>Professional</h3>
-              <div class="price">
-                $49<span>/Month</span>                    
-              </div>
-              <ul>
-                <li>Free Setup</li>
-                <li>10GB Storage</li>
-                <li>100GB Bandwith</li>
-                <li>5 Products</li>
-              </ul>
-              <a href="#" class="btn btn-lg btn-primary">Sign up</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section><!--/#pricing-->
-
-  <section id="twitter" class="parallax">
-    <div>
-      <a class="twitter-left-control" href="#twitter-carousel" role="button" data-slide="prev"><i class="fa fa-angle-left"></i></a>
-      <a class="twitter-right-control" href="#twitter-carousel" role="button" data-slide="next"><i class="fa fa-angle-right"></i></a>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2">
-            <div class="twitter-icon text-center">
-              <i class="fa fa-twitter"></i>
-              <h4>Themeum</h4>
-            </div>
-            <div id="twitter-carousel" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                <div class="item active wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
-                  <p>Introducing Shortcode generator for Helix V2 based templates <a href="#"><span>#helixframework #joomla</span> http://bit.ly/1qlgwav</a></p>
-                </div>
-                <div class="item">
-                  <p>Introducing Shortcode generator for Helix V2 based templates <a href="#"><span>#helixframework #joomla</span> http://bit.ly/1qlgwav</a></p>
-                </div>
-                <div class="item">                                
-                  <p>Introducing Shortcode generator for Helix V2 based templates <a href="#"><span>#helixframework #joomla</span> http://bit.ly/1qlgwav</a></p>
-                </div>
-              </div>                        
-            </div>                    
-          </div>
-        </div>
-      </div>
-    </div>
-  </section><!--/#twitter-->
-
-  <section id="blog">
-    <div class="container">
-      <div class="row">
-        <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
-          <h2>Blog Posts</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
-        </div>
-      </div>
-      <div class="blog-posts">
-        <div class="row">
-          <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">
-            <div class="post-thumb">
-              <a href="#"><img class="img-responsive" src="Cliente/images/blog/1.jpg" alt=""></a> 
-              <div class="post-meta">
-                <span><i class="fa fa-comments-o"></i> 3 Comments</span>
-                <span><i class="fa fa-heart"></i> 0 Likes</span> 
-              </div>
-              <div class="post-icon">
-                <i class="fa fa-pencil"></i>
-              </div>
-            </div>
-            <div class="entry-header">
-              <h3><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit</a></h3>
-              <span class="date">June 26, 2014</span>
-              <span class="cetagory">in <strong>Photography</strong></span>
-            </div>
-            <div class="entry-content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-            </div>
-          </div>
-          <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="600ms">
-            <div class="post-thumb">
-              <div id="post-carousel"  class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <li data-target="#post-carousel" data-slide-to="0" class="active"></li>
-                  <li data-target="#post-carousel" data-slide-to="1"></li>
-                  <li data-target="#post-carousel" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                  <div class="item active">
-                    <a href="#"><img class="img-responsive" src="Cliente/images/blog/2.jpg" alt=""></a>
-                  </div>
-                  <div class="item">
-                    <a href="#"><img class="img-responsive" src="Cliente/images/blog/1.jpg" alt=""></a>
-                  </div>
-                  <div class="item">
-                    <a href="#"><img class="img-responsive" src="Cliente/images/blog/3.jpg" alt=""></a>
-                  </div>
-                </div>                               
-                <a class="blog-left-control" href="#post-carousel" role="button" data-slide="prev"><i class="fa fa-angle-left"></i></a>
-                <a class="blog-right-control" href="#post-carousel" role="button" data-slide="next"><i class="fa fa-angle-right"></i></a>
-              </div>                            
-              <div class="post-meta">
-                <span><i class="fa fa-comments-o"></i> 3 Comments</span>
-                <span><i class="fa fa-heart"></i> 0 Likes</span> 
-              </div>
-              <div class="post-icon">
-                <i class="fa fa-picture-o"></i>
-              </div>
-            </div>
-            <div class="entry-header">
-              <h3><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit</a></h3>
-              <span class="date">June 26, 2014</span>
-              <span class="cetagory">in <strong>Photography</strong></span>
-            </div>
-            <div class="entry-content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-            </div>
-          </div>
-          <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="800ms">
-            <div class="post-thumb">
-              <a href="#"><img class="img-responsive" src="Cliente/images/blog/3.jpg" alt=""></a>
-              <div class="post-meta">
-                <span><i class="fa fa-comments-o"></i> 3 Comments</span>
-                <span><i class="fa fa-heart"></i> 0 Likes</span> 
-              </div>
-              <div class="post-icon">
-                <i class="fa fa-video-camera"></i>
-              </div>
-            </div>
-            <div class="entry-header">
-              <h3><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit</a></h3>
-              <span class="date">June 26, 2014</span>
-              <span class="cetagory">in <strong>Photography</strong></span>
-            </div>
-            <div class="entry-content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-            </div>
-          </div>                    
-        </div>
-        <div class="load-more wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-          <a href="#" class="btn-loadmore"><i class="fa fa-repeat"></i> Load More</a>
-        </div>                
-      </div>
-    </div>
-  </section><!--/#blog-->
-
   <section id="contact">
-    <div id="google-map" class="wow fadeIn" data-latitude="52.365629" data-longitude="4.871331" data-wow-duration="1000ms" data-wow-delay="400ms"></div>
+    <div id="google-map" class="wow fadeIn" data-latitude="-0.2064371" data-longitude="-78.4990202" data-wow-duration="1000ms" data-wow-delay="400ms"></div>
     <div id="contact-us" class="parallax">
       <div class="container">
         <div class="row">
           <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <h2>Contact Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
+            <h2>Contactanos</h2>
+            <p>Si necesitas algo en especial o simplemente hacernos saber lo que piensas, ponte en contacto con nosotros</p>
           </div>
         </div>
         <div class="contact-form wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -780,34 +823,35 @@
                 <div class="row  wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <input type="text" name="name" class="form-control" placeholder="Name" required="required">
+                      <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" required="required">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <input type="email" name="email" class="form-control" placeholder="Email Address" required="required">
+                      <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required="required">
                     </div>
                   </div>
                 </div>
+                  
                 <div class="form-group">
-                  <input type="text" name="subject" class="form-control" placeholder="Subject" required="required">
+                  <input type="text" name="Asunto" id="Asunto" class="form-control" placeholder="Asunto" required="required">
                 </div>
                 <div class="form-group">
-                  <textarea name="message" id="message" class="form-control" rows="4" placeholder="Enter your message" required="required"></textarea>
+                  <textarea name="mensaje" id="message" class="form-control" rows="4" placeholder="Escribe tu mensaje por favor" required="required"></textarea>
                 </div>                        
                 <div class="form-group">
-                  <button type="submit" class="btn-submit">Send Now</button>
+                  <button type="button" id="Correo" class="btn-submit">Enviar Ahora</button>
                 </div>
               </form>   
             </div>
             <div class="col-sm-6">
               <div class="contact-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <p>Contactanos con otras alternativas</p>
                 <ul class="address">
-                  <li><i class="fa fa-map-marker"></i> <span> Address:</span> 2400 South Avenue A </li>
-                  <li><i class="fa fa-phone"></i> <span> Phone:</span> +928 336 2000  </li>
-                  <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:someone@yoursite.com"> support@oxygen.com</a></li>
-                  <li><i class="fa fa-globe"></i> <span> Website:</span> <a href="#">www.sitename.com</a></li>
+                  <li><i class="fa fa-map-marker"></i> <span> Direccion:</span> Av.Patria y 10 de Agosto, edificio de prestamos </li>
+                  <li><i class="fa fa-phone"></i> <span> Telefono:</span> 022557352/022557353  </li>
+                  <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="luis.caiza@smartwork.com.ec"> support@oxygen.com</a></li>
+                  <li><i class="fa fa-globe"></i> <span> Website:</span> <a href="#">www.KutipakUTC.com</a></li>
                 </ul>
               </div>                            
             </div>
@@ -838,11 +882,9 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-6">
-            <p>&copy; 2014 Oxygen Theme.</p>
+            <p>&copy; 2016 Kutipak UTC derechos reservados.</p>
           </div>
-          <div class="col-sm-6">
-            <p class="pull-right">Designed by <a href="http://www.themeum.com/">Themeum</a></p>
-          </div>
+          
         </div>
       </div>
     </div>

@@ -11,21 +11,25 @@ import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
 
+import persistencia.tables.Contador;
 import persistencia.tables.Estructura;
 import persistencia.tables.Estructurapalabras;
 import persistencia.tables.Idiomas;
 import persistencia.tables.Palabras;
 import persistencia.tables.Palabrassubfijosprefijos;
 import persistencia.tables.Personas;
+import persistencia.tables.Sugerencias;
 import persistencia.tables.Tiempos;
 import persistencia.tables.Tipospalabras;
 import persistencia.tables.Usuario;
+import persistencia.tables.records.ContadorRecord;
 import persistencia.tables.records.EstructuraRecord;
 import persistencia.tables.records.EstructurapalabrasRecord;
 import persistencia.tables.records.IdiomasRecord;
 import persistencia.tables.records.PalabrasRecord;
 import persistencia.tables.records.PalabrassubfijosprefijosRecord;
 import persistencia.tables.records.PersonasRecord;
+import persistencia.tables.records.SugerenciasRecord;
 import persistencia.tables.records.TiemposRecord;
 import persistencia.tables.records.TipospalabrasRecord;
 import persistencia.tables.records.UsuarioRecord;
@@ -49,11 +53,13 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<ContadorRecord, Integer> IDENTITY_CONTADOR = Identities0.IDENTITY_CONTADOR;
 	public static final Identity<EstructuraRecord, Integer> IDENTITY_ESTRUCTURA = Identities0.IDENTITY_ESTRUCTURA;
 	public static final Identity<IdiomasRecord, Integer> IDENTITY_IDIOMAS = Identities0.IDENTITY_IDIOMAS;
 	public static final Identity<PalabrasRecord, Integer> IDENTITY_PALABRAS = Identities0.IDENTITY_PALABRAS;
 	public static final Identity<PalabrassubfijosprefijosRecord, Integer> IDENTITY_PALABRASSUBFIJOSPREFIJOS = Identities0.IDENTITY_PALABRASSUBFIJOSPREFIJOS;
 	public static final Identity<PersonasRecord, Integer> IDENTITY_PERSONAS = Identities0.IDENTITY_PERSONAS;
+	public static final Identity<SugerenciasRecord, Integer> IDENTITY_SUGERENCIAS = Identities0.IDENTITY_SUGERENCIAS;
 	public static final Identity<TiemposRecord, Integer> IDENTITY_TIEMPOS = Identities0.IDENTITY_TIEMPOS;
 	public static final Identity<TipospalabrasRecord, Integer> IDENTITY_TIPOSPALABRAS = Identities0.IDENTITY_TIPOSPALABRAS;
 	public static final Identity<UsuarioRecord, Integer> IDENTITY_USUARIO = Identities0.IDENTITY_USUARIO;
@@ -62,12 +68,14 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final UniqueKey<ContadorRecord> KEY_CONTADOR_PRIMARY = UniqueKeys0.KEY_CONTADOR_PRIMARY;
 	public static final UniqueKey<EstructuraRecord> KEY_ESTRUCTURA_PRIMARY = UniqueKeys0.KEY_ESTRUCTURA_PRIMARY;
 	public static final UniqueKey<EstructurapalabrasRecord> KEY_ESTRUCTURAPALABRAS_PRIMARY = UniqueKeys0.KEY_ESTRUCTURAPALABRAS_PRIMARY;
 	public static final UniqueKey<IdiomasRecord> KEY_IDIOMAS_PRIMARY = UniqueKeys0.KEY_IDIOMAS_PRIMARY;
 	public static final UniqueKey<PalabrasRecord> KEY_PALABRAS_PRIMARY = UniqueKeys0.KEY_PALABRAS_PRIMARY;
 	public static final UniqueKey<PalabrassubfijosprefijosRecord> KEY_PALABRASSUBFIJOSPREFIJOS_PRIMARY = UniqueKeys0.KEY_PALABRASSUBFIJOSPREFIJOS_PRIMARY;
 	public static final UniqueKey<PersonasRecord> KEY_PERSONAS_PRIMARY = UniqueKeys0.KEY_PERSONAS_PRIMARY;
+	public static final UniqueKey<SugerenciasRecord> KEY_SUGERENCIAS_PRIMARY = UniqueKeys0.KEY_SUGERENCIAS_PRIMARY;
 	public static final UniqueKey<TiemposRecord> KEY_TIEMPOS_PRIMARY = UniqueKeys0.KEY_TIEMPOS_PRIMARY;
 	public static final UniqueKey<TipospalabrasRecord> KEY_TIPOSPALABRAS_PRIMARY = UniqueKeys0.KEY_TIPOSPALABRAS_PRIMARY;
 	public static final UniqueKey<UsuarioRecord> KEY_USUARIO_PRIMARY = UniqueKeys0.KEY_USUARIO_PRIMARY;
@@ -89,23 +97,27 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends AbstractKeys {
+		public static Identity<ContadorRecord, Integer> IDENTITY_CONTADOR = createIdentity(Contador.CONTADOR, Contador.CONTADOR.CONTADORID);
 		public static Identity<EstructuraRecord, Integer> IDENTITY_ESTRUCTURA = createIdentity(Estructura.ESTRUCTURA, Estructura.ESTRUCTURA.ESTRUCTURAID);
 		public static Identity<IdiomasRecord, Integer> IDENTITY_IDIOMAS = createIdentity(Idiomas.IDIOMAS, Idiomas.IDIOMAS.IDIOMAID);
 		public static Identity<PalabrasRecord, Integer> IDENTITY_PALABRAS = createIdentity(Palabras.PALABRAS, Palabras.PALABRAS.PALABRAID);
 		public static Identity<PalabrassubfijosprefijosRecord, Integer> IDENTITY_PALABRASSUBFIJOSPREFIJOS = createIdentity(Palabrassubfijosprefijos.PALABRASSUBFIJOSPREFIJOS, Palabrassubfijosprefijos.PALABRASSUBFIJOSPREFIJOS.ID);
 		public static Identity<PersonasRecord, Integer> IDENTITY_PERSONAS = createIdentity(Personas.PERSONAS, Personas.PERSONAS.PERSONAID);
+		public static Identity<SugerenciasRecord, Integer> IDENTITY_SUGERENCIAS = createIdentity(Sugerencias.SUGERENCIAS, Sugerencias.SUGERENCIAS.SUGERENCIASID);
 		public static Identity<TiemposRecord, Integer> IDENTITY_TIEMPOS = createIdentity(Tiempos.TIEMPOS, Tiempos.TIEMPOS.TIEMPOSID);
 		public static Identity<TipospalabrasRecord, Integer> IDENTITY_TIPOSPALABRAS = createIdentity(Tipospalabras.TIPOSPALABRAS, Tipospalabras.TIPOSPALABRAS.TIPOID);
 		public static Identity<UsuarioRecord, Integer> IDENTITY_USUARIO = createIdentity(Usuario.USUARIO, Usuario.USUARIO.USUARIOID);
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<ContadorRecord> KEY_CONTADOR_PRIMARY = createUniqueKey(Contador.CONTADOR, Contador.CONTADOR.CONTADORID);
 		public static final UniqueKey<EstructuraRecord> KEY_ESTRUCTURA_PRIMARY = createUniqueKey(Estructura.ESTRUCTURA, Estructura.ESTRUCTURA.ESTRUCTURAID);
 		public static final UniqueKey<EstructurapalabrasRecord> KEY_ESTRUCTURAPALABRAS_PRIMARY = createUniqueKey(Estructurapalabras.ESTRUCTURAPALABRAS, Estructurapalabras.ESTRUCTURAPALABRAS.TIPOID);
 		public static final UniqueKey<IdiomasRecord> KEY_IDIOMAS_PRIMARY = createUniqueKey(Idiomas.IDIOMAS, Idiomas.IDIOMAS.IDIOMAID);
 		public static final UniqueKey<PalabrasRecord> KEY_PALABRAS_PRIMARY = createUniqueKey(Palabras.PALABRAS, Palabras.PALABRAS.PALABRAID);
 		public static final UniqueKey<PalabrassubfijosprefijosRecord> KEY_PALABRASSUBFIJOSPREFIJOS_PRIMARY = createUniqueKey(Palabrassubfijosprefijos.PALABRASSUBFIJOSPREFIJOS, Palabrassubfijosprefijos.PALABRASSUBFIJOSPREFIJOS.ID);
 		public static final UniqueKey<PersonasRecord> KEY_PERSONAS_PRIMARY = createUniqueKey(Personas.PERSONAS, Personas.PERSONAS.PERSONAID);
+		public static final UniqueKey<SugerenciasRecord> KEY_SUGERENCIAS_PRIMARY = createUniqueKey(Sugerencias.SUGERENCIAS, Sugerencias.SUGERENCIAS.SUGERENCIASID);
 		public static final UniqueKey<TiemposRecord> KEY_TIEMPOS_PRIMARY = createUniqueKey(Tiempos.TIEMPOS, Tiempos.TIEMPOS.TIEMPOSID);
 		public static final UniqueKey<TipospalabrasRecord> KEY_TIPOSPALABRAS_PRIMARY = createUniqueKey(Tipospalabras.TIPOSPALABRAS, Tipospalabras.TIPOSPALABRAS.TIPOID);
 		public static final UniqueKey<UsuarioRecord> KEY_USUARIO_PRIMARY = createUniqueKey(Usuario.USUARIO, Usuario.USUARIO.USUARIOID);

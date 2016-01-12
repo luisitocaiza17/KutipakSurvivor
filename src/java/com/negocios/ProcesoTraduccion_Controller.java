@@ -5,17 +5,27 @@
  */
 package com.negocios;
 
+import Utils.Utilitarios;
+import com.datos.DAO.ContadorDAO;
 import com.datos.DAO.PalabrasDAO;
+import com.datos.DAO.SugerenciasDAO;
 import com.motorTraduccion.Descompositor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import persistencia.tables.Contador;
+import persistencia.tables.records.ContadorRecord;
 import persistencia.tables.records.PalabrasRecord;
+import persistencia.tables.records.PantallapalabrasRecord;
+import persistencia.tables.records.SugerenciasRecord;
 
 /**
  *
@@ -80,22 +90,130 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
         JSONObject result = new JSONObject();
         String palabra = request.getParameter("palabra") == null ? "" : request.getParameter("palabra");
         String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
+        String proceso = request.getParameter("proceso") == null ? "" : request.getParameter("proceso");
         
-        palabra= palabra.toUpperCase();
-        
-        PalabrasDAO palabraProcesos= new PalabrasDAO();
-        PalabrasRecord palabraObjeto = new PalabrasRecord();
-	palabraObjeto.setNombrepalabra(palabra);
-        palabraObjeto.setIdiomaid(Integer.parseInt(idioma));
+       
         try{
-            /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
-            Descompositor descompositor = new Descompositor();
-            String traduccionCompleta= descompositor.descompositorOraciones(palabra,Integer.parseInt(idioma));
-            result.put("success", Boolean.TRUE);
-            result.put("mensaje", " PROCESO CORRECTO "); 
-            result.put("traduccion", traduccionCompleta); 
-            response.setContentType("application/json; charset=ISO-8859-1"); 
-            result.write(response.getWriter());
+            if(proceso.equals("normal")){
+                palabra= palabra.toUpperCase();
+                PalabrasDAO palabraProcesos= new PalabrasDAO();
+                PalabrasRecord palabraObjeto = new PalabrasRecord();
+                palabraObjeto.setNombrepalabra(palabra);
+                palabraObjeto.setIdiomaid(Integer.parseInt(idioma));
+                /***1).PROCESO DE DESCOMPOSICION DE PALABRAS***/
+                Descompositor descompositor = new Descompositor();
+                String traduccionCompleta= descompositor.descompositorOraciones(palabra,Integer.parseInt(idioma));
+                result.put("success", Boolean.TRUE);
+                result.put("mensaje", " PROCESO CORRECTO "); 
+                result.put("traduccion", traduccionCompleta); 
+                response.setContentType("application/json; charset=ISO-8859-1"); 
+                result.write(response.getWriter());
+            }
+            if(proceso.equals("busquedaPalabras")){
+                 palabra= palabra.toUpperCase();
+                PalabrasDAO palabraProcesos= new PalabrasDAO();
+                PalabrasRecord palabraObjeto = new PalabrasRecord();
+                palabraObjeto.setNombrepalabra(palabra);
+                palabraObjeto.setIdiomaid(Integer.parseInt(idioma));
+                Descompositor descompositor = new Descompositor();
+                ArrayList<String> traduccionCompleta= descompositor.descompositorOraciones2(palabra,Integer.parseInt(idioma));
+                JSONArray JSONArrayTipos = new JSONArray();
+                JSONArray JSONTraducciones = new JSONArray();
+                for(String palabraIndividual:traduccionCompleta){
+                        JSONArrayTipos.add(palabraIndividual);
+                 }
+                result.put("listadoPalabras", JSONArrayTipos);
+                result.put("success", Boolean.TRUE);
+                result.put("mensaje", " PROCESO CORRECTO "); 
+                result.put("traduccion", traduccionCompleta); 
+                response.setContentType("application/json; charset=ISO-8859-1"); 
+                result.write(response.getWriter());
+            }
+            if(proceso.equals("contador")){
+                ContadorDAO contadorDAO = new ContadorDAO();
+                int contadorActual= contadorDAO.consultar();
+                SugerenciasDAO sugerenciasDAO = new SugerenciasDAO();
+                int contadorActualSugerencias= sugerenciasDAO.ContadorSugerencias();
+                int contadorTiemposExitosos=sugerenciasDAO.ContadorTiemposExitosos();
+                int contadorComentariosBuenos=sugerenciasDAO.ContadorConsultasExitosas();
+                ContadorRecord nuevoContador= new ContadorRecord();
+                nuevoContador.setValor(contadorActual++);
+                contadorDAO.InsertarNumero(nuevoContador);
+                //sugerencias completas
+                ArrayList<SugerenciasRecord> sugerenciasRecord = new ArrayList<SugerenciasRecord>();
+                sugerenciasRecord=sugerenciasDAO.ConsultaSugerencias();
+                JSONObject planJSONObject = new JSONObject();
+                JSONArray JSONArrayTipos = new JSONArray();
+                JSONArray JSONTraducciones = new JSONArray();
+                for(SugerenciasRecord rs:sugerenciasRecord){
+                    planJSONObject.put("comentario", rs.getComentario());
+                    JSONArrayTipos.add(planJSONObject);
+                }
+                result.put("comentariosRegitrados", JSONArrayTipos);
+                result.put("success", Boolean.TRUE);
+                result.put("contador", contadorActual);
+                result.put("contadorSugerencias", contadorActualSugerencias);
+                result.put("rapidas", contadorTiemposExitosos);
+                 result.put("comentariosBuenos", contadorComentariosBuenos);
+                response.setContentType("application/json; charset=ISO-8859-1"); 
+                result.write(response.getWriter());
+            }
+            if(proceso.equals("comentarios")){
+                SugerenciasDAO sugerenciasDAO = new SugerenciasDAO();
+                int contadorActual= sugerenciasDAO.ContadorSugerencias();
+                SugerenciasRecord nuevaSugerencia= new SugerenciasRecord();
+                String tiempo = request.getParameter("tiempo") == null ? "" : request.getParameter("tiempo");
+                String sirvio = request.getParameter("sirvio") == null ? "" : request.getParameter("sirvio");
+                String comentario = request.getParameter("comentario") == null ? "" : request.getParameter("comentario");
+                
+                boolean tiemporespuesta=false;
+                if(tiempo.equals("SI"))
+                    tiemporespuesta=true;
+                boolean sirviorespuesta=false;
+                if(sirvio.equals("SI"))
+                    sirviorespuesta=true; 
+                
+                nuevaSugerencia.setSirvio(tiemporespuesta);
+                nuevaSugerencia.setTiempo(sirviorespuesta);
+                nuevaSugerencia.setComentario(comentario);
+                int contadorTiemposExitosos=sugerenciasDAO.ContadorTiemposExitosos();
+                int contadorComentariosBuenos=sugerenciasDAO.ContadorConsultasExitosas();
+                sugerenciasDAO.GrabarSugerencia(nuevaSugerencia);
+                
+                
+                //sugerencias completas
+                ArrayList<SugerenciasRecord> sugerenciasRecord = new ArrayList<SugerenciasRecord>();
+                sugerenciasRecord=sugerenciasDAO.ConsultaSugerencias();
+                JSONObject planJSONObject = new JSONObject();
+                JSONArray JSONArrayTipos = new JSONArray();
+                JSONArray JSONTraducciones = new JSONArray();
+                for(SugerenciasRecord rs:sugerenciasRecord){
+                    planJSONObject.put("comentario", rs.getComentario());
+                    JSONArrayTipos.add(planJSONObject);
+                }
+                result.put("comentariosRegitrados", JSONArrayTipos);
+                result.put("success", Boolean.TRUE);
+                result.put("contadorSugerencias", contadorActual);
+                result.put("rapidas", contadorTiemposExitosos);
+                result.put("comentariosBuenos", contadorComentariosBuenos);
+                response.setContentType("application/json; charset=ISO-8859-1"); 
+                result.write(response.getWriter());
+            }
+            if(proceso.equals("correo")){
+                String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre");
+                String email = request.getParameter("email") == null ? "" : request.getParameter("email");
+                String Asunto = request.getParameter("Asunto") == null ? "" : request.getParameter("Asunto");
+                String mensaje = request.getParameter("message") == null ? "" : request.getParameter("message");
+                
+                
+                
+                Utilitarios utils = new  Utilitarios();
+                Utilitarios.envioMail("luis.caiza@smartwork.com.ec", Asunto+ " "+nombre,email+"  "+ mensaje);
+                        
+                result.put("success", Boolean.TRUE);
+                response.setContentType("application/json; charset=ISO-8859-1"); 
+                result.write(response.getWriter());
+            }
             
         }catch(Exception e){
             e.printStackTrace();
@@ -104,8 +222,6 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
             response.setContentType("application/json; charset=ISO-8859-1"); 
             result.write(response.getWriter());
         }
-        
-        
     }
 
     /**

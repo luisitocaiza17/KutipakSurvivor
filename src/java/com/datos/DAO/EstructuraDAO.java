@@ -26,7 +26,7 @@ import persistencia.tables.records.EstructuraRecord;
 public class EstructuraDAO {
     public List<EstructuraRecord> ConsultarEstrutura () throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
-    List<EstructuraRecord>listadoEstructuras= new ArrayList<EstructuraRecord>();
+        List<EstructuraRecord>listadoEstructuras= new ArrayList<EstructuraRecord>();
         Connection conexion= con.realiza_conexion();
         DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
         Result<Record> result = create.select().from(ESTRUCTURA).fetch();

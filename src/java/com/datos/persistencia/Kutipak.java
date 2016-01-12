@@ -13,6 +13,7 @@ import javax.annotation.Generated;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
+import persistencia.tables.Contador;
 import persistencia.tables.Estructura;
 import persistencia.tables.Estructurapalabras;
 import persistencia.tables.Idiomas;
@@ -20,6 +21,7 @@ import persistencia.tables.Palabras;
 import persistencia.tables.Palabrassubfijosprefijos;
 import persistencia.tables.Pantallapalabras;
 import persistencia.tables.Personas;
+import persistencia.tables.Sugerencias;
 import persistencia.tables.Tiempos;
 import persistencia.tables.Tipospalabras;
 import persistencia.tables.Usuario;
@@ -38,7 +40,7 @@ import persistencia.tables.Usuario;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Kutipak extends SchemaImpl {
 
-	private static final long serialVersionUID = -758663102;
+	private static final long serialVersionUID = -339172431;
 
 	/**
 	 * The reference instance of <code>kutipak</code>
@@ -61,6 +63,7 @@ public class Kutipak extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
+			Contador.CONTADOR,
 			Estructura.ESTRUCTURA,
 			Estructurapalabras.ESTRUCTURAPALABRAS,
 			Idiomas.IDIOMAS,
@@ -68,6 +71,7 @@ public class Kutipak extends SchemaImpl {
 			Palabrassubfijosprefijos.PALABRASSUBFIJOSPREFIJOS,
 			Pantallapalabras.PANTALLAPALABRAS,
 			Personas.PERSONAS,
+			Sugerencias.SUGERENCIAS,
 			Tiempos.TIEMPOS,
 			Tipospalabras.TIPOSPALABRAS,
 			Usuario.USUARIO);

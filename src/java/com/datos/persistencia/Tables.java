@@ -6,6 +6,7 @@ package persistencia;
 
 import javax.annotation.Generated;
 
+import persistencia.tables.Contador;
 import persistencia.tables.Estructura;
 import persistencia.tables.Estructurapalabras;
 import persistencia.tables.Idiomas;
@@ -13,6 +14,7 @@ import persistencia.tables.Palabras;
 import persistencia.tables.Palabrassubfijosprefijos;
 import persistencia.tables.Pantallapalabras;
 import persistencia.tables.Personas;
+import persistencia.tables.Sugerencias;
 import persistencia.tables.Tiempos;
 import persistencia.tables.Tipospalabras;
 import persistencia.tables.Usuario;
@@ -30,6 +32,11 @@ import persistencia.tables.Usuario;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+	/**
+	 * The table kutipak.contador
+	 */
+	public static final Contador CONTADOR = persistencia.tables.Contador.CONTADOR;
 
 	/**
 	 * The table kutipak.estructura
@@ -65,6 +72,11 @@ public class Tables {
 	 * The table kutipak.personas
 	 */
 	public static final Personas PERSONAS = persistencia.tables.Personas.PERSONAS;
+
+	/**
+	 * The table kutipak.sugerencias
+	 */
+	public static final Sugerencias SUGERENCIAS = persistencia.tables.Sugerencias.SUGERENCIAS;
 
 	/**
 	 * The table kutipak.tiempos
