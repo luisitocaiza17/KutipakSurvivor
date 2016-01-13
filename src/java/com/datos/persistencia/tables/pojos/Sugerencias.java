@@ -5,6 +5,7 @@ package persistencia.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.annotation.Generated;
 
@@ -22,12 +23,13 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sugerencias implements Serializable {
 
-	private static final long serialVersionUID = 1867954836;
+	private static final long serialVersionUID = 1611501543;
 
-	private Integer sugerenciasid;
-	private Boolean sirvio;
-	private Boolean tiempo;
-	private String  comentario;
+	private Integer   sugerenciasid;
+	private Boolean   sirvio;
+	private Boolean   tiempo;
+	private String    comentario;
+	private Timestamp fecha;
 
 	public Sugerencias() {}
 
@@ -36,18 +38,21 @@ public class Sugerencias implements Serializable {
 		this.sirvio = value.sirvio;
 		this.tiempo = value.tiempo;
 		this.comentario = value.comentario;
+		this.fecha = value.fecha;
 	}
 
 	public Sugerencias(
-		Integer sugerenciasid,
-		Boolean sirvio,
-		Boolean tiempo,
-		String  comentario
+		Integer   sugerenciasid,
+		Boolean   sirvio,
+		Boolean   tiempo,
+		String    comentario,
+		Timestamp fecha
 	) {
 		this.sugerenciasid = sugerenciasid;
 		this.sirvio = sirvio;
 		this.tiempo = tiempo;
 		this.comentario = comentario;
+		this.fecha = fecha;
 	}
 
 	public Integer getSugerenciasid() {
@@ -80,5 +85,13 @@ public class Sugerencias implements Serializable {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+
+	public Timestamp getFecha() {
+		return this.fecha;
+	}
+
+	public void setFecha(Timestamp fecha) {
+		this.fecha = fecha;
 	}
 }

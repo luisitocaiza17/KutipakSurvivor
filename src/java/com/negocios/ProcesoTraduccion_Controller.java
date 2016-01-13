@@ -12,7 +12,9 @@ import com.datos.DAO.SugerenciasDAO;
 import com.motorTraduccion.Descompositor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -136,8 +138,11 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
                 int contadorActualSugerencias= sugerenciasDAO.ContadorSugerencias();
                 int contadorTiemposExitosos=sugerenciasDAO.ContadorTiemposExitosos();
                 int contadorComentariosBuenos=sugerenciasDAO.ContadorConsultasExitosas();
+                Date fecha = new Date();
+                Timestamp fechaActual = new Timestamp(fecha.getTime());
                 ContadorRecord nuevoContador= new ContadorRecord();
                 nuevoContador.setValor(contadorActual++);
+                nuevoContador.setFecha(fechaActual);
                 contadorDAO.InsertarNumero(nuevoContador);
                 //sugerencias completas
                 ArrayList<SugerenciasRecord> sugerenciasRecord = new ArrayList<SugerenciasRecord>();
@@ -172,7 +177,9 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
                 boolean sirviorespuesta=false;
                 if(sirvio.equals("SI"))
                     sirviorespuesta=true; 
-                
+                Date fecha = new Date();
+                Timestamp fechaActual = new Timestamp(fecha.getTime());
+                nuevaSugerencia.setFecha(fechaActual);
                 nuevaSugerencia.setSirvio(tiemporespuesta);
                 nuevaSugerencia.setTiempo(sirviorespuesta);
                 nuevaSugerencia.setComentario(comentario);

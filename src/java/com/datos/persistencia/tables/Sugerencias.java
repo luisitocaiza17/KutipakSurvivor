@@ -4,6 +4,7 @@
 package persistencia.tables;
 
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import persistencia.tables.records.SugerenciasRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sugerencias extends TableImpl<SugerenciasRecord> {
 
-	private static final long serialVersionUID = -1855717341;
+	private static final long serialVersionUID = -186976833;
 
 	/**
 	 * The reference instance of <code>kutipak.sugerencias</code>
@@ -68,6 +69,11 @@ public class Sugerencias extends TableImpl<SugerenciasRecord> {
 	 * The column <code>kutipak.sugerencias.comentario</code>.
 	 */
 	public final TableField<SugerenciasRecord, String> COMENTARIO = createField("comentario", org.jooq.impl.SQLDataType.VARCHAR.length(500), this, "");
+
+	/**
+	 * The column <code>kutipak.sugerencias.fecha</code>.
+	 */
+	public final TableField<SugerenciasRecord, Timestamp> FECHA = createField("fecha", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * Create a <code>kutipak.sugerencias</code> table reference

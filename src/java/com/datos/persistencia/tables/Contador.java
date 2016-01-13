@@ -4,6 +4,7 @@
 package persistencia.tables;
 
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import persistencia.tables.records.ContadorRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Contador extends TableImpl<ContadorRecord> {
 
-	private static final long serialVersionUID = 1923133153;
+	private static final long serialVersionUID = -1973606551;
 
 	/**
 	 * The reference instance of <code>kutipak.contador</code>
@@ -58,6 +59,11 @@ public class Contador extends TableImpl<ContadorRecord> {
 	 * The column <code>kutipak.contador.valor</code>.
 	 */
 	public final TableField<ContadorRecord, Integer> VALOR = createField("valor", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>kutipak.contador.fecha</code>.
+	 */
+	public final TableField<ContadorRecord, Timestamp> FECHA = createField("fecha", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * Create a <code>kutipak.contador</code> table reference

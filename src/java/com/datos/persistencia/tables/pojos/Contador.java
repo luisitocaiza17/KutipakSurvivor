@@ -5,6 +5,7 @@ package persistencia.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.annotation.Generated;
 
@@ -22,24 +23,28 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Contador implements Serializable {
 
-	private static final long serialVersionUID = -200729851;
+	private static final long serialVersionUID = 1478767818;
 
-	private Integer contadorid;
-	private Integer valor;
+	private Integer   contadorid;
+	private Integer   valor;
+	private Timestamp fecha;
 
 	public Contador() {}
 
 	public Contador(Contador value) {
 		this.contadorid = value.contadorid;
 		this.valor = value.valor;
+		this.fecha = value.fecha;
 	}
 
 	public Contador(
-		Integer contadorid,
-		Integer valor
+		Integer   contadorid,
+		Integer   valor,
+		Timestamp fecha
 	) {
 		this.contadorid = contadorid;
 		this.valor = valor;
+		this.fecha = fecha;
 	}
 
 	public Integer getContadorid() {
@@ -56,5 +61,13 @@ public class Contador implements Serializable {
 
 	public void setValor(Integer valor) {
 		this.valor = valor;
+	}
+
+	public Timestamp getFecha() {
+		return this.fecha;
+	}
+
+	public void setFecha(Timestamp fecha) {
+		this.fecha = fecha;
 	}
 }

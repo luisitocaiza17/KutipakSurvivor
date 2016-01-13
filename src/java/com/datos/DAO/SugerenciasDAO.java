@@ -95,8 +95,8 @@ public class SugerenciasDAO {
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();
 	DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
-        create.insertInto(Sugerencias.SUGERENCIAS,Sugerencias.SUGERENCIAS.SIRVIO,Sugerencias.SUGERENCIAS.TIEMPO,Sugerencias.SUGERENCIAS.COMENTARIO)
-                .values(sugerencia.getSirvio(),sugerencia.getTiempo(),sugerencia.getComentario()).execute();
+        create.insertInto(Sugerencias.SUGERENCIAS,Sugerencias.SUGERENCIAS.SIRVIO,Sugerencias.SUGERENCIAS.TIEMPO,Sugerencias.SUGERENCIAS.COMENTARIO,Sugerencias.SUGERENCIAS.FECHA)
+                .values(sugerencia.getSirvio(),sugerencia.getTiempo(),sugerencia.getComentario(),sugerencia.getFecha()).execute();
         conexion.close();
         return true;
     }

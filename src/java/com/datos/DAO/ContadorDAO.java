@@ -44,8 +44,8 @@ public class ContadorDAO {
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();
 	DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
-        create.insertInto(Contador.CONTADOR,Contador.CONTADOR.VALOR)
-                .values(contadorEntrante.getValor()).execute();
+        create.insertInto(Contador.CONTADOR,Contador.CONTADOR.VALOR,Contador.CONTADOR.FECHA)
+                .values(contadorEntrante.getValor(),contadorEntrante.getFecha()).execute();
         conexion.close();
         return true;
     }
