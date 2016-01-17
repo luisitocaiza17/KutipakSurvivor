@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: kutipak
+-- Host: localhost    Database: kutipak
 -- ------------------------------------------------------
 -- Server version	5.5.33
 
@@ -27,8 +27,9 @@ CREATE TABLE `sugerencias` (
   `sirvio` bit(1) DEFAULT NULL,
   `tiempo` bit(1) DEFAULT NULL,
   `comentario` varchar(500) DEFAULT NULL,
+  `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`sugerenciasID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +38,7 @@ CREATE TABLE `sugerencias` (
 
 LOCK TABLES `sugerencias` WRITE;
 /*!40000 ALTER TABLE `sugerencias` DISABLE KEYS */;
-INSERT INTO `sugerencias` VALUES (1,'','\0','seeee'),(2,'','\0','pruebas'),(3,'','',''),(4,'','','sf'),(5,'\0','\0','PRUEBAS'),(6,'','\0',''),(7,'\0','','FHDH'),(8,'','\0','todo correcto'),(9,'','','todo correcto'),(10,'','','todo correcto'),(11,'','\0','todo bien'),(12,'','','pruebas'),(13,'','','sadfasfda'),(14,'','','sadfasfdaasdf'),(15,'','','sadfasfdaasdf'),(16,'','','sadfasfdaasdfsfadfsf'),(17,'','','sadfasfdaasdfsfadfsf'),(18,'','',''),(19,'','','dddsfgs'),(20,'','',''),(21,'','','asdasd'),(22,'','','asdasd'),(23,'','','ASDFASFD'),(24,'','','ASDFASFD'),(25,'','','ASDFASFD'),(26,'','','ASDFASFD'),(27,'','',''),(28,'','',''),(29,'','',''),(30,'','',''),(31,'','','sdfa'),(32,'','','PRUEBAS CON COMENTARIOS'),(33,'','','PRUEBAS CON COMENTARIOS'),(34,'','','PRUEBAS CON COMENTARIOS 4'),(35,'','','PRUEBAS CON COMENTARIOS SDFSAFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'),(36,'','','PRUEBAS CON COMENTARIOS SDFSAFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+INSERT INTO `sugerencias` VALUES (1,'','\0','seeee',NULL),(2,'','\0','pruebas',NULL),(3,'','','',NULL),(4,'','','sf',NULL),(5,'\0','\0','PRUEBAS',NULL),(6,'','\0','',NULL),(7,'\0','','FHDH',NULL),(8,'','\0','todo correcto',NULL),(9,'','','todo correcto',NULL),(10,'','','todo correcto',NULL),(11,'','\0','todo bien',NULL),(12,'','','pruebas',NULL),(13,'','','sadfasfda',NULL),(14,'','','sadfasfdaasdf',NULL),(15,'','','sadfasfdaasdf',NULL),(16,'','','sadfasfdaasdfsfadfsf',NULL),(17,'','','sadfasfdaasdfsfadfsf',NULL),(18,'','','',NULL),(19,'','','dddsfgs',NULL),(20,'','','',NULL),(21,'','','asdasd',NULL),(22,'','','asdasd',NULL),(23,'','','ASDFASFD',NULL),(24,'','','ASDFASFD',NULL),(25,'','','ASDFASFD',NULL),(26,'','','ASDFASFD',NULL),(27,'','','',NULL),(28,'','','',NULL),(29,'','','',NULL),(30,'','','',NULL),(31,'','','sdfa',NULL),(32,'','','PRUEBAS CON COMENTARIOS',NULL),(33,'','','PRUEBAS CON COMENTARIOS',NULL),(34,'','','PRUEBAS CON COMENTARIOS 4',NULL),(35,'','','PRUEBAS CON COMENTARIOS SDFSAFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',NULL),(36,'','','PRUEBAS CON COMENTARIOS SDFSAFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',NULL),(37,'','','dfsa','2016-01-12 23:29:32'),(38,'','','me parece Diem','2016-01-12 23:49:57'),(39,'','','sdafasfda','2016-01-13 00:55:35');
 /*!40000 ALTER TABLE `sugerencias` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-12 14:43:42
+-- Dump completed on 2016-01-17 11:40:55
