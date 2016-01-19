@@ -16,28 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tiempos`
+-- Table structure for table `personas`
 --
 
-DROP TABLE IF EXISTS `tiempos`;
+DROP TABLE IF EXISTS `personas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tiempos` (
-  `TIEMPOSID` int(11) NOT NULL AUTO_INCREMENT,
-  `NOMBRETIEMPO` varchar(40) DEFAULT NULL,
-  `NEMOTECNICOTIEMPO` varchar(5) DEFAULT NULL,
-  PRIMARY KEY (`TIEMPOSID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `personas` (
+  `PERSONAID` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRES` varchar(40) DEFAULT NULL,
+  `APELLIDOS` varchar(40) DEFAULT NULL,
+  `CEDULA` varchar(40) DEFAULT NULL,
+  `CORREOELECTRONICO` varchar(40) DEFAULT NULL,
+  `TELEFONO` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`PERSONAID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tiempos`
+-- Dumping data for table `personas`
 --
 
-LOCK TABLES `tiempos` WRITE;
-/*!40000 ALTER TABLE `tiempos` DISABLE KEYS */;
-INSERT INTO `tiempos` VALUES (1,'PRESENTE','PRE'),(2,'PASADO','PAS'),(3,'FUTURO','FUT');
-/*!40000 ALTER TABLE `tiempos` ENABLE KEYS */;
+LOCK TABLES `personas` WRITE;
+/*!40000 ALTER TABLE `personas` DISABLE KEYS */;
+INSERT INTO `personas` VALUES (1,'LUI','CAIZA','1719103820','LUISITO.CAIZA17@GMAIL.COM','022316189'),(2,'LUIS','CAYO','123456789','LUIS.CAYO@GMAIL.COM','022316188');
+/*!40000 ALTER TABLE `personas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-17 11:41:03
+-- Dump completed on 2016-01-19  6:13:11

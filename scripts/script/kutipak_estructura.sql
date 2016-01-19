@@ -16,29 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `estructurapalabras`
+-- Table structure for table `estructura`
 --
 
-DROP TABLE IF EXISTS `estructurapalabras`;
+DROP TABLE IF EXISTS `estructura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `estructurapalabras` (
-  `TIPOID` int(11) NOT NULL,
-  `ESTRUCTURAID` int(11) NOT NULL,
-  PRIMARY KEY (`TIPOID`),
-  KEY `FK_PALABRASESTRUCTURAS` (`ESTRUCTURAID`),
-  CONSTRAINT `FK_ESTRUCTURASTIPOS` FOREIGN KEY (`TIPOID`) REFERENCES `tipospalabras` (`TIPOID`),
-  CONSTRAINT `FK_PALABRASESTRUCTURAS` FOREIGN KEY (`ESTRUCTURAID`) REFERENCES `estructura` (`ESTRUCTURAID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `estructura` (
+  `ESTRUCTURAID` int(11) NOT NULL AUTO_INCREMENT,
+  `IDIOMAID` int(11) DEFAULT NULL,
+  `NOMBREESTRUCTURA` varchar(20) DEFAULT NULL,
+  `FORMULA` varchar(50) DEFAULT NULL,
+  `FORMULASALIDA` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ESTRUCTURAID`),
+  KEY `FK_IDIOMA_ESTRUCTURA` (`IDIOMAID`),
+  CONSTRAINT `FK_IDIOMA_ESTRUCTURA` FOREIGN KEY (`IDIOMAID`) REFERENCES `idiomas` (`IDIOMAID`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `estructurapalabras`
+-- Dumping data for table `estructura`
 --
 
-LOCK TABLES `estructurapalabras` WRITE;
-/*!40000 ALTER TABLE `estructurapalabras` DISABLE KEYS */;
-/*!40000 ALTER TABLE `estructurapalabras` ENABLE KEYS */;
+LOCK TABLES `estructura` WRITE;
+/*!40000 ALTER TABLE `estructura` DISABLE KEYS */;
+INSERT INTO `estructura` VALUES (18,1,'1','AZ','ZA'),(19,1,'2','D0','0D'),(20,1,'3','M0','0M'),(21,1,'4','MD','DM'),(22,2,'5','VS','SV'),(23,2,'6','BS','SB'),(24,2,'7','ZS','SZ'),(25,2,'8','ZA','AZ'),(26,2,'9','0M','M0'),(27,2,'10','ZM','MZ'),(28,2,'11','0P','P0'),(29,1,'12','P0','0P'),(30,2,'13','AP','PA'),(31,2,'14','0P','AP'),(32,1,'15','PA','AP'),(33,1,'16','P0','0P'),(34,2,'WAWAKA','AP','PA'),(35,2,'14','0P','AP'),(36,1,'15','PA','AP'),(37,1,'16','P0','0P');
+/*!40000 ALTER TABLE `estructura` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-17 11:41:05
+-- Dump completed on 2016-01-19  6:13:07
