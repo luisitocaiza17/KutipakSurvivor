@@ -16,29 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `estructurapalabras`
+-- Table structure for table `tiempos`
 --
 
-DROP TABLE IF EXISTS `estructurapalabras`;
+DROP TABLE IF EXISTS `tiempos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `estructurapalabras` (
-  `TIPOID` int(11) NOT NULL,
-  `ESTRUCTURAID` int(11) NOT NULL,
-  PRIMARY KEY (`TIPOID`),
-  KEY `FK_PALABRASESTRUCTURAS` (`ESTRUCTURAID`),
-  CONSTRAINT `FK_ESTRUCTURASTIPOS` FOREIGN KEY (`TIPOID`) REFERENCES `tipospalabras` (`TIPOID`),
-  CONSTRAINT `FK_PALABRASESTRUCTURAS` FOREIGN KEY (`ESTRUCTURAID`) REFERENCES `estructura` (`ESTRUCTURAID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `tiempos` (
+  `TIEMPOSID` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRETIEMPO` varchar(40) DEFAULT NULL,
+  `NEMOTECNICOTIEMPO` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`TIEMPOSID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `estructurapalabras`
+-- Dumping data for table `tiempos`
 --
 
-LOCK TABLES `estructurapalabras` WRITE;
-/*!40000 ALTER TABLE `estructurapalabras` DISABLE KEYS */;
-/*!40000 ALTER TABLE `estructurapalabras` ENABLE KEYS */;
+LOCK TABLES `tiempos` WRITE;
+/*!40000 ALTER TABLE `tiempos` DISABLE KEYS */;
+INSERT INTO `tiempos` VALUES (1,'PRESENTE','PRE'),(2,'PASADO','PAS'),(3,'FUTURO','FUT');
+/*!40000 ALTER TABLE `tiempos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-30  0:00:35
+-- Dump completed on 2016-01-19  6:13:12

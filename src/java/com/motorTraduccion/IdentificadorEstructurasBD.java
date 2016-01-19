@@ -71,7 +71,7 @@ public class IdentificadorEstructurasBD {
                                 String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                 if (palabraSimilar.length() > 3) {
                                     bucle:
-                                    for (int a = palabraSimilar.length(); a > 2; a--) {
+                                    for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                         PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                         palabraSimilar = palabraSimilar.substring(0, a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -120,7 +120,7 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > 2; a--) {
+                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                             palabraSimilar = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -169,7 +169,7 @@ public class IdentificadorEstructurasBD {
                                         String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                         if (palabraSimilar.length() > 3) {
                                             bucle:
-                                            for (int a = palabraSimilar.length(); a > 2; a--) {
+                                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                                 palabraSimilar = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -197,7 +197,7 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > 2; a--) {
+                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                             palabraSimilar = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -241,7 +241,7 @@ public class IdentificadorEstructurasBD {
                         String palabraSimilar = palabraTipos[i][0] = palabras[i];
                         if (palabraSimilar.length() > 3) {
                             bucle:
-                            for (int a = palabraSimilar.length(); a > 2; a--) {
+                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                 palabraSimilar = palabraSimilar.substring(0, a);
                                 palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -325,7 +325,7 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > 2; a--) {
+                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                             palabraSimilar = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -407,7 +407,7 @@ public class IdentificadorEstructurasBD {
                                 String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                 if (palabraSimilar.length() > 3) {
                                     bucle:
-                                    for (int a = palabraSimilar.length(); a > 2; a--) {
+                                    for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                         PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                         palabraSimilar = palabraSimilar.substring(0, a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -446,7 +446,7 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > 2; a--) {
+                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                             palabraSimilar = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -489,7 +489,7 @@ public class IdentificadorEstructurasBD {
                                         String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                         if (palabraSimilar.length() > 3) {
                                             bucle:
-                                            for (int a = palabraSimilar.length(); a > 2; a--) {
+                                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                                 palabraSimilar = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -514,7 +514,7 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > 2; a--) {
+                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                             palabraSimilar = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -555,7 +555,7 @@ public class IdentificadorEstructurasBD {
                         String palabraSimilar = palabraTipos[i][0] = palabras[i];
                         if (palabraSimilar.length() > 3) {
                             bucle:
-                            for (int a = palabraSimilar.length(); a > 2; a--) {
+                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                 palabraSimilar = palabraSimilar.substring(0, a);
                                 palabraObjeto2.setNombrepalabra(palabraSimilar);
@@ -628,7 +628,7 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > 2; a--) {
+                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                             palabraSimilar = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar);

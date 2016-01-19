@@ -16,32 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuario`
+-- Table structure for table `tipospalabras`
 --
 
-DROP TABLE IF EXISTS `usuario`;
+DROP TABLE IF EXISTS `tipospalabras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuario` (
-  `USUARIOID` int(11) NOT NULL AUTO_INCREMENT,
-  `PERSONAID` int(11) DEFAULT NULL,
-  `NOMBREUSUARIO` varchar(40) DEFAULT NULL,
-  `CONTRASENIA` varchar(40) DEFAULT NULL,
-  `ROL` int(11) DEFAULT NULL,
-  PRIMARY KEY (`USUARIOID`),
-  KEY `FK_PERSONAUSUARIO` (`PERSONAID`),
-  CONSTRAINT `FK_PERSONAUSUARIO` FOREIGN KEY (`PERSONAID`) REFERENCES `personas` (`PERSONAID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+CREATE TABLE `tipospalabras` (
+  `TIPOID` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRETIPO` varchar(20) DEFAULT NULL,
+  `NEMOTECNICO` varchar(10) DEFAULT NULL,
+  `CODIGOKTPAK` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`TIPOID`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario`
+-- Dumping data for table `tipospalabras`
 --
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,NULL,'LUISITO','LUISITO',NULL),(2,2,'CAYO','CAYO',1);
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+LOCK TABLES `tipospalabras` WRITE;
+/*!40000 ALTER TABLE `tipospalabras` DISABLE KEYS */;
+INSERT INTO `tipospalabras` VALUES (1,'INDEFINIDOS','INDE','0'),(2,'ADJETIVOS','ADJ','D'),(4,'SUSTANTIVO','SUS','Z'),(7,'ARTICULO','ART','A'),(8,'ADVERBIO','ADV','B'),(9,'PRONOMBRE','PRO','5'),(10,'VERBO','VER','V'),(11,'PREPOSICIÓN','PRE','7'),(12,'CONJUNCIÓN','CON','8'),(13,'INTERJECCIÓN','INTER','9'),(14,'DETERMINANTE','DET','T'),(15,'NUMERAL','NUM','N'),(16,'EXPRESIÓN','EXP','E'),(17,'INTERROGACIÓN','INTERROG','I'),(18,'MORFEMA','MOR','M'),(19,'SER','SER','S'),(20,'PREFIJO','FIJ','P'),(21,'PREGUNTA','PREG','Z');
+/*!40000 ALTER TABLE `tipospalabras` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-30  0:00:25
+-- Dump completed on 2016-01-19  6:13:06
