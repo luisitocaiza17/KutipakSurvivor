@@ -68,28 +68,31 @@ public class IdentificadorEstructurasBD {
                                     break;
                                 }
                             } else {
-                                String palabraSimilar = palabraTipos[i][0] = palabras[i];
-                                if (palabraSimilar.length() > 3) {
-                                    bucle:
-                                    for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
-                                        PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                        palabraSimilar = palabraSimilar.substring(0, a);
-                                        palabraObjeto2.setNombrepalabra(palabraSimilar);
-                                        palabraObjeto2.setIdiomaid(idiomaId);
-                                        int tamanio = palabraSimilar.length() + 3;
-                                        List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
-                                        for (PalabrasRecord rs : results) {
-                                            palabraTipos[i][0] = rs.getSignificado();
-                                            String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
-                                            palabraTipos[i][1] = codigo;
-                                            break bucle;
-                                        }
-                                        if (a == 3) {
-                                            palabraTipos[i][0] = palabras[i];
-                                            palabraTipos[i][1] = "0";
-                                            break;
-                                        }
-                                    }
+                                String palabraSimilar = sSubCadena;
+                                        if (palabraSimilar.length() > 3) {
+                                            boolean ExisteAlFinal = false;
+                                            bucle:
+                                            for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-2); a--) {
+                                                PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                                palabraSimilar = palabraSimilar.substring(0, a);
+                                                palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                                palabraObjeto2.setIdiomaid(idiomaId);
+                                                int tamanio = palabras[i].length();
+                                                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
+                                                for (PalabrasRecord rs : results) {
+                                                    palabraTipos[i][0] = rs.getSignificado();
+                                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                                    palabraTipos[i][1] = codigo;
+                                                    ExisteAlFinal=true;
+                                                    break bucle;
+                                                }
+                                               
+                                            }
+                                             if (!ExisteAlFinal) {
+                                                    palabraTipos[i][0] = palabras[i];
+                                                    palabraTipos[i][1] = "0";
+                                                   
+                                                }
                                 } else {
                                     palabraTipos[i][0] = palabras[i];
                                     palabraTipos[i][1] = "0";
@@ -117,28 +120,32 @@ public class IdentificadorEstructurasBD {
                                         break;
                                     }
                                 } else {
-                                    String palabraSimilar = palabraTipos[i][0] = palabras[i];
-                                    if (palabraSimilar.length() > 3) {
-                                        bucle:
-                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
-                                            PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                            palabraSimilar = palabraSimilar.substring(0, a);
-                                            palabraObjeto2.setNombrepalabra(palabraSimilar);
-                                            palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabraSimilar.length() + 3;
-                                            List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
-                                            for (PalabrasRecord rs : results) {
-                                                palabraTipos[i][0] = rs.getSignificado();
-                                                String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
-                                                palabraTipos[i][1] = codigo;
-                                                break bucle;
+                                    String palabraSimilar = sSubCadena;
+                                        if (palabraSimilar.length() > 3) {
+                                            boolean ExisteAlFinal = false;
+                                            bucle:
+                                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-2); a--) {
+                                                PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                                String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                                palabraObjeto2.setNombrepalabra(palabraSimilar2);
+                                                palabraObjeto2.setIdiomaid(idiomaId);
+                                                
+                                                int tamanio = palabras[i].length();
+                                                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
+                                                for (PalabrasRecord rs : results) {
+                                                    palabraTipos[i][0] = rs.getSignificado();
+                                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                                    palabraTipos[i][1] = codigo;
+                                                    ExisteAlFinal=true;
+                                                    break bucle;
+                                                }
+                                               
                                             }
-                                            if (a == 3) {
-                                                palabraTipos[i][0] = palabras[i];
-                                                palabraTipos[i][1] = "0";
-                                                break;
-                                            }
-                                        }
+                                             if (!ExisteAlFinal) {
+                                                    palabraTipos[i][0] = palabras[i];
+                                                    palabraTipos[i][1] = "0";
+                                                   
+                                                }
                                     } else {
                                         palabraTipos[i][0] = palabras[i];
                                         palabraTipos[i][1] = "0";
@@ -166,28 +173,30 @@ public class IdentificadorEstructurasBD {
                                             break;
                                         }
                                     } else {
-                                        String palabraSimilar = palabraTipos[i][0] = palabras[i];
+                                        String palabraSimilar = sSubCadena;
                                         if (palabraSimilar.length() > 3) {
+                                            boolean ExisteAlFinal = false;
                                             bucle:
-                                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
+                                            for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-2); a--) {
                                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                                palabraSimilar = palabraSimilar.substring(0, a);
-                                                palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                                String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                                palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                int tamanio = palabraSimilar.length() + 3;
+                                                int tamanio = palabras[i].length();
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     palabraTipos[i][0] = rs.getSignificado();
                                                     String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
                                                     palabraTipos[i][1] = codigo;
+                                                    ExisteAlFinal=true;
                                                     break bucle;
-                                                }
-                                                if (a == 3) {
+                                                }                                               
+                                            }
+                                             if (!ExisteAlFinal) {
                                                     palabraTipos[i][0] = palabras[i];
                                                     palabraTipos[i][1] = "0";
-                                                    break;
+                                                   
                                                 }
-                                            }
                                         } else {
                                             palabraTipos[i][0] = palabras[i];
                                             palabraTipos[i][1] = "0";
@@ -195,27 +204,31 @@ public class IdentificadorEstructurasBD {
                                     }
                                 } else {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
-                                    if (palabraSimilar.length() > 3) {
-                                        bucle:
-                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
-                                            PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                            palabraSimilar = palabraSimilar.substring(0, a);
-                                            palabraObjeto2.setNombrepalabra(palabraSimilar);
-                                            palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabraSimilar.length() + 3;
-                                            List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
-                                            for (PalabrasRecord rs : results) {
-                                                palabraTipos[i][0] = rs.getSignificado();
-                                                String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
-                                                palabraTipos[i][1] = codigo;
-                                                break bucle;
+                                        if (palabraSimilar.length() > 3) {
+                                            boolean ExisteAlFinal = false;
+                                            bucle:
+                                            for (int a = palabraSimilar.length();  a >= (palabraSimilar.length()-1); a--) {
+                                                PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                                String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                                palabraObjeto2.setNombrepalabra(palabraSimilar2);
+                                                palabraObjeto2.setIdiomaid(idiomaId);
+                                                
+                                                int tamanio = palabras[i].length();
+                                                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
+                                                for (PalabrasRecord rs : results) {
+                                                    palabraTipos[i][0] = rs.getSignificado();
+                                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                                    palabraTipos[i][1] = codigo;
+                                                    ExisteAlFinal=true;
+                                                    break bucle;
+                                                }
+                                               
                                             }
-                                            if (a == 3) {
-                                                palabraTipos[i][0] = palabras[i];
-                                                palabraTipos[i][1] = "0";
-                                                break;
-                                            }
-                                        }
+                                             if (!ExisteAlFinal) {
+                                                    palabraTipos[i][0] = palabras[i];
+                                                    palabraTipos[i][1] = "0";
+                                                   
+                                                }
                                     } else {
                                         palabraTipos[i][0] = palabras[i];
                                         palabraTipos[i][1] = "0";
@@ -239,27 +252,30 @@ public class IdentificadorEstructurasBD {
                     existePlural = palabra.contains(palabraBuscar);
                     if (!existePlural) {
                         String palabraSimilar = palabraTipos[i][0] = palabras[i];
-                        if (palabraSimilar.length() > 3) {
-                            bucle:
-                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
-                                PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                palabraSimilar = palabraSimilar.substring(0, a);
-                                palabraObjeto2.setNombrepalabra(palabraSimilar);
-                                palabraObjeto2.setIdiomaid(idiomaId);
-                                int tamanio = palabraSimilar.length() + 3;
-                                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
-                                for (PalabrasRecord rs : results) {
-                                    palabraTipos[i][0] = rs.getSignificado();
-                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
-                                    palabraTipos[i][1] = codigo;
-                                    break bucle;
-                                }
-                                if (a == 3) {
-                                    palabraTipos[i][0] = palabras[i];
-                                    palabraTipos[i][1] = "0";
-                                    break;
-                                }
-                            }
+                                        if (palabraSimilar.length() > 3) {
+                                            boolean ExisteAlFinal = false;
+                                            bucle:
+                                            for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
+                                                PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                                String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                                palabraObjeto2.setNombrepalabra(palabraSimilar2);
+                                                palabraObjeto2.setIdiomaid(idiomaId);
+                                                int tamanio = palabras[i].length();
+                                                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
+                                                for (PalabrasRecord rs : results) {
+                                                    palabraTipos[i][0] = rs.getSignificado();
+                                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                                    palabraTipos[i][1] = codigo;
+                                                    ExisteAlFinal=true;
+                                                    break bucle;
+                                                }
+                                               
+                                            }
+                                             if (!ExisteAlFinal) {
+                                                    palabraTipos[i][0] = palabras[i];
+                                                    palabraTipos[i][1] = "0";
+                                                  
+                                                }
                         } else {
                             palabraTipos[i][0] = palabras[i];
                             palabraTipos[i][1] = "0";
@@ -323,27 +339,30 @@ public class IdentificadorEstructurasBD {
 
                                 } else {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
-                                    if (palabraSimilar.length() > 3) {
-                                        bucle:
-                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
-                                            PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                            palabraSimilar = palabraSimilar.substring(0, a);
-                                            palabraObjeto2.setNombrepalabra(palabraSimilar);
-                                            palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabraSimilar.length() + 3;
-                                            List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
-                                            for (PalabrasRecord rs : results) {
-                                                palabraTipos[i][0] = rs.getSignificado();
-                                                String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
-                                                palabraTipos[i][1] = codigo;
-                                                break bucle;
+                                        if (palabraSimilar.length() > 3) {
+                                            boolean ExisteAlFinal = false;
+                                            bucle:
+                                            for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
+                                                PalabrasRecord palabraObjeto2 = new PalabrasRecord();
+                                                String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                                palabraObjeto2.setNombrepalabra(palabraSimilar2);
+                                                palabraObjeto2.setIdiomaid(idiomaId);
+                                                int tamanio = palabras[i].length();
+                                                List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
+                                                for (PalabrasRecord rs : results) {
+                                                    palabraTipos[i][0] = rs.getSignificado();
+                                                    String codigo = tipos.ConsultarTiposPalabrasId("" + rs.getTipoid());
+                                                    palabraTipos[i][1] = codigo;
+                                                    ExisteAlFinal=true;
+                                                    break bucle;
+                                                }
+                                               
                                             }
-                                            if (a == 3) {
-                                                palabraTipos[i][0] = palabras[i];
-                                                palabraTipos[i][1] = "0";
-                                                break;
-                                            }
-                                        }
+                                             if (!ExisteAlFinal) {
+                                                    palabraTipos[i][0] = palabras[i];
+                                                    palabraTipos[i][1] = "0";
+                                                   
+                                                }
                                     } else {
                                         palabraTipos[i][0] = palabras[i];
                                         palabraTipos[i][1] = "0";
@@ -407,12 +426,12 @@ public class IdentificadorEstructurasBD {
                                 String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                 if (palabraSimilar.length() > 3) {
                                     bucle:
-                                    for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
+                                    for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
                                         PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                        palabraSimilar = palabraSimilar.substring(0, a);
-                                        palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                        String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                        palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                         palabraObjeto2.setIdiomaid(idiomaId);
-                                        int tamanio = palabraSimilar.length() + 3;
+                                        int tamanio = palabras[i].length();
                                         List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                         for (PalabrasRecord rs : results) {
                                             resultado.add(rs.getSignificado());
@@ -446,12 +465,12 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
+                                        for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                            palabraSimilar = palabraSimilar.substring(0, a);
-                                            palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                            String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                            palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                             palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabraSimilar.length() + 3;
+                                            int tamanio = palabras[i].length();
                                             List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                             for (PalabrasRecord rs : results) {
                                                 resultado.add( rs.getSignificado());
@@ -489,12 +508,12 @@ public class IdentificadorEstructurasBD {
                                         String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                         if (palabraSimilar.length() > 3) {
                                             bucle:
-                                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
+                                            for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
                                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                                palabraSimilar = palabraSimilar.substring(0, a);
-                                                palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                                String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                                palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                int tamanio = palabraSimilar.length() + 3;
+                                                int tamanio = palabras[i].length();
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     resultado.add( rs.getSignificado());
@@ -514,12 +533,12 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
+                                        for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                            palabraSimilar = palabraSimilar.substring(0, a);
-                                            palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                            String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                            palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                             palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabraSimilar.length() + 3;
+                                            int tamanio = palabras[i].length();
                                             List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                             for (PalabrasRecord rs : results) {
                                                resultado.add(rs.getSignificado());
@@ -555,12 +574,12 @@ public class IdentificadorEstructurasBD {
                         String palabraSimilar = palabraTipos[i][0] = palabras[i];
                         if (palabraSimilar.length() > 3) {
                             bucle:
-                            for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
+                            for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                palabraSimilar = palabraSimilar.substring(0, a);
-                                palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                int tamanio = palabraSimilar.length() + 3;
+                                int tamanio = palabras[i].length();
                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                 for (PalabrasRecord rs : results) {
                                     resultado.add( rs.getSignificado());
@@ -628,12 +647,12 @@ public class IdentificadorEstructurasBD {
                                     String palabraSimilar = palabraTipos[i][0] = palabras[i];
                                     if (palabraSimilar.length() > 3) {
                                         bucle:
-                                        for (int a = palabraSimilar.length(); a > (palabraSimilar.length()-1); a--) {
+                                        for (int a = palabraSimilar.length();  a > (palabraSimilar.length()-1); a--) {
                                             PalabrasRecord palabraObjeto2 = new PalabrasRecord();
-                                            palabraSimilar = palabraSimilar.substring(0, a);
-                                            palabraObjeto2.setNombrepalabra(palabraSimilar);
+                                            String palabraSimilar2 = palabraSimilar.substring(0, a);
+                                            palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                             palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabraSimilar.length() + 3;
+                                            int tamanio = palabras[i].length();
                                             List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                             for (PalabrasRecord rs : results) {
                                                 resultado.add( rs.getSignificado());
