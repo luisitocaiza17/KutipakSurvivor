@@ -28,6 +28,12 @@
                
                $('#Contenidos').hide();
                
+               $("#buscar").click(function () {
+                    var palabra=$("#palabra1").val();
+                    var idioma= $("#idioma1").val();
+                    var traducion= $("#traducion1").val();
+                    busquedaEspeficica(palabra,idioma,traducion,"busquedaEspecifica");
+               });
                $("#guardar").click(function () {
                         
                        var palabra=$("#palabra").val();
@@ -72,7 +78,45 @@
                         
                    });
             });
-                        
+                  
+            function busquedaEspeficica(palabra, idioma, traduccion, proceso){
+               
+               
+                $.ajax({
+                    url: '../Palabras_Controller',
+                    data: {
+                        "tipoConsulta":proceso,
+                        "palabra":palabra,
+                        "idioma":idioma,
+                        "traduccion":traduccion
+                    },
+                    async: false,
+                    type: 'POST',
+                    datatype: 'json',
+                    success: function (data) {
+                         var listadoPalabras = data.listadoPalabras;
+                         var selogro=data.success;
+                         if(selogro===true){
+                                $("#dataTable").children().remove();
+                                $.each(listadoPalabras, function (index) {
+                                     $("#dataTable").append("<tr>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].idioma + "</td>" +        
+                                     "<td style='width: 10%'><a onclick='redireccionaActualizar(&#39;"+listadoPalabras[index].id+"&#39;,&#39;"+listadoPalabras[index].idioma+"&#39;,&#39;"+listadoPalabras[index].palabra+"&#39;,&#39;"+listadoPalabras[index].traducion+"&#39;,&#39;"+listadoPalabras[index].tipoP+"&#39;,&#39;"+listadoPalabras[index].tiempoP+"&#39;);'>" + listadoPalabras[index].palabra + "</a></td>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].traducion + "</td>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].tipo + "</td>" +
+                                     "<td style='width: 10%'>" + listadoPalabras[index].tiempo + "</td>" +
+                                     "</tr>");
+                                });
+                            }
+                          
+                    }
+                    
+                });
+                
+            }
+   
+
+    
             function cargaInicial(tipoConsulta){
                 //DE KENDO
         
@@ -109,16 +153,15 @@
                          var selogro=data.success;
                          if(selogro===true){
                                 $("#dataTable").children().remove();
-                                $.each(listadoPalabras, function (index) {
-
-                                     $("#dataTable").append("<tr>" +
-                                     "<td style='width: 10%'>" + listadoPalabras[index].idioma + "</td>" +        
-                                     "<td style='width: 10%'><a onclick='redireccionaActualizar(&#39;"+listadoPalabras[index].id+"&#39;,&#39;"+listadoPalabras[index].idioma+"&#39;,&#39;"+listadoPalabras[index].palabra+"&#39;,&#39;"+listadoPalabras[index].traducion+"&#39;,&#39;"+listadoPalabras[index].tipoP+"&#39;,&#39;"+listadoPalabras[index].tiempoP+"&#39;);'>" + listadoPalabras[index].palabra + "</a></td>" +
-                                     "<td style='width: 10%'>" + listadoPalabras[index].traducion + "</td>" +
-                                     "<td style='width: 10%'>" + listadoPalabras[index].tipo + "</td>" +
-                                     "<td style='width: 10%'>" + listadoPalabras[index].tiempo + "</td>" +
-                                     "</tr>");
-                                 });
+                                //$.each(listadoPalabras, function (index) {
+                                    // $("#dataTable").append("<tr>" +
+                                     //"<td style='width: 10%'>" + listadoPalabras[index].idioma + "</td>" +        
+                                    // "<td style='width: 10%'><a onclick='redireccionaActualizar(&#39;"+listadoPalabras[index].id+"&#39;,&#39;"+listadoPalabras[index].idioma+"&#39;,&#39;"+listadoPalabras[index].palabra+"&#39;,&#39;"+listadoPalabras[index].traducion+"&#39;,&#39;"+listadoPalabras[index].tipoP+"&#39;,&#39;"+listadoPalabras[index].tiempoP+"&#39;);'>" + listadoPalabras[index].palabra + "</a></td>" +
+                                    // "<td style='width: 10%'>" + listadoPalabras[index].traducion + "</td>" +
+                                    // "<td style='width: 10%'>" + listadoPalabras[index].tipo + "</td>" +
+                                    // "<td style='width: 10%'>" + listadoPalabras[index].tiempo + "</td>" +
+                                    // "</tr>");
+                                // });
                                  
                                 
                                  $("#idioma").append("<option selected  value='-1'>Seleccione el idioma</option>");
@@ -139,6 +182,12 @@
                                     $.each(listadoTiempos, function (index) {
                                         $("#eltiempo").append("<option value='" + listadoTiempos[index].tiempo + "'>" +  listadoTiempos[index].tiempo + "</option>");
                                     }); 
+                                    
+                                 $("#idioma1").append("<option selected  value='-1'>Seleccione el idioma</option>");
+                                    var listadoIdioma = data.listadoIdioma;
+                                    $.each(listadoIdioma, function (index) {
+                                        $("#idioma1").append("<option value='" + listadoIdioma[index].idioma + "'>" +  listadoIdioma[index].idioma + "</option>");
+                                    });
                                  
                              }else{
                                  alert ("no existe nada en la BD");
@@ -152,8 +201,8 @@
                         scrollable: true,
                         pageable: {
                             input: true,
-                            numeric: true,
-                            pageSize: 20
+                            numeric: true
+            
                         },
                         groupable: true,
                         navigatable: true
@@ -359,6 +408,10 @@
         <!-- /.row -->
         <!-- Content Row -->
         <div class="row">
+            
+            
+            
+            
             <!-- Sidebar Column -->
             <div class="col-md-3">
                 <div class="list-group">
@@ -373,7 +426,34 @@
                 <h2>Palabras</h2>
                 <p>Los tiempos, son la forma en que se representa la oración y sus variantes a través del tiempo, estos son estándares por medio de los 
                     cuales se traducirá la palabra en base al tiempo, lo que mejorara la calidad de traducción</p>
-                
+                <br>
+                <br>
+                <form class="form-horizontal">
+                                <div class="form-group">
+                                  <label for="palabra1" class="col-sm-2 control-label">Palabra</label>
+                                  <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="palabra1" placeholder="auto,casa" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="idioma1" class="col-sm-2 control-label">Idioma</label>
+                                  <div class="col-sm-6">
+                                    <select class="form-control required" id="idioma1"onchange="carga(this)"  > 
+                                        
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="traducion1" class="col-sm-2 control-label">Traducción</label>
+                                  <div class="col-sm-6">
+                                     
+                                        <input id="traducion1" class="form-control required" style="width: 100%;" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                        <br>
+                                        <button type="button"  id="buscar" class="col-sm-6 btn btn-default" >BUSCAR</button>
+                                    </div>
+                                  </div>
+                                
+                |       </form>
                
                 <br>
                  <div align="left">
@@ -387,6 +467,8 @@
                   <br>
                 <br />
                 <br />
+                
+                
                 <div id="TablaTodos" class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
