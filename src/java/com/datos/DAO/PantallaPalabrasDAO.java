@@ -48,6 +48,28 @@ public class PantallaPalabrasDAO {
         return listadoPalabras;
     }
     
+     public List<PantallapalabrasRecord> ConsultarPalabrasEspecifica2(String palabra,String idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<PantallapalabrasRecord> listadoPalabras= new ArrayList<PantallapalabrasRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(PANTALLAPALABRAS).where(PANTALLAPALABRAS.PALABRAS.equal(palabra)).and (PANTALLAPALABRAS.IDIOMA.equal(idioma)).fetch();
+        for(Record r : result){
+            PantallapalabrasRecord palabras = new PantallapalabrasRecord();
+            palabras.setIdioma(r.getValue(PANTALLAPALABRAS.IDIOMA));
+             palabras.setNombretiempo(r.getValue(PANTALLAPALABRAS.NOMBRETIEMPO));
+             palabras.setNombretipo(r.getValue(PANTALLAPALABRAS.NOMBRETIPO));
+             palabras.setPalabraid(r.getValue(PANTALLAPALABRAS.PALABRAID));
+             palabras.setPalabras(r.getValue(PANTALLAPALABRAS.PALABRAS));
+             palabras.setSignificado(r.getValue(PANTALLAPALABRAS.SIGNIFICADO));
+             palabras.setTiempo(r.getValue(PANTALLAPALABRAS.TIEMPO));
+             palabras.setTipo(r.getValue(PANTALLAPALABRAS.TIPO));
+            listadoPalabras.add(palabras);
+        }
+        conexion.close();
+        return listadoPalabras;
+    }
+    
     public List<PantallapalabrasRecord> ConsultarPalabrasEspecifica(String palabra) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         List<PantallapalabrasRecord> listadoPalabras= new ArrayList<PantallapalabrasRecord>();

@@ -94,6 +94,30 @@ public class Palabras_Controller extends HttpServlet {
 			String operacion = request.getParameter("operacion") == null ? "" : request.getParameter("operacion");
 			String id = request.getParameter("id") == null ? "" : request.getParameter("id");
 			
+                        if(tipoConsulta.equals("busquedaEspecifica")){
+                            String palabra = request.getParameter("palabra") == null ? "" : request.getParameter("palabra");
+                            String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
+                            String traduccion = request.getParameter("traduccion") == null ? "" : request.getParameter("traduccion");
+			
+                             PantallaPalabrasDAO TodasPalabras = new PantallaPalabrasDAO();
+                             List<PantallapalabrasRecord> results = TodasPalabras.ConsultarPalabrasEspecifica2(palabra,idioma);
+                             JSONArray JSONArrayTipos = new JSONArray();
+                             JSONArray JSONTraducciones = new JSONArray(); 
+                             for(PantallapalabrasRecord rs : results){
+                                 planJSONObject.put("id", rs.getPalabraid());
+                                 planJSONObject.put("idioma", rs.getIdioma());
+                                 planJSONObject.put("palabra", rs.getPalabras());
+                                 planJSONObject.put("traducion", rs.getSignificado());
+                                 planJSONObject.put("tipo", rs.getTipo());
+                                 planJSONObject.put("tiempo", rs.getTiempo());
+                                 planJSONObject.put("tipoP", rs.getNombretipo());
+                                 planJSONObject.put("tiempoP", rs.getNombretiempo());
+                                 JSONArrayTipos.add(planJSONObject);
+                                 JSONTraducciones.add(rs.getSignificado());
+                             }
+                             result.put("listadoPalabras", JSONArrayTipos);
+                              result.put("success", Boolean.TRUE);
+                        }
                         
                         if(tipoConsulta.equals("TodosTipos")){
                              PantallaPalabrasDAO TodasPalabras = new PantallaPalabrasDAO();
