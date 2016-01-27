@@ -118,7 +118,7 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
                 palabraObjeto.setNombrepalabra(palabra);
                 palabraObjeto.setIdiomaid(Integer.parseInt(idioma));
                 Descompositor descompositor = new Descompositor();
-                ArrayList<String> traduccionCompleta= descompositor.descompositorOraciones2(palabra,Integer.parseInt(idioma));
+                ArrayList<String> traduccionCompleta= descompositor.descompositorOraciones3(palabra,Integer.parseInt(idioma));
                 JSONArray JSONArrayTipos = new JSONArray();
                 JSONArray JSONTraducciones = new JSONArray();
                 for(String palabraIndividual:traduccionCompleta){

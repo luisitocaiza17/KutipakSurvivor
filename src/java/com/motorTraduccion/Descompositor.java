@@ -76,10 +76,18 @@ public class Descompositor {
                     boolean existe=(palabra+" ").contains(palabraBuscar);
                     if(existe){
                         String[] cadenasPlural = (palabra+" ").split(palabraBuscar); 
+                        
                         for (int i = 0; i < cadenasPlural.length; i++) {
-                            oracionCompuesta=oracionCompuesta+cadenasPlural[i]+" "+palabraBuscar;
-                            encontro=true;
-                            break prefijo;
+                            if (palabraBuscar.equals("MANTA ")){
+                                   oracionCompuesta=oracionCompuesta+cadenasPlural[i]+" "+palabraBuscar;
+                                   encontro=true;
+                                   break prefijo;
+                               }
+                            if(palabraProcesos.ConsultarPalabrasExisteId(cadenasPlural[i], idioma).getPalabraid() != null){
+                                oracionCompuesta=oracionCompuesta+cadenasPlural[i]+" "+palabraBuscar;
+                                encontro=true;
+                                break prefijo;
+                            }
                         }
                     }
                 }
@@ -210,5 +218,96 @@ public class Descompositor {
         return resultado;
     }
      
+     public ArrayList<String> descompositorOraciones3(String oraciones,int idioma) throws FileNotFoundException, IOException, Exception {
+        String paragraph = oraciones;
+        InputStream is = new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-sent.bin");
+        SentenceModel model = new SentenceModel(is);
+        SentenceDetectorME sdetector = new SentenceDetectorME(model);
+        String sentences[] = sdetector.sentDetect(paragraph);
+        
+        ArrayList<String> resultado=new ArrayList();
 
+        resultado=RecompositorPalabrasCompuestas3(oraciones,idioma);
+        is.close();
+        return resultado;
+    }
+     
+    public ArrayList<String>  RecompositorPalabrasCompuestas3(String oraciones, int idioma) throws FileNotFoundException, IOException, Exception {
+        InputStream is = new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-token.bin");
+        TokenizerModel model = new TokenizerModel(is);
+        Tokenizer tokenizer = new TokenizerME(model);
+        String tokens[] = tokenizer.tokenize(oraciones);
+        ArrayList<String> resultado=new ArrayList();
+        String oracionCompuesta="";
+        PalabrasDAO palabraProcesos = new PalabrasDAO();
+        PalabrasRecord palabraObjeto = new PalabrasRecord();
+        for(String palabra :tokens){
+            if (palabraProcesos.ConsultarPalabrasExisteId(palabra, idioma).getPalabraid() == null) {
+                if(idioma==2){
+                 /***IDIOMA KICHWA****/
+                /*proceso de busqueda de los subfijos*/
+                PalabrassubfijosprefijosDAO prefijosProcesos = new PalabrassubfijosprefijosDAO();
+                List<PalabrassubfijosprefijosRecord> prefijos=prefijosProcesos.ConsultarPrefijosSubfijos(idioma);
+                boolean encontro=false;
+                prefijo: for(PalabrassubfijosprefijosRecord rs :prefijos){
+                    String palabraBuscar=rs.getPalabra()+" ";
+                    boolean existe=(palabra+" ").contains(palabraBuscar);
+                    if(existe){
+                        String[] cadenasPlural = (palabra+" ").split(palabraBuscar); 
+                        for (int i = 0; i < cadenasPlural.length; i++) {
+                            if(palabraProcesos.ConsultarPalabrasExisteId(cadenasPlural[i], idioma).getPalabraid() != null){
+                                oracionCompuesta=oracionCompuesta+cadenasPlural[i]+" "+palabraBuscar;
+                                encontro=true;
+                                break prefijo;
+                            }
+                        }
+                    }
+                }
+                if(!encontro)
+                   oracionCompuesta=oracionCompuesta+" "+palabra; 
+            }else{
+                /*****IDIOMA ESPAÑOL*****/
+               /*proceso de busqueda de los subfijos*/
+                PalabrassubfijosprefijosDAO prefijosProcesos = new PalabrassubfijosprefijosDAO();
+                List<PalabrassubfijosprefijosRecord> prefijos=prefijosProcesos.ConsultarPrefijosSubfijos(idioma);
+                boolean encontro=false;
+                prefijo: for(PalabrassubfijosprefijosRecord rs :prefijos){
+                    String palabraBuscar=rs.getPalabra()+" ";
+                    boolean existe=(palabra+" ").contains(palabraBuscar);
+                    if(existe){
+                        String[] cadenasPlural = (palabra+" ").split(palabraBuscar); 
+                        for (int i = 0; i < cadenasPlural.length; i++) {
+                            oracionCompuesta=oracionCompuesta+cadenasPlural[i]+" "+palabraBuscar;
+                            encontro=true;
+                            break prefijo;
+                        }
+                    }
+                }
+                if(!encontro)
+                   oracionCompuesta=oracionCompuesta+" "+palabra; 
+            }           
+        }    
+        else{
+            oracionCompuesta=oracionCompuesta+" "+palabra;
+        }
+                
+        }
+        
+        resultado=descompositorPalabras3(oracionCompuesta,idioma);
+        is.close();
+        return resultado;
+    }
+    
+    public ArrayList<String>  descompositorPalabras3(String oraciones, int idioma) throws FileNotFoundException, IOException, Exception {
+        InputStream is = new FileInputStream("C:\\KutipakSurvivor\\librerias\\OpenNlp\\proceso\\en-token.bin");
+        TokenizerModel model = new TokenizerModel(is);
+        Tokenizer tokenizer = new TokenizerME(model);
+        String tokens[] = tokenizer.tokenize(oraciones);
+        ArrayList<String>  resultado=new ArrayList();
+        /*2) PROCESO DE IDENTIFICACION DE PALABRAS (ESTRUCTURA GRAMATICAL)***/
+        IdentificadorEstructurasBD  identificador = new IdentificadorEstructurasBD();
+        resultado=identificador.PalabrasSignificado(tokens,idioma);
+        is.close();
+        return resultado;
+    }
 }
