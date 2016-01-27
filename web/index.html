@@ -73,6 +73,13 @@
                     cargar(palabra); 
             });
             
+            $("#contenedorOriginal").click(function () {
+               document.getElementById('alternativas').innerHTML='';    
+               document.getElementById('contenedor').innerHTML='';
+                
+            });
+            
+            
             $("#Correo").click(function () {
                      var nombre=$("#nombre").val();
                      var email=$("#email").val();
@@ -266,20 +273,20 @@
         <div class="item active" style="background-image: url(Cliente/images/slider/6.jpg)">
           <div class="caption">
             <h1 class="animated fadeInLeftBig"> KUTIPAK UTC <span> TRADUCTOR ONLINE </span></h1>
-            <p class="animated fadeInRightBig"><b> Espa&ntilde;ol - Kitchwa  </b></p>
+            <p class="animated fadeInRightBig"><b> Espa&ntilde;ol - Kichwa  </b></p>
             <a data-scroll class="btn btn-start animated fadeInUpBig" href="#TRADUCTOR">A Traducir :) !!</a>
           </div>
         </div>
         <div class="item" style="background-image: url(Cliente/images/slider/5.jpg)">
           <div class="caption">
-            <h1 class="animated fadeInLeftBig">KUTIPAK UTC <span>Espa&ntilde;ol - Kitchwa</span></h1>
+            <h1 class="animated fadeInLeftBig">KUTIPAK UTC <span>Espa&ntilde;ol - Kichwa</span></h1>
             <p class="animated fadeInRightBig"><b>Traductor Online!!</b></p>
             <a data-scroll class="btn btn-start animated fadeInUpBig" href="#TRADUCTOR">A Traducir :) !!</a>
           </div>
         </div>
         <div class="item" style="background-image: url(Cliente/images/slider/4.jpg)">
           <div class="caption">
-             <h1 class="animated fadeInLeftBig">TRADUCTOR <span>Espa&ntilde;ol - Kitchwa</span></h1>
+             <h1 class="animated fadeInLeftBig">TRADUCTOR <span>Espa&ntilde;ol - Kichwa</span></h1>
             <p class="animated fadeInRightBig"><b>KUTIPAK UTC</b></p>
             <a data-scroll class="btn btn-start animated fadeInUpBig" href="#TRADUCTOR">A Traducir :) !!</a>
           </div>
@@ -357,17 +364,16 @@
                   </div>
                  
                 </div>
-                  <br>
-                  <br>
+                 
                   <br>
                 <div class="form-group">
                  
                   <div class="col-sm-6">
-                    <textarea class="form-control" rows="3" id="contenedorOriginal" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
+                    <textarea class="form-control" rows="3" id="contenedorOriginal"  style="border:dashed 2px blueviolet;"  placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
                   </div>
                   
                   <div  class="col-sm-6">
-                    <textarea class="form-control" rows="3" aria-describedby="helpBlock2" id="contenedorTraducido" placeholder="RESULTADO PALABRA YA TRADUCIDA"></textarea>
+                    <textarea class="form-control" rows="3" style="border:dashed 2px blueviolet;" aria-describedby="helpBlock2" id="contenedorTraducido" placeholder="RESULTADO PALABRA YA TRADUCIDA"></textarea>
                     <h6>clic sobre la palabra,para ver otras alternativas de traducción</h6>
                     <div class="contenedor" id="contenedor"></div>
                     <br>
@@ -670,7 +676,7 @@
               <div class="member-info">
                 <h3>Luis Homero Caiza Soria</h3>
                 <h4>Desarrollador</h4>
-                <p>Desarrollador Junion SmartWork S.A</p>
+                <p>Desarrollador Junior SmartWork S.A</p>
               </div>
               <div class="social-icons">
                 <ul>
