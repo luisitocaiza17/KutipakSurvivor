@@ -77,7 +77,7 @@ public class IdentificadorEstructurasBD {
                                                 palabraSimilar = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                int tamanio = palabras[i].length();
+                                                int tamanio = palabras[i].length()+1;
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     palabraTipos[i][0] = rs.getSignificado();
@@ -130,7 +130,7 @@ public class IdentificadorEstructurasBD {
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
                                                 
-                                                int tamanio = palabras[i].length();
+                                                int tamanio = palabras[i].length()+1;
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     palabraTipos[i][0] = rs.getSignificado();
@@ -182,7 +182,7 @@ public class IdentificadorEstructurasBD {
                                                 String palabraSimilar2 = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                int tamanio = palabras[i].length();
+                                                int tamanio = palabras[i].length()+1;
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     palabraTipos[i][0] = rs.getSignificado();
@@ -207,13 +207,13 @@ public class IdentificadorEstructurasBD {
                                         if (palabraSimilar.length() > 3) {
                                             boolean ExisteAlFinal = false;
                                             bucle:
+                                            
                                             for (int a = palabraSimilar.length();  a >= (palabraSimilar.length()-1); a--) {
                                                 PalabrasRecord palabraObjeto2 = new PalabrasRecord();
                                                 String palabraSimilar2 = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                
-                                                int tamanio = palabras[i].length();
+                                                int tamanio = palabras[i].length()+1;
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     palabraTipos[i][0] = rs.getSignificado();
@@ -260,7 +260,7 @@ public class IdentificadorEstructurasBD {
                                                 String palabraSimilar2 = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                int tamanio = palabras[i].length();
+                                                int tamanio = palabras[i].length()+1;
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     palabraTipos[i][0] = rs.getSignificado();
@@ -347,7 +347,7 @@ public class IdentificadorEstructurasBD {
                                                 String palabraSimilar2 = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                int tamanio = palabras[i].length();
+                                                int tamanio = palabras[i].length()+1;
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     palabraTipos[i][0] = rs.getSignificado();
@@ -431,7 +431,7 @@ public class IdentificadorEstructurasBD {
                                         String palabraSimilar2 = palabraSimilar.substring(0, a);
                                         palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                         palabraObjeto2.setIdiomaid(idiomaId);
-                                        int tamanio = palabras[i].length();
+                                        int tamanio = palabras[i].length()+1;
                                         List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                         for (PalabrasRecord rs : results) {
                                             resultado.add(rs.getSignificado());
@@ -470,7 +470,7 @@ public class IdentificadorEstructurasBD {
                                             String palabraSimilar2 = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                             palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabras[i].length();
+                                            int tamanio = palabras[i].length()+1;
                                             List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                             for (PalabrasRecord rs : results) {
                                                 resultado.add( rs.getSignificado());
@@ -513,7 +513,7 @@ public class IdentificadorEstructurasBD {
                                                 String palabraSimilar2 = palabraSimilar.substring(0, a);
                                                 palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                                int tamanio = palabras[i].length();
+                                                int tamanio = palabras[i].length()+1;
                                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                                 for (PalabrasRecord rs : results) {
                                                     resultado.add( rs.getSignificado());
@@ -538,7 +538,7 @@ public class IdentificadorEstructurasBD {
                                             String palabraSimilar2 = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                             palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabras[i].length();
+                                            int tamanio = palabras[i].length()+1;
                                             List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                             for (PalabrasRecord rs : results) {
                                                resultado.add(rs.getSignificado());
@@ -579,7 +579,7 @@ public class IdentificadorEstructurasBD {
                                 String palabraSimilar2 = palabraSimilar.substring(0, a);
                                 palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                 palabraObjeto2.setIdiomaid(idiomaId);
-                                int tamanio = palabras[i].length();
+                                int tamanio = palabras[i].length()+1;
                                 List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                 for (PalabrasRecord rs : results) {
                                     resultado.add( rs.getSignificado());
@@ -652,7 +652,7 @@ public class IdentificadorEstructurasBD {
                                             String palabraSimilar2 = palabraSimilar.substring(0, a);
                                             palabraObjeto2.setNombrepalabra(palabraSimilar2);
                                             palabraObjeto2.setIdiomaid(idiomaId);
-                                            int tamanio = palabras[i].length();
+                                            int tamanio = palabras[i].length()+1;
                                             List<PalabrasRecord> results = palabraProcesos.ConsultarPalabrasTraduccionSimilar(palabraObjeto2, tamanio);
                                             for (PalabrasRecord rs : results) {
                                                 resultado.add( rs.getSignificado());

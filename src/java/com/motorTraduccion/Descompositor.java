@@ -78,7 +78,7 @@ public class Descompositor {
                         String[] cadenasPlural = (palabra+" ").split(palabraBuscar); 
                         
                         for (int i = 0; i < cadenasPlural.length; i++) {
-                            if (palabraBuscar.equals("MANTA ")){
+                            if (palabraBuscar.equals("MANTA ")||palabraBuscar.equals("MAN ")){
                                    oracionCompuesta=oracionCompuesta+cadenasPlural[i]+" "+palabraBuscar;
                                    encontro=true;
                                    break prefijo;
