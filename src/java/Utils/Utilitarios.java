@@ -57,7 +57,7 @@ public class Utilitarios {
 	// Variables envio de mail
 	public static String usuarioMail    = "luis.caiza@smartwork.com.ec";
 	public static String miCorreo       = "luis.caiza@smartwork.com.ec";
-	public static String miContrasena   = "Luisito121";
+	public static String miContrasena   = "Residente1212";
 	public static String servidorSMTP   = "smtp.office365.com";
 	public static String puertoEnvio    = "587";
 
