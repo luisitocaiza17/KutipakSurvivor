@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: kutipak
 -- ------------------------------------------------------
@@ -27,7 +27,7 @@ CREATE TABLE `palabrassubfijosprefijos` (
   `PALABRA` varchar(200) DEFAULT NULL,
   `IDIOMA` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `palabrassubfijosprefijos` (
 
 LOCK TABLES `palabrassubfijosprefijos` WRITE;
 /*!40000 ALTER TABLE `palabrassubfijosprefijos` DISABLE KEYS */;
-INSERT INTO `palabrassubfijosprefijos` VALUES (1,'KA',2),(2,'MANTA',2),(4,'KAMA',2),(5,'PI',2),(6,'PAK',2),(7,'YUK',2),(8,'CHU',2),(9,'SHI',2),(10,'SHINA',2),(11,'KAMA',2),(12,'MAN',2),(13,'NI',2),(14,'N',2),(15,'KA',2),(16,'KRI',2),(17,'KPI',2),(18,'RAK',2),(19,'PASH',2),(20,'PURA',2),(21,'PAK',2),(23,'SHKA',2),(24,'KU',2),(25,'LLA',2),(26,'RAYKU',2),(27,'YUK',2),(28,'TAK',2),(29,'PI',2),(30,'KI',2),(31,'PAK',2),(32,'ENDO',1),(33,'ANDO',1);
+INSERT INTO `palabrassubfijosprefijos` VALUES (1,'KA',2),(2,'MANTA',2),(4,'KAMA',2),(5,'PI',2),(6,'PAK',2),(7,'YUK',2),(8,'CHU',2),(9,'SHI',2),(10,'SHINA',2),(11,'KAMA',2),(12,'MAN',2),(13,'NI',2),(14,'N',2),(15,'KA',2),(16,'KRI',2),(17,'KPI',2),(18,'RAK',2),(19,'PASH',2),(20,'PURA',2),(21,'PAK',2),(23,'SHKA',2),(24,'KU',2),(25,'LLA',2),(26,'RAYKU',2),(27,'YUK',2),(28,'TAK ',2),(29,'PI',2),(30,'KI',2),(31,'PAK',2),(32,'ENDO',1),(33,'ANDO',1),(42,'MI',2),(43,'TA',2),(44,'WAN',2),(45,'SAPA',2),(46,'SHINA',2),(47,'ITO',1),(48,'ITA',1);
 /*!40000 ALTER TABLE `palabrassubfijosprefijos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-19  6:13:08
+-- Dump completed on 2016-07-07 15:02:26

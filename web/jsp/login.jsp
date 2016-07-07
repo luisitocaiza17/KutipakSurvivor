@@ -26,28 +26,6 @@
                 }
             })
             });
-            
-//            function verificar(usuario1,contrasenia1){
-//                $.ajax({
-//                url: '../Login_Controller',
-//                data: {
-//                    "usuario": usuario1,
-//                    "contrasenia": contrasenia1
-//                },
-//                async: true,
-//                type: 'POST',
-//                datatype: 'jsonp',
-//                success: function (data) {
-//                     if(data.success===true){
-//                            alert("EXITO")
-//                    }else{
-//                                alert("EL USUARIO NO EXISTE, VUELVA A INTENTARLO")
-//                                return false;
-//                            }
-//                    
-//                }
-//            });
-//            }
         </script>
         
     </head>
@@ -57,7 +35,7 @@
             <div class="col-lg-12 text-center v-center">
 
                 <h1>HOLA administrador!</h1>
-                <p class="lead">Ingresa tus Credenciales para poder continuar :)</p>
+                <p >Ingresa tus Credenciales para poder continuar :)</p>
 
                 <br><br><br>
 
@@ -65,9 +43,11 @@
                     <div class="input-group" style="width:340px;text-align:center;margin:0 auto;">
                         <input class="form-control input-lg" id="usuario" placeholder="Usuario" name ="usuario" type="text">
                     </div>
+                    <br>
                     <div class="input-group" style="width:340px;text-align:center;margin:0 auto;">
-                        <input class="form-control input-lg" id="contrasenia" placeholder="Contraseña" name ="contrasenia" type="text">
+                        <input class="form-control input-lg" id="contrasenia" placeholder="Contraseña" name ="contrasenia" type="password">
                     </div>
+                    <br>
                     <div class="input-group" style="width:340px;text-align:center;margin:0 auto;">
                         <input class="form-control btn btn-primary " type="submit" id="entrar"  value="INGRESA! :)!">
                     </div>
@@ -80,7 +60,7 @@
         <div class="row">
 
             <div class="col-lg-12 text-center v-center" style="font-size:39pt;">
-                <a><i class="icon-github"></i></a> <a href="#"><i class="icon-pinterest"></i></a>
+                <a><i class="icon-github"></i></a> <a href="http://www.kutipak.com:8080/KUTIPAKUTC/"><i class="icon-pinterest"></i></a>
             </div>
 
         </div>

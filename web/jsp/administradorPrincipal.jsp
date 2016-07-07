@@ -213,31 +213,18 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+            <div class="navbar-header">                
                 <a class="navbar-brand" href="../index.html">KUTIPAK UTC</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="../index.html">Inicio</a>
-                    </li>
-                    <li>
-                        <a href="../html/services.html">Nosotros</a>
-                    </li>
-                    <li>
-                        <a href="../html/contact.html">Administrador</a>
+                        <a onClick="abreCambio();" >Cambio de Contraseña</a>
                     </li>
                     <li>
                         <a onClick="cerrarSesion();" href="../index.html">Cerrar Seción</a>
-                    </li>
-                    
+                    </li>                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -252,13 +239,14 @@
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Administración de KUTIPAK UTC
-                    <small>'Mejorando cada día'</small>
+                <h2 class="page-header">Administraci&oacute;n de KUTIPAK UTC
+                    <small>'Mejorando cada d&iacute;a'</small>
                 </h2>
                 <ol class="breadcrumb">
-                    <li><a href="../index.html">Inicio</a>
+                    <li><a href="administradorPrincipal.jsp">Inicio</a>
                     </li>
-                    <li class="active">Administración</li>
+                    <li class="active">Administraci&oacute;n</li>
+                    
                 </ol>
             </div>
         </div>
@@ -269,16 +257,17 @@
             <div class="col-md-3">
                 <div class="list-group">
                     <a href="administradorPrincipal.jsp" class="list-group-item active">Tipos Palabras</a>
-                    <a href="tiempos.jsp" class="list-group-item">Tiempos</a>
                     <a href="palabras.jsp" class="list-group-item">Palabras</a>
-                    <a  onClick="abreCambio();" class="list-group-item">Cambio de Contraseña</a>
+                    <a href="estructura.jsp" class="list-group-item ">Estructura</a>
                 </div>
             </div>
             <!-- Content Column -->
             <div class="col-md-9">
                 <h2>Tipos de Palabras</h2>
-                <p>Los tipos de palabras son distintivos básicos de cada palabra, estas pueden ser adjetivos, advervios,
-                    sustantivos, verbos entre otras, esto ayudará a mejorar la traducción</p>
+                <p>Los tipos de palabras son distintivos b&aacute;sicos de cada palabra, estas pueden ser adjetivos, advervios,
+                    sustantivos, verbos entre otras, esto ayudar&aacute; a mejorar la traducci&oacute;n, ya que cada palabra debe tener 
+                    un tipo de palabra.
+                </p>
                 
                 <br>
                 <div align="right">

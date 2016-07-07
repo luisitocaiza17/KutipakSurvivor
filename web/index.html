@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="traductor kichwa-español, quichua-español, quichua-español, taductor online Ecuador, que permite traducir palabras y oraciones" content="">
-  <meta name="kitchwa - quechua - quichua" content="">
+  <meta name="description" content="traductor kichwa-español, quichua-español, quichua-español, taductor online Ecuador, que permite traducir palabras y oraciones">
+  <meta name="keywords" content="kichwa - quechua - quichua - traductor - KICHWA - QUECHUA - QUICHUA - TRADUCTOR">
   
   <title>Kutipak UTC</title>
   <link href="Cliente/css/bootstrap.min.css" rel="stylesheet">
@@ -171,12 +171,19 @@
                          var selogro=data.success;
                          var comentariosRegitrados = data.comentariosRegitrados;
                          
-                         $("#susComentarios").children().remove();
+                          $("#susComentarios").children().remove();
+                            var contador=0;
                             $.each(comentariosRegitrados, function (index) {
-
-                                 $("#susComentarios").append("<tr>" +
-                                 "<td style='width: 10%'>" + comentariosRegitrados[index].comentario + "</td>" +        
-                                 "</tr>");
+                                 if(contador%2==0){       
+                                    $("#susComentarios").append("<tr class='info'>" +
+                                    "<td style='width: 10%'>" + comentariosRegitrados[index].comentario + "</td>" +        
+                                    "</tr>");
+                                }else{
+                                    $("#susComentarios").append("<tr>" +
+                                    "<td style='width: 10%'>" + comentariosRegitrados[index].comentario + "</td>" +        
+                                    "</tr>");
+                                }
+                                contador=contador+1;
                              });
                          
                             $("#contador").text(data.contador);
@@ -261,9 +268,6 @@
             
   </script>
   
-  <STYLE type="text/css">
-  
-  </STYLE>
 </head><!--/head-->
 
 <body>
@@ -306,10 +310,8 @@
       <div class="container">
         <div class="navbar-header">
           
-            <h1><img class="img-responsive" src="Cliente/images/logo1.png" alt="logo"></h1>
-
-            <!--<h1><img class="img-responsive" src="Cliente/images/color2.png" alt="logo"></h1>-->
-                   
+            <h1><img class="img-responsive" WIDTH=250 HEIGHT=180 src="Cliente/images/logo1.png" alt="logo"></h1>
+       
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">                 
@@ -317,7 +319,8 @@
             <li class="scroll"><a href="#TRADUCTOR">Traductor</a></li> 
             <li class="scroll"><a href="#MEJORANDO">Mejorando</a></li> 
             <li class="scroll"><a href="#about-us">Nosotros</a></li>                     
-            <li class="scroll"><a href="#contact">Contactanos :)</a></li>       
+            <li class="scroll"><a href="#contact">Contactanos :)</a></li>
+            <li ><a href="http://www.kutipak.com:8080/KUTIPAKUTC/jsp/login.jsp">Administrador ;)</a></li> 
           </ul>
         </div>
       </div>
@@ -366,21 +369,20 @@
                 </div>
                  
                   <br>
-                <div class="form-group has-warning">
-                 
+                <div class="form-group has-warning">                 
                   <div class="col-sm-6">
                     <textarea  class="form-control" rows="3" id="contenedorOriginal"    placeholder="POR FAVOR INGRESE LA PALABRA A TRADUCIR"></textarea>
                   </div>
                   
                   <div  class="col-sm-6">
                     <textarea readonly class="form-control" rows="3"  aria-describedby="helpBlock2" id="contenedorTraducido" placeholder="RESULTADO PALABRA YA TRADUCIDA"></textarea>
-                    <h6>clic sobre la palabra,para ver otras alternativas de traducción</h6>
+                    <h6>Clic sobre la palabra,para ver otras alternativas de traducci&Oacute;n</h6>
                     <div class="contenedor" id="contenedor"></div>
                     <br>
                     <br>
+                    <!--Donde mostramos las alternativas de traduccion desde el servidor -->
                     <div class="alternativas" id="alternativas"></div>
-                  </div>
-                 
+                  </div>                 
                 </div>
                 
                 <div class="form-group">                 
@@ -438,7 +440,7 @@
         <div class="row">
           <div class="text-center col-sm-8 col-sm-offset-2">
             <h2>KUTIPAK UTC  <span>TRADUCTOR ONLINE </span></h2>
-            <p>traductor kichwa - español (quechua español)Ayudanos a mejorar, todos tus sugerencias serán tomadas en cuenta</p>
+            <p>traductor kichwa - español (quechua español) Ay&uacute;danos a mejorar, todos tus sugerencias ser&aacute;n tomadas en cuenta</p>
           </div>
         </div> 
       </div>
@@ -449,7 +451,7 @@
               <form class="form-horizontal" >
               
                     <div class="form-group">
-                        <label for="TiempoResuesta" class="col-sm-9 control-label">Tu tiempo de traducción mejoro? ;)</label>
+                        <label for="TiempoResuesta" class="col-sm-9 control-label">Tu tiempo de traducción mejor&oacute;? ;)</label>
                         <div class="col-sm-3">
                             <input type="checkbox" id="TiempoResuesta">
                         </div>
@@ -461,24 +463,29 @@
                         </div>
                     </div>
                   <br>
-                    <div class="form-group">
-                      <textarea class="form-control" id="Comentario" rows="3" required="required"
+                    <div class="form-group has-warning">
+                      <textarea class="form-control" id="Comentario" rows="3" required="required" aria-describedby="helpBlock2" 
                                   placeholder="tu opinión es importante para nosotros, escribe lo que piensas sobre nuestra app"></textarea>
                     </div>
-                    <button type="button" id ="recomendar" class="btn btn-primary" href="#features">Recomendar :D</button>
+                    <button type="button" id ="recomendar" class="btn btn-primary">Recomendar :D</button>
              
               </form>
-                  <br>
-                  <br>
-                  
-                    
+            <br>
+            <br>
                   
           </div>
           <div class="col-md-4"></div>
         </div>
-           <table id="susComentarios" class="table table-hover">
+          
+          <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                    <table id="susComentarios" class="table table-hover">
                       <th align="center">Comentarios Recientes</th>
-                  </table> 
+                    </table> 
+                  </div>
+              <div class="col-md-1"></div>
+          </div>
       </div>
     </div>
   </section>
@@ -490,8 +497,10 @@
         <div class="col-sm-6">
           <div class="about-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
             <h2>Nosotros</h2>
-            <p>Somos un grupo de tesistas que deseamos disminuir el tiempo que se invierte en el proceso de traducción, del idioma español a kichwa por medio del uso de herramientas informáticas, que el usuario realice su tarea de la forma más rápida y precisa es nuestros objetivo, así como fomentar el aprendizaje del idioma, como nuestro aporte a la cultura ancestral de nuestra nación. </p>
-            <p>Todo se puede lograr con constancia, y este es uno de los proyectos más sobresalientes de los que hemos participado, y de los cuales creemos firmemente, por su beneficio social, por su buena actitud, y por qué nos permite explotar nuestra habilidades en mejora, del idioma y de las personas que lo hablan, para que la cultura y la lengua permanezca muchos más años recordándonos nuestro pasado, y guiando nuestro presente</p>
+            <p>Queremos hacer m&aacutes fácil el aprendizaje y difusi&oacute;n del idioma kichwa, la aplicaci&oacute;n creada por nosotros, es una aplicación de c&oacute;digo abierto, si deseas mejorarla comunícate con nosotros, si no eres desarrollador pero quieres aportar para hacer mejor la aplicaci&oacute;n, nosotros trabajaremos contigo para lograrlo.
+                La vida es un reto y todo reto se cumple con constancia y perseverancia, ayúdanos a ser mejores, ayúdanos a hacer del idioma kichwa un idioma que perdure en el tiempo como muestra de nuestra gerencia cultural.
+             </p>
+            <p>La vida es un reto y todo reto se cumple con constancia y perseverancia, ay&uacute;danos a ser mejores, ay&uacute;danos a hacer del idioma kichwa un idioma que perdure en el tiempo como muestra de nuestra herencia cultural.</p>
           </div>
         </div>
         <div class="col-sm-6">
@@ -499,17 +508,17 @@
             <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
               <p class="lead">Experiencia con el Usuario</p>
               <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="90">90%</div>
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar" aria-valuetransitiongoal="97" >90%</div>
               </div>
             </div>
             <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="400ms">
               <p class="lead">Diseño Web</p>
               <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="93">93%</div>
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar" aria-valuetransitiongoal="97" >93%</div>
               </div>
             </div>
             <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
-              <p class="lead">Programación</p>
+              <p class="lead">Programaci&oacute;n</p>
               <div class="progress">
                 <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="97">97%</div>
               </div>
@@ -531,7 +540,7 @@
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
           <h2>Nuestro Portafolio</h2>
-          <p>Centro Cultural de Idiomas Universidad Técnica de Cotopaxi</p>
+          <p>Nuestro agradecimiento al Centro Cultural de Idiomas de la Universidad Técnica de Cotopaxi</p>
         </div>
       </div> 
     </div>
@@ -625,10 +634,6 @@
             </div>
           </div>
         </div>
-        
-        
-        
-        
       </div>
     </div>
     <div id="portfolio-single-wrap">
@@ -642,7 +647,7 @@
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
           <h2>Quienes lo hicimos posible</h2>
-          <p>El grupo de tesistas, y todos aquellos que de alguna u otra manera pusieron su granito de arena para hacer posible que este proyecto tenga éxito</p>
+          <p>Ingenieros en Sistemas Computacionales e Inform&aacute;tica idealizadores de la aplicaci&oacute;n para fomentar el aprendizaje del idioma kichwa </p>
         </div>
       </div>
       <div class="team-members">
@@ -651,12 +656,12 @@
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
               <div class="member-image">
-                <img class="img-responsive" src="Cliente/images/portfolio/17.jpg" alt="">
+                <img src="Cliente/images/portfolio/17.jpg" WIDTH=200 HEIGHT=260>
               </div>
               <div class="member-info">
-                <h3>Luis Guillermo Cayo Tigasi</h3>
-                <h4>Tesista</h4>
-                <p>Estudiante de último año de sistemas</p>
+                <h3>Ing.Luis Guillermo Cayo Tigasi</h3>
+                <h4>Metod&oacute;logo</h4>
+                <p>Especialista en el idioma Kichwa pieza fundamental del proyecto</p>
               </div>
               <div class="social-icons">
                 <ul>
@@ -671,12 +676,13 @@
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
               <div class="member-image">
-                <img class="img-responsive" src="Cliente/images/portfolio/18.png" alt="">
+                <img  src="Cliente/images/portfolio/18.jpg" WIDTH=200 HEIGHT=260>
               </div>
               <div class="member-info">
-                <h3>Luis Homero Caiza Soria</h3>
+                <h3>Ing. Luis Homero Caiza Soria</h3>
                 <h4>Desarrollador</h4>
-                <p>Desarrollador Junior SmartWork S.A</p>
+                <p>Desarrollador SmartWork S.A</p>
+                <p>(022 316-189) - (0983952965)</p>
               </div>
               <div class="social-icons">
                 <ul>

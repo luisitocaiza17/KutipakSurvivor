@@ -22,17 +22,18 @@
             var tipoConsulta="";
             var dataP;
             $(document).ready(function () {              
-               tipoConsulta="TodosTipos";
-               cargaInicial(tipoConsulta);
-               
+               cargaCombos();
                
                $('#Contenidos').hide();
-               
+               $('#TablaTodos').hide();
+               $('#nuevo').hide();
+               $('#formIncial').show();
                $("#buscar").click(function () {
                     var palabra=$("#palabra1").val();
                     var idioma= $("#idioma1").val();
                     var traducion= $("#traducion1").val();
                     busquedaEspeficica(palabra,idioma,traducion,"busquedaEspecifica");
+                    $('#TablaTodos').show();
                });
                $("#guardar").click(function () {
                         
@@ -80,8 +81,7 @@
             });
                   
             function busquedaEspeficica(palabra, idioma, traduccion, proceso){
-               
-               
+                $('#nuevo').show();
                 $.ajax({
                     url: '../Palabras_Controller',
                     data: {
@@ -115,16 +115,35 @@
                 
             }
    
-
+            function cargaCombos(){ 
+                $("#palabra1").val("");
+                $("#traducion1").val("");
+                $('#nuevo').hide();
+                $("#idioma").val("")
+                    .find('option')
+                    .remove()
+                    .end();
+                $.ajax({
+                    url: '../Palabras_Controller',
+                    data: {
+                        "tipoConsulta": "cargaCombosConsulta"
+                    },
+                    async: false,
+                    type: 'POST',
+                    datatype: 'json',
+                    success: function (data) {
+                         $("#idioma1").append("<option selected  value='-1'>Seleccione el idioma</option>");
+                            var listadoIdioma = data.listadoIdioma;
+                            $.each(listadoIdioma, function (index) {
+                                $("#idioma1").append("<option value='" + listadoIdioma[index].idioma + "'>" +  listadoIdioma[index].idioma + "</option>");
+                        });
+                    }
+                });
+            }   
     
             function cargaInicial(tipoConsulta){
-                //DE KENDO
-        
                 
-                //FIN KENDO
-                
-                $('#Contenidos').hide();
-                $('#TablaTodos').show();
+                $('#TablaTodos').hide();
                 $('#nuevo').show();
                 $("#nemotecnico").val("");
                 
@@ -140,6 +159,9 @@
                     .find('option')
                     .remove()
                     .end();
+                 
+                $("#palabra").val("");
+                $("#traducion").val("")
                 $.ajax({
                     url: '../Palabras_Controller',
                     data: {
@@ -153,16 +175,6 @@
                          var selogro=data.success;
                          if(selogro===true){
                                 $("#dataTable").children().remove();
-                                //$.each(listadoPalabras, function (index) {
-                                    // $("#dataTable").append("<tr>" +
-                                     //"<td style='width: 10%'>" + listadoPalabras[index].idioma + "</td>" +        
-                                    // "<td style='width: 10%'><a onclick='redireccionaActualizar(&#39;"+listadoPalabras[index].id+"&#39;,&#39;"+listadoPalabras[index].idioma+"&#39;,&#39;"+listadoPalabras[index].palabra+"&#39;,&#39;"+listadoPalabras[index].traducion+"&#39;,&#39;"+listadoPalabras[index].tipoP+"&#39;,&#39;"+listadoPalabras[index].tiempoP+"&#39;);'>" + listadoPalabras[index].palabra + "</a></td>" +
-                                    // "<td style='width: 10%'>" + listadoPalabras[index].traducion + "</td>" +
-                                    // "<td style='width: 10%'>" + listadoPalabras[index].tipo + "</td>" +
-                                    // "<td style='width: 10%'>" + listadoPalabras[index].tiempo + "</td>" +
-                                    // "</tr>");
-                                // });
-                                 
                                 
                                  $("#idioma").append("<option selected  value='-1'>Seleccione el idioma</option>");
                                     var listadoIdioma = data.listadoIdioma;
@@ -212,20 +224,23 @@
             
             function redireccionaInsertar(){
                 
+                $('#formIncial').hide();
                 $('#TablaTodos').hide();
                 $('#Contenidos').show();
                 $('#nuevo').hide();
                 $("#guardar").text("GUARDAR");
                 $('#eliminar').hide();
-                
+                cargaInicial("TodosTipos");                
             }
             
             function redireccionaActualizar(id,idioma, palabra, traducion, tipo, tiempo){
-                
+                $('#formIncial').hide();
                 $('#TablaTodos').hide();
                 $('#Contenidos').show();
-                $('#nuevo').hide();
                 $('#eliminar').show();
+                $('#nuevo').hide();
+                cargaInicial("TodosTipos");  
+                $('#nuevo').hide();
                 if(id!==""){
                     $("#guardar").text("ACTUALIZAR");
                     $("#palabra").val(palabra);
@@ -234,10 +249,7 @@
                     $("#eltiempo").val(tiempo);
                     $("#traducion").val(traducion);
                     $("#idPalabra").val(id);
-                    //Procesos("ACTUALIZAR",id, nombrePalabra,nemotecnico);
-                    
-                }
-            
+                }            
             }
             
             function eliminarRegistro(){
@@ -251,7 +263,6 @@
                     Procesos(operacion,idTipoPalabra, nombrePalabra,nemotecnico);
                     var tipoConsulta="TodosTipos";
                     location.reload();
-                    //cargaInicial(tipoConsulta);
                 } 
                 
             }
@@ -357,25 +368,13 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="../index.html">KUTIPAK UTC</a>
+                
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="../index.html">Inicio</a>
-                    </li>
-                    <li>
-                        <a href="../html/services.html">Nosotros</a>
-                    </li>
-                    <li>
-                        <a href="../html/contact.html">Administrador</a>
+                        <a onClick="abreCambio();" >Cambio de Contraseña</a>
                     </li>
                     <li>
                         <a onClick="cerrarSesion();" href="../index.html">Cerrar Seción</a>
@@ -399,9 +398,10 @@
                     <small>'Mejorando cada día'</small>
                 </h2>
                 <ol class="breadcrumb">
-                    <li><a href="../index.html">Inicio</a>
+                    <li><a href="administradorPrincipal.jsp">Inicio</a>
                     </li>
                     <li class="active">Administración</li>
+                    
                 </ol>
             </div>
         </div>
@@ -409,69 +409,65 @@
         <!-- Content Row -->
         <div class="row">
             
-            
-            
-            
             <!-- Sidebar Column -->
             <div class="col-md-3">
                 <div class="list-group">
                     <a href="administradorPrincipal.jsp" class="list-group-item ">Tipos Palabras</a>
-                    <a href="tiempos.jsp" class="list-group-item ">Tiempos</a>
-                    <a href="palabras.jsp" class="list-group-item active">Palabras</a>
-                    <a  onClick="abreCambio();" class="list-group-item">Cambio de Contraseña</a>
+                    <a href="palabras.jsp" class="list-group-item active">Palabras</a> 
+                    <a href="estructura.jsp" class="list-group-item ">Estructura</a>
                 </div>
             </div>
             <!-- Content Column -->
             <div class="col-md-9">
-                <h2>Palabras</h2>
-                <p>Los tiempos, son la forma en que se representa la oración y sus variantes a través del tiempo, estos son estándares por medio de los 
-                    cuales se traducirá la palabra en base al tiempo, lo que mejorara la calidad de traducción</p>
-                <br>
-                <br>
-                <form class="form-horizontal">
-                                <div class="form-group">
-                                  <label for="palabra1" class="col-sm-2 control-label">Palabra</label>
-                                  <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="palabra1" placeholder="auto,casa" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" >
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label for="idioma1" class="col-sm-2 control-label">Idioma</label>
-                                  <div class="col-sm-6">
-                                    <select class="form-control required" id="idioma1"onchange="carga(this)"  > 
-                                        
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label for="traducion1" class="col-sm-2 control-label">Traducción</label>
-                                  <div class="col-sm-6">
-                                     
-                                        <input id="traducion1" class="form-control required" style="width: 100%;" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                        <br>
-                                        <button type="button"  id="buscar" class="col-sm-6 btn btn-default" >BUSCAR</button>
-                                    </div>
-                                  </div>
-                                
-                |       </form>
-               
-                <br>
-                 <div align="left">
-                            <button id="CargarExcel" type="button" class="btn btn-primary" onclick="CargarExcel();">Cargar desde Excel</button>
+                <div class="row" id="formIncial">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                    <h2>Palabras</h2>
+                    <p>Todas las palabras que contamos en el traductor web.</p>
+                    <br>
+                    
+                    <br>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                          <label for="palabra1" class="col-sm-2 control-label">Palabra</label>
+                          <div class="col-sm-6">
+                            <input type="text" class="form-control" id="palabra1" placeholder="auto,casa" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+                          </div>
                         </div>
-                 <br>
-                 
-                <div align="right">
-                    <button id="nuevo" type="button" class="btn btn-default" onclick="redireccionaInsertar();">Nuevo</button>
+                        <div class="form-group">
+                          <label for="idioma1" class="col-sm-2 control-label">Idioma</label>
+                          <div class="col-sm-6">
+                            <select class="form-control required" id="idioma1"onchange="carga(this)"  > 
+
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="traducion1" class="col-sm-2 control-label">Traducción</label>
+                          <div class="col-sm-6">
+
+                                <input id="traducion1" class="form-control required" style="width: 100%;" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                <br>
+                                <button type="button"  id="buscar" class="col-sm-6 btn btn-success" >BUSCAR</button>
+                            </div>
+                          </div>                                
+                    </form>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                  <br>
-                <br />
-                <br />
-                
-                
+            </div>
+            <br>
+            <div align="right">
+                            <button id="CargarExcel" type="button" class="btn btn-primary btn-xs" onclick="CargarExcel();">Cargar desde Excel</button>
+            </div> 
+            <div align="right">
+                <button id="nuevo" type="button" class="btn btn-default" onclick="redireccionaInsertar();">Nuevo</button>
+            </div>
+            <br>            
+            <div>    
                 <div id="TablaTodos" class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6">
                         <table class="table table-hover table-bordered" id="gridInfo">
                          <colgroup>
                                 <col />
@@ -494,7 +490,7 @@
                                 
                     </table>
                     </div>
-                    <div class="col-md-1"></div>
+                    <div class="col-md-2"></div>
                     
                 </div>
                 <div id="Contenidos" class="row">

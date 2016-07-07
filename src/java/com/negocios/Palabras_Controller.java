@@ -86,7 +86,7 @@ public class Palabras_Controller extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                   System.out.println("sie entra a palabras");
-        JSONObject result = new JSONObject();
+                JSONObject result = new JSONObject();
 		try {
                     
                         JSONObject planJSONObject = new JSONObject();
@@ -117,6 +117,20 @@ public class Palabras_Controller extends HttpServlet {
                              }
                              result.put("listadoPalabras", JSONArrayTipos);
                               result.put("success", Boolean.TRUE);
+                        }
+                        
+                        //carga inicial de combos
+                        if(tipoConsulta.equals("cargaCombosConsulta")){
+                            JSONObject planJSONObjectTiempos = new JSONObject();
+                             IdiomasDAO todosIdiomas = new IdiomasDAO();
+                             List<IdiomasRecord> resultsIdiomas = todosIdiomas.ConsultarIdiomas();
+                             JSONArray JSONArrayIdioma = new JSONArray();  
+                             for(IdiomasRecord rs : resultsIdiomas){
+                                 planJSONObjectTiempos.put("id", rs.getIdiomaid());
+                                 planJSONObjectTiempos.put("idioma", rs.getNombre());
+                                 JSONArrayIdioma.add(planJSONObjectTiempos);
+                             }
+                             result.put("listadoIdioma", JSONArrayIdioma);
                         }
                         
                         if(tipoConsulta.equals("TodosTipos")){
@@ -178,13 +192,14 @@ public class Palabras_Controller extends HttpServlet {
                              
                              result.put("success", Boolean.TRUE);
                          }
-                        
+                        /*LLAMADA PARA LA BUSQUEDA ESPECIFICA DE LAS PALABRAS QUE SE DESEAN BUSCAR*/
                         if(tipoConsulta.equals("Significados")){
                             String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
 			    PantallaPalabrasDAO TodasPalabras = new PantallaPalabrasDAO();
                              List<PantallapalabrasRecord> results = TodasPalabras.ConsultarPalabrasEspecificaIdioma(idioma);
                              JSONArray JSONArrayTipos = new JSONArray();
                              JSONArray JSONTraducciones = new JSONArray(); 
+                             //BUSCAMOS Y LAS ENVIAMOS A PANTALLA
                              for(PantallapalabrasRecord rs : results){
                                  planJSONObject.put("id", rs.getPalabraid());
                                  planJSONObject.put("idioma", rs.getIdioma());

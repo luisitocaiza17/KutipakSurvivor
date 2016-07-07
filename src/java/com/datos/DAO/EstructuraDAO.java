@@ -36,10 +36,41 @@ public class EstructuraDAO {
              lasEstructuras.setFormula(r.getValue(ESTRUCTURA.FORMULA));
              lasEstructuras.setIdiomaid(r.getValue(ESTRUCTURA.IDIOMAID));
              lasEstructuras.setNombreestructura(r.getValue(ESTRUCTURA.NOMBREESTRUCTURA));
+             lasEstructuras.setFormulasalida(r.getValue(ESTRUCTURA.FORMULASALIDA));
              listadoEstructuras.add(lasEstructuras);
          }
          conexion.close();
          return listadoEstructuras;
+    }
+    
+    public List<EstructuraRecord> ConsultarEstrutura (int Skip, int Take) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<EstructuraRecord>listadoEstructuras= new ArrayList<EstructuraRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        
+        Result<Record> result = create.select().from(ESTRUCTURA).where(ESTRUCTURA.ESTRUCTURAID.between(Skip, Take)).fetch();
+        for(Record r : result){
+             EstructuraRecord lasEstructuras = new EstructuraRecord();
+             lasEstructuras.setEstructuraid(r.getValue(ESTRUCTURA.ESTRUCTURAID));
+             lasEstructuras.setFormula(r.getValue(ESTRUCTURA.FORMULA));
+             lasEstructuras.setIdiomaid(r.getValue(ESTRUCTURA.IDIOMAID));
+             lasEstructuras.setNombreestructura(r.getValue(ESTRUCTURA.NOMBREESTRUCTURA));
+             lasEstructuras.setFormulasalida(r.getValue(ESTRUCTURA.FORMULASALIDA));
+             listadoEstructuras.add(lasEstructuras);
+         }
+         conexion.close();
+         return listadoEstructuras;
+        
+    }
+    
+    public long ConsultarEstruturaNumero (int Skip, int Take) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+        ConectarBD con = new ConectarBD();
+        List<EstructuraRecord>listadoEstructuras= new ArrayList<EstructuraRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        long total = create.select().from(ESTRUCTURA).fetchCount();
+        return total;
     }
     
     public List<EstructuraRecord> ConsultarEstruturaIdioma (int idioma) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
