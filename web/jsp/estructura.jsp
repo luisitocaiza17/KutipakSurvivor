@@ -25,8 +25,11 @@
             var dataP;
             $(document).ready(function () {              
                cargarTabla();
+               $('#Contenidos').hide();
             });
-                  
+                
+            
+            
             function cargarTabla(){
                 <%--Creamos la tabla tipo kendo--%>
                 if ($('#grid').data().kendoGrid){
@@ -60,11 +63,10 @@
                     }
                 },
                 columns: [
-                        { field: "ESTRUCTURAID", title: "Id Cotización", width: "60px"},
-                        { field: "IDIOMAID", title: "Id Agricola.", width: "60px"},
-                        { field: "NOMBREESTRUCTURA", title: "Periodo" , width: "160px"},
-                        { field: "FORMULA", title: "Fecha Elavoración",format: "{0:yyyy/MM/dd}", width: "100px",headerAttributes: { style: "white-space: normal"}, hidden: true, exportar: true},
-                        { field: "FORMULASALIDA", title: "Identificación Cliente", width: "90px",headerAttributes: { style: "white-space: normal"}}],
+                        { field: "idioma", title: "Id Cotización", width: "60px"},
+                        { field: "nombreEstructura", title: "Id Agricola.", width: "60px"},
+                        { field: "estructuraEntrante", title: "Periodo" , width: "160px"},
+                        { field: "estructuraSaliente", title: "Fecha Elavoración",format: "{0:yyyy/MM/dd}", width: "100px",headerAttributes: { style: "white-space: normal"}, hidden: true, exportar: true}],
                     height: 500,
                     selectable: true,
                     resizable: true,
@@ -178,33 +180,30 @@
                     <div class="col-md-8">
                         <h2>Estructura</h2>
                         <p>La estructura permite configurar el orden de la compasicion gramatical.</p>
+                        <!--<button id="cargar" type="button" class="btn btn-danger" onclick="cargarTabla();">Cargar</button>-->
                     </div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        
+                    </div>
+                </div>
+                <!-- Table -->
+                <br>            
+                    <div align="right">
+                        <button id="nuevo" type="button" class="btn btn-default" onclick="redireccionaInsertar();">Nuevo</button>
+                    </div>
+                <br> 
+                <div class="row">
+                        <div class="col-lg-12">
+                                <div class="table-responsive">
+                                        <div id="grid"></div>
+                                </div>
+                        </div>
                 </div>
             </div>
-            <br>            
-            <div align="right">
-                <button id="nuevo" type="button" class="btn btn-default" onclick="redireccionaInsertar();">Nuevo</button>
-            </div>
-            <br> 
-            <!-- Table -->
-            <div class="row">
-                    <div class="col-lg-12">
-                            <div class="table-responsive">
-                                    <div id="grid"></div>
-                            </div>
-                    </div>
-            </div>
+            
+            
             <div>    
-                <div id="TablaTodos" class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-6">
-                        <div id="grid"></div>
-                    </div>
-                    <div class="col-md-2"></div>
-                    
-                </div>
-                <div id="Contenidos" class="row">
+                    <div id="Contenidos" class="row">
                     <div align="left">
                             <button id="regresar" type="button" class="btn btn-default" onclick="javascript:location.reload();">Regresar</button>
                         </div>

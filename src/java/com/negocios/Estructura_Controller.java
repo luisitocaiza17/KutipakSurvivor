@@ -5,9 +5,12 @@
  */
 package com.negocios;
 
+
 import com.datos.DAO.EstructuraDAO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.negocios.model.EstructuraPalabras;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import persistencia.tables.records.EstructuraRecord;
+
 
 
 /**
@@ -95,10 +99,26 @@ public class Estructura_Controller extends HttpServlet {
                 List<EstructuraRecord> estructuraRecord = new ArrayList<EstructuraRecord>();
                 long contador = 0;
                 estructuraRecord=estrucutraDAO.ConsultarEstrutura(skip, take);
+                
+                //cargamos los datos del cotizador y la adaptamos al objeto
+                List<EstructuraPalabras>  Listado = new ArrayList<EstructuraPalabras>();
+                EstructuraPalabras palabras = new EstructuraPalabras();
+                for( EstructuraRecord rs:estructuraRecord){
+                    palabras.setId(rs.getEstructuraid());
+                    if(rs.getIdiomaid()==1)
+                        palabras.setIdioma("ESPAÑOL");
+                    else
+                        palabras.setIdioma("KICHWA");
+                    palabras.setNombreEstructura(rs.getNombreestructura());
+                    palabras.setEstructuraEntrante(rs.getFormula());
+                    palabras.setEstructuraSaliente(rs.getFormulasalida());
+                    Listado.add(palabras);
+                }
+                
                 contador=estrucutraDAO.ConsultarEstruturaNumero(skip, take);
                 DataSourceResult pg = new DataSourceResult();
                 pg.setTotal((int)contador);
-                pg.setData(estructuraRecord);
+                pg.setData(Listado);
 		Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy HH:mm:ss").create();		
                 response.setContentType("application/json; charset=ISO-8859-1");
                 response.getWriter().print(gson.toJson(pg));

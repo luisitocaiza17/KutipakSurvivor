@@ -49,7 +49,7 @@ public class EstructuraDAO {
         Connection conexion= con.realiza_conexion();
         DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
         
-        Result<Record> result = create.select().from(ESTRUCTURA).where(ESTRUCTURA.ESTRUCTURAID.between(Skip, Take)).fetch();
+        Result<Record> result = create.select().from(ESTRUCTURA).limit(Take).offset(Skip).fetch();
         for(Record r : result){
              EstructuraRecord lasEstructuras = new EstructuraRecord();
              lasEstructuras.setEstructuraid(r.getValue(ESTRUCTURA.ESTRUCTURAID));
