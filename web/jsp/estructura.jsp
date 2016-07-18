@@ -11,11 +11,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Estructura</title>
         <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="../css/Kendo/kendo.common.min.css" />
         <link rel="stylesheet" href="../css/Kendo/kendo.default.min.css">
         <link href="../css/bootstrap/styles.css" rel="stylesheet">
+        
         <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap/bootstrap.js"></script>
+        <script src="../js/bootstrap/bootstrap.min.js"></script>
+        
         <script src="../js/Kendo/kendo.all.min.js"></script>
         <script src="../js/Kendo/kendo.web.min.js"></script>
         <script src="../js/Kendo/jszip.min.js"></script>
@@ -23,12 +28,181 @@
             
             var tipoConsulta="";
             var dataP;
+            
+            var entradaList1 = "";
+            var salidaList1 = "";
+            var entradaList2 = "";
+            var salidaList2 = "";
+            
             $(document).ready(function () {              
                cargarTabla();
                $('#Contenidos').hide();
-            });
+               
+                $("#idioma").kendoMultiSelect({
+                    dataTextField : "nombre",
+                    dataValueField : "codigo",
+                    animation : false,
+                    maxSelectedItems : 1
+                });
                 
+               $("#entrada1").kendoMultiSelect({
+                    dataTextField : "nombre",
+                    dataValueField : "codigo",
+                    animation : false,
+                    maxSelectedItems : 1
+                });
+	
+               $("#salida1").kendoMultiSelect({
+                    dataTextField : "nombre",
+                    dataValueField : "codigo",
+                    animation : false,
+                    maxSelectedItems : 1
+                });
+               
+               $("#entrada2").kendoMultiSelect({
+                    dataTextField : "nombre",
+                    dataValueField : "codigo",
+                    animation : false,
+                    maxSelectedItems : 1
+                });
+	
+               $("#salida2").kendoMultiSelect({
+                    dataTextField : "nombre",
+                    dataValueField : "codigo",
+                    animation : false,
+                    maxSelectedItems : 1
+                });
+               
+                entradaList1 = $("#entrada1").data(
+                        "kendoMultiSelect");
+                salidaList1 = $("#salida1").data(
+                        "kendoMultiSelect");
+               entradaList2 = $("#entrada2").data(
+                        "kendoMultiSelect");
+                salidaList2 = $("#salida2").data(
+                        "kendoMultiSelect");
+               CargarInicial ();
+               
+                $("#save-record").bind({click: function(){
+                    
+                     var validator = $("#formCrud").kendoValidator().data("kendoValidator"); 
+                     $(".required").css("border", "1px solid #ccc");
+                      if (validator.validate() === false) {     
+                             $(".required").each(function(index) {
+                                             var cadena = $(this).val();
+                                             if (cadena.length <= 0) {
+                                                     $(this).css("border", "1px solid red");
+                                                     alert("Por favor ingrese el campo requerido");
+                                                     $(this).focus();
+                                                     return false;
+                                             }		
+                                     });
+                        }else{
+                                identificadorCot = $("#UsuarioId").val();
+                                if(identificadorCot === "")
+                                    tipoConsulta = "crear";
+                                else
+                                    tipoConsulta = "editar";
+                                enviarDatos(tipoConsulta);
+                   }
+		}
+               
+               
+                });
+                
+             });
+            function enviarDatos(tipoProceso){
+                var entrada1=$("#entrada1 option:selected").val();
+                var entrada2=$("#entrada2 option:selected").val();
+                var salida1=$("#salida1 option:selected").val();
+                var salida2=$("#salida2 option:selected").val();
+                var idioma=$("#idioma option:selected").val();
+                var texto=$("#nombre").val();
+                
+                $.ajax({
+                    url: '../Estructura_Controller',
+                    data: {
+                        "tipoConsulta": tipoProceso,
+                        "texto":texto,
+                        "idioma":idioma,
+                        "entrante":entrada1+""+entrada2,
+                        "saliente":salida1+""+salida2
+                    },
+                    async: false,
+                    type: 'POST',
+                    datatype: 'json',
+                    success: function (data) {
+                        var exito= data.success;
+			if(exito=="true" || exito ===true){
+				$("#msgPopup").show();
+			}else{
+				alert("Se produjo un error al guardar la configuracion");
+			}
+                    }                    
+                });
+                
+                
+            }    
+                
+            function CargarInicial (){
+                $.ajax({
+                    url: '../Estructura_Controller',
+                    data: {
+                        "tipoConsulta": "CargaInicial"                        
+                    },
+                    async: false,
+                    type: 'POST',
+                    datatype: 'json',
+                    success: function (data) {
+                        /*Cargo el select agencias*/
+                        entradaList1.dataSource.filter({});
+                        entradaList1.setDataSource(data.entrada1);
+                        
+                        entradaList2.dataSource.filter({});
+                        entradaList2.setDataSource(data.entrada2);
+                        
+                        /*Cargo el select agencias*/
+                        salidaList1.dataSource.filter({});
+                        salidaList1.setDataSource(data.salida1);
+                        salidaList2.dataSource.filter({});
+                        salidaList2.setDataSource(data.salida2);
+                    }                    
+                });
+            }    
+                
+            function abreCambio(){
+                 var agente = window.open("cambioContrasenia.jsp","ventana1","directories=no,width=500,height=500,resizable=no,scrollbars=yes,top=0,left=260,status=1");
+                 agente.opener = self;
+             }
+             
+            function cerrarSesion(){
+                $.ajax({
+                    url : '../Salir',      				
+                    type : 'POST',
+                    datatype : 'json',
+                    success : function(data) {   
+                        if (data.success === true){
+                                window.location= "../index.jsp";
+                        }
+                    }
+                });	                
+             }
             
+            function redireccionaInsertar(){                
+                   $('#add').modal('show');                    
+            }
+            
+            function fnEventoClick(e) {
+                e.preventDefault();
+                var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                //alert("Cotización id:"+dataItem.codigo);
+                 $('#add').modal('show');
+                actualizar(dataItem.id);
+            }
+            
+            function actualizar(id){
+                 $('UsuarioId').val(id);
+            }
             
             function cargarTabla(){
                 <%--Creamos la tabla tipo kendo--%>
@@ -47,6 +221,7 @@
                     type: "json",
                     serverPaging: true,
                     serverSorting: true,
+                    serverFiltering: true,
                     pageSize: 20,
                     transport:{
                             read: {
@@ -63,10 +238,13 @@
                     }
                 },
                 columns: [
-                        { field: "idioma", title: "Id Cotización", width: "60px"},
-                        { field: "nombreEstructura", title: "Id Agricola.", width: "60px"},
-                        { field: "estructuraEntrante", title: "Periodo" , width: "160px"},
-                        { field: "estructuraSaliente", title: "Fecha Elavoración",format: "{0:yyyy/MM/dd}", width: "100px",headerAttributes: { style: "white-space: normal"}, hidden: true, exportar: true}],
+                        
+                        { field: "idioma", title: "Idioma", width: "60px"},
+                        { field: "nombreEstructura", title: "Nombre estructura.", width: "100px"},
+                        { field: "estructuraEntrante", title: "Entrante" , width: "80px"},
+                        { field: "estructuraSaliente", title: "Saliente", width: "80px"},
+                        { command: { text: "Ver Detalle", click: fnEventoClick }, title: " Detalle ", width: "110px"}
+                        ],
                     height: 500,
                     selectable: true,
                     resizable: true,
@@ -116,7 +294,7 @@
         if(session.getAttribute("usuario") == null){
             response.sendRedirect("../index.html");
         }
-    %>
+        %>
             <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -200,6 +378,67 @@
                         </div>
                 </div>
             </div>
+            
+            <!-- Modal -->
+		<div class="modal fade" id="add" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="formCrud">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Kutipak traductor Online</h4>
+						</div>
+						<div class="modal-body">
+							<div class="alert alert-success" id="msgPopup">La configuraci&oacute;n se guardo con &eacute;xito.</div>
+							<div class="status"> </div>	
+							<div class="form-group">
+								<input type="hidden"class="form-control" id="UsuarioId">										
+																
+								<select id="idioma" name="idioma"
+									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>
+                                                                     <option value="1">Español</option>
+                                                                     <option value="2">Kichwa</option>
+								</select>
+								<br>
+								<label>Nombre Estructura</label>
+									<input type="text" class="form-control required" id="nombre" validationMessage="Campo requerido!!!" required>
+								
+								<label>Formula Entrada</label>
+                                                                    <select id="entrada1" name="entrada1"
+									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
+                                                                    </select>
+                                                                    <select id="entrada2" name="entrada2"
+									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
+                                                                    </select>
+								<label>Formula Salida</label>
+                                                                    <select id="salida1" name="salida1"
+									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
+                                                                    </select>
+                                                                    <select id="salida2" name="salida2"
+									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
+                                                                    </select>
+								 
+								<br />																						
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" id="close-popup"
+								data-dismiss="modal">Cerrar</button>
+							<button type="button" class="btn btn-primary" id="save-record">Guardar Cambios</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+            
+            
+            
+            
             
             
             <div>    

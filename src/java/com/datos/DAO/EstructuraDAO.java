@@ -119,8 +119,8 @@ public class EstructuraDAO {
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();
 	DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
-        create.insertInto(Estructura.ESTRUCTURA,Estructura.ESTRUCTURA.ESTRUCTURAID,Estructura.ESTRUCTURA.FORMULA,Estructura.ESTRUCTURA.IDIOMAID,Estructura.ESTRUCTURA.NOMBREESTRUCTURA)
-                .values(miEstructura.getEstructuraid(),miEstructura.getFormula(),miEstructura.getIdiomaid(),miEstructura.getNombreestructura()).execute();
+        create.insertInto(Estructura.ESTRUCTURA,Estructura.ESTRUCTURA.ESTRUCTURAID,Estructura.ESTRUCTURA.FORMULA,Estructura.ESTRUCTURA.IDIOMAID,Estructura.ESTRUCTURA.NOMBREESTRUCTURA,Estructura.ESTRUCTURA.FORMULASALIDA)
+                .values(miEstructura.getEstructuraid(),miEstructura.getFormula(),miEstructura.getIdiomaid(),miEstructura.getNombreestructura(),miEstructura.getFormulasalida()).execute();
         conexion.close();
         return true;
     }

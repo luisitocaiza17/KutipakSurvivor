@@ -7,6 +7,7 @@ package com.negocios;
 
 
 import com.datos.DAO.EstructuraDAO;
+import com.datos.DAO.TiposPalabrasDAO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.negocios.model.EstructuraPalabras;
@@ -23,8 +24,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import persistencia.tables.records.EstructuraRecord;
+import persistencia.tables.records.TipospalabrasRecord;
 
 
 
@@ -92,18 +95,93 @@ public class Estructura_Controller extends HttpServlet {
         // get the take and skip parameters
         int skip = request.getParameter("skip") == null ? 0 : Integer.parseInt(request.getParameter("skip"));
         int take = request.getParameter("take") == null ? 20 : Integer.parseInt(request.getParameter("take"));
+        
+        //cargamos cada uno de los combos y los enviamos como objetos de JSON
+        if (tipoConsulta.equalsIgnoreCase("crear")) {
+            try {
+                String texto = request.getParameter("texto") == null ? "": request.getParameter("texto");
+                String idioma = request.getParameter("idioma") == null ? "": request.getParameter("idioma");
+                String entrante = request.getParameter("entrante") == null ? "": request.getParameter("entrante");
+                String saliente = request.getParameter("saliente") == null ? "": request.getParameter("saliente");
+                
+                //Guardamos el Objeto
+                EstructuraRecord objeto = new EstructuraRecord();
+                objeto.setIdiomaid(Integer.parseInt(idioma));
+                objeto.setNombreestructura(texto);
+                objeto.setFormula(entrante);
+                objeto.setFormulasalida(saliente);
+                EstructuraDAO estructuraDAO = new EstructuraDAO();
+                estructuraDAO.GrabarEstructura(objeto);
+                 result.put("success", Boolean.TRUE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                result.put("success", Boolean.FALSE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            } 
+        }
+        
+        if (tipoConsulta.equalsIgnoreCase("CargaInicial")) {
+            TiposPalabrasDAO tiposPalabrasDAO = new TiposPalabrasDAO();
+            List<TipospalabrasRecord> tipospalabrasRecord = new ArrayList<TipospalabrasRecord>();
+            //Obejtos de Entrada
+            JSONObject palabrasObjetoEntrada1 = new JSONObject();
+            JSONArray  palabrasArrayEntrada1 = new JSONArray();
+            JSONObject palabrasObjetoEntrada2 = new JSONObject();
+            JSONArray  palabrasArrayEntrada2 = new JSONArray();
+            
+            //Objetos de Salida
+            JSONObject palabrasObjetoSalida1 = new JSONObject();
+            JSONArray  palabrasArraySalida1 = new JSONArray();
+            JSONObject palabrasObjetoSalida2 = new JSONObject();
+            JSONArray  palabrasArraySalida2 = new JSONArray();
+            
+            try{
+                //cargamos los Tipos de Palabras
+                tipospalabrasRecord=tiposPalabrasDAO.ConsultarTiposPalabras();
+                for(TipospalabrasRecord rs:tipospalabrasRecord){
+                    palabrasObjetoEntrada1.put("nombre", rs.getNombretipo());
+                    palabrasObjetoEntrada1.put("codigo", rs.getCodigoktpak());
+                    palabrasArrayEntrada1.add(palabrasObjetoEntrada1);
+                    palabrasObjetoEntrada2.put("nombre", rs.getNombretipo());
+                    palabrasObjetoEntrada2.put("codigo", rs.getCodigoktpak());
+                    palabrasArrayEntrada2.add(palabrasObjetoEntrada2);
+                    palabrasObjetoSalida1.put("nombre", rs.getNombretipo());
+                    palabrasObjetoSalida1.put("codigo", rs.getCodigoktpak());
+                    palabrasArraySalida1.add(palabrasObjetoEntrada1);
+                    palabrasObjetoSalida2.put("nombre", rs.getNombretipo());
+                    palabrasObjetoSalida2.put("codigo", rs.getCodigoktpak());
+                    palabrasArraySalida2.add(palabrasObjetoEntrada2);
+                    
+                }
+                result.put("entrada1", palabrasArrayEntrada1);
+                result.put("entrada2", palabrasArrayEntrada2);
+                result.put("salida1", palabrasArraySalida1);
+                result.put("salida2", palabrasArraySalida2);
+                result.put("success", Boolean.TRUE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            
+        }
+        
         if (tipoConsulta.equalsIgnoreCase("encontrarTodos")) {
             try {
                 //preparamos la lista y preparamos el contador
                 EstructuraDAO estrucutraDAO = new EstructuraDAO();
                 List<EstructuraRecord> estructuraRecord = new ArrayList<EstructuraRecord>();
                 long contador = 0;
-                estructuraRecord=estrucutraDAO.ConsultarEstrutura(skip, take);
+                estructuraRecord=estrucutraDAO.ConsultarEstrutura(skip,take);
                 
                 //cargamos los datos del cotizador y la adaptamos al objeto
                 List<EstructuraPalabras>  Listado = new ArrayList<EstructuraPalabras>();
-                EstructuraPalabras palabras = new EstructuraPalabras();
+               
                 for( EstructuraRecord rs:estructuraRecord){
+                    EstructuraPalabras palabras = new EstructuraPalabras();
                     palabras.setId(rs.getEstructuraid());
                     if(rs.getIdiomaid()==1)
                         palabras.setIdioma("ESPAÑOL");
