@@ -34,7 +34,8 @@
             var entradaList2 = "";
             var salidaList2 = "";
             
-            $(document).ready(function () {              
+            $(document).ready(function () {  
+               $("#msgPopup").hide();
                cargarTabla();
                $('#Contenidos').hide();
                
