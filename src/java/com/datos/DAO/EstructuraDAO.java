@@ -115,6 +115,28 @@ public class EstructuraDAO {
          return listadoEstructuras;
     }
     
+    public EstructuraRecord ConsultarEstructuraEspecificaId (EstructuraRecord miEstructura) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
+       
+        ConectarBD con = new ConectarBD();
+        List<EstructuraRecord>listadoEstructuras= new ArrayList<EstructuraRecord>();
+        Connection conexion= con.realiza_conexion();
+        DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
+        Result<Record> result = create.select().from(ESTRUCTURA).
+                where(ESTRUCTURA.ESTRUCTURAID.equal(miEstructura.getEstructuraid())).fetch();
+         for(Record r : result){
+             EstructuraRecord lasEstructuras = new EstructuraRecord();
+             lasEstructuras.setEstructuraid(r.getValue(ESTRUCTURA.ESTRUCTURAID));
+             lasEstructuras.setFormula(r.getValue(ESTRUCTURA.FORMULA));
+             lasEstructuras.setIdiomaid(r.getValue(ESTRUCTURA.IDIOMAID));
+             lasEstructuras.setNombreestructura(r.getValue(ESTRUCTURA.NOMBREESTRUCTURA));
+             lasEstructuras.setFormulasalida(r.getValue(ESTRUCTURA.FORMULASALIDA));
+             
+             listadoEstructuras.add(lasEstructuras);
+         }
+         conexion.close();
+         return listadoEstructuras.get(0);
+    }
+    
     public boolean GrabarEstructura(EstructuraRecord miEstructura) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();
@@ -129,7 +151,7 @@ public class EstructuraDAO {
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();
 	DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
-        create.update(ESTRUCTURA).set(ESTRUCTURA.FORMULA,miEstructura.getFormula()).set(ESTRUCTURA.IDIOMAID,miEstructura.getIdiomaid()).set(ESTRUCTURA.NOMBREESTRUCTURA,miEstructura.getNombreestructura()).where(ESTRUCTURA.ESTRUCTURAID.equal(miEstructura.getEstructuraid())).execute();
+        create.update(ESTRUCTURA).set(ESTRUCTURA.FORMULA,miEstructura.getFormula()).set(ESTRUCTURA.IDIOMAID,miEstructura.getIdiomaid()).set(ESTRUCTURA.NOMBREESTRUCTURA,miEstructura.getNombreestructura()).set(ESTRUCTURA.FORMULA,miEstructura.getFormula()).set(ESTRUCTURA.FORMULASALIDA,miEstructura.getFormulasalida()).where(ESTRUCTURA.ESTRUCTURAID.equal(miEstructura.getEstructuraid())).execute();
         conexion.close();
         return true;
     }
@@ -138,7 +160,7 @@ public class EstructuraDAO {
         ConectarBD con = new ConectarBD();
         Connection conexion = con.realiza_conexion();
 	DSLContext create = DSL.using(conexion, SQLDialect.MYSQL);
-        create.delete(ESTRUCTURA).where(ESTRUCTURA.ESTRUCTURAID.equal(estructura.getEstructuraid()));
+        create.delete(ESTRUCTURA).where(ESTRUCTURA.ESTRUCTURAID.equal(estructura.getEstructuraid())).execute();
         return true;
     }
 }

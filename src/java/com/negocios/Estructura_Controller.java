@@ -14,6 +14,7 @@ import com.negocios.model.EstructuraPalabras;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,98 @@ public class Estructura_Controller extends HttpServlet {
                 response.setContentType("application/json; charset=ISO-8859-1");
                 result.write(response.getWriter());
             } 
+        }
+        
+        //cargamos cada uno de los combos y los enviamos como objetos de JSON
+        if (tipoConsulta.equalsIgnoreCase("editar")) {
+            try {
+                String texto = request.getParameter("texto") == null ? "": request.getParameter("texto");
+                String idioma = request.getParameter("idioma") == null ? "": request.getParameter("idioma");
+                String entrante = request.getParameter("entrante") == null ? "": request.getParameter("entrante");
+                String saliente = request.getParameter("saliente") == null ? "": request.getParameter("saliente");
+                String id = request.getParameter("id") == null ? "": request.getParameter("id");
+                
+                //Guardamos el Objeto
+                EstructuraRecord objeto = new EstructuraRecord();
+                objeto.setIdiomaid(Integer.parseInt(idioma));
+                objeto.setNombreestructura(texto);
+                objeto.setFormula(entrante);
+                objeto.setFormulasalida(saliente);
+                objeto.setEstructuraid(Integer.parseInt(id));
+                EstructuraDAO estructuraDAO = new EstructuraDAO();
+                estructuraDAO.ActualizarEstructura(objeto);
+                 result.put("success", Boolean.TRUE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                result.put("success", Boolean.FALSE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            } 
+        }
+        
+        //Eliminamos el registro
+        if (tipoConsulta.equalsIgnoreCase("eliminar")) {
+            try {
+                String id = request.getParameter("id") == null ? "": request.getParameter("id");
+                //Guardamos el Objeto
+                EstructuraRecord objeto = new EstructuraRecord();
+                objeto.setEstructuraid(Integer.parseInt(id));
+                EstructuraDAO estructuraDAO = new EstructuraDAO();
+                estructuraDAO.EliminarEstructura(objeto);
+                 result.put("success", Boolean.TRUE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                result.put("success", Boolean.FALSE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            } 
+        }
+        
+        if (tipoConsulta.equalsIgnoreCase("CargaIndividual")) {
+            String id = request.getParameter("id") == null ? "": request.getParameter("id");
+            EstructuraRecord objeto = new EstructuraRecord();
+            objeto.setEstructuraid(Integer.parseInt(id));
+            objeto.setEstructuraid(Integer.parseInt(id));
+            EstructuraDAO estructuraDAO = new EstructuraDAO();
+            try{
+                objeto=estructuraDAO.ConsultarEstructuraEspecificaId(objeto);
+                
+                result.put("texto", objeto.getNombreestructura());
+                result.put("idioma", objeto.getIdiomaid());
+                
+                //Separamos las cadenas Entrada
+                String entrada=objeto.getFormula();
+                char[] cadema =entrada.toCharArray();
+                
+                String E1=""+cadema[0];
+                String E2=""+cadema[1];
+                
+                 //Separamos las cadenas SALIDAS
+                String salida=objeto.getFormulasalida();
+                char[] cademaSalida =salida.toCharArray();
+                
+                String S1=""+cademaSalida[0];
+                String S2=""+cademaSalida[1];
+                
+                
+                result.put("entrada1", E1);
+                result.put("entrada2", E2);
+                result.put("salida1", S1);
+                result.put("salida2", S2);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+                
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
+                result.put("success", Boolean.FALSE);
+                response.setContentType("application/json; charset=ISO-8859-1");
+                result.write(response.getWriter());
+            }
         }
         
         if (tipoConsulta.equalsIgnoreCase("CargaInicial")) {

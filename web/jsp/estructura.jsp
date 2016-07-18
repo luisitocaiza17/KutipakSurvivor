@@ -35,7 +35,7 @@
             var salidaList2 = "";
             
             $(document).ready(function () {  
-               $("#msgPopup").hide();
+              $("#msgPopup").hide();
                cargarTabla();
                $('#Contenidos').hide();
                
@@ -119,7 +119,7 @@
                 var salida2=$("#salida2 option:selected").val();
                 var idioma=$("#idioma option:selected").val();
                 var texto=$("#nombre").val();
-                
+                var id=$('#UsuarioId').val();
                 $.ajax({
                     url: '../Estructura_Controller',
                     data: {
@@ -127,7 +127,8 @@
                         "texto":texto,
                         "idioma":idioma,
                         "entrante":entrada1+""+entrada2,
-                        "saliente":salida1+""+salida2
+                        "saliente":salida1+""+salida2,
+                        "id":id
                     },
                     async: false,
                     type: 'POST',
@@ -136,12 +137,23 @@
                         var exito= data.success;
 			if(exito=="true" || exito ===true){
 				$("#msgPopup").show();
+                                cargarTabla();
 			}else{
 				alert("Se produjo un error al guardar la configuracion");
 			}
                     }                    
                 });
                 
+                
+            }    
+                
+            function limpiar(){
+                $("#idioma").data("kendoMultiSelect").value(null);
+                $("#nombre").val("");
+                $("#entrada1").data("kendoMultiSelect").value(null);
+                $("#entrada2").data("kendoMultiSelect").value(null);
+                $("#salida1").data("kendoMultiSelect").value(null);
+                $("#salida2").data("kendoMultiSelect").value(null);
                 
             }    
                 
@@ -189,20 +201,69 @@
                 });	                
              }
             
-            function redireccionaInsertar(){                
-                   $('#add').modal('show');                    
+            function redireccionaInsertar(){
+                    limpiar();
+                   $('#add').modal('show'); 
+                   $('#elimina').hide();
+                   $("#msgPopup").hide();
             }
             
             function fnEventoClick(e) {
                 e.preventDefault();
+                
                 var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
                 //alert("Cotización id:"+dataItem.codigo);
                  $('#add').modal('show');
                 actualizar(dataItem.id);
             }
             
+            function eliminar(){
+                var id=$('#UsuarioId').val();
+                $.ajax({
+                    url : '../Estructura_Controller',  
+                    data: {
+                        "tipoConsulta": "eliminar" ,
+                        "id": id 
+                    },
+                    async: false,
+                    type : 'POST',
+                    datatype : 'json',
+                    success : function(data) {   
+                        if (data.success === true){
+                                cargarTabla();
+                                $('#add').modal('hide');
+                                alert ("Se Borró sin problemas");
+                                
+                        }else{
+                            alert ("Upss..Tuvimos un problema no se pudo eliminar el registro");
+                        }
+                        
+                    }
+                });
+            }
+            
             function actualizar(id){
-                 $('UsuarioId').val(id);
+                 $('#UsuarioId').val(id);
+                 $('#elimina').show();
+                 $("#msgPopup").hide();
+                 $.ajax({
+                    url : '../Estructura_Controller',  
+                    data: {
+                        "tipoConsulta": "CargaIndividual" ,
+                        "id": id 
+                    },
+                    async: false,
+                    type : 'POST',
+                    datatype : 'json',
+                    success : function(data) {   
+                        $("#idioma").data("kendoMultiSelect").value(data.idioma);
+                        $("#nombre").val(data.texto);
+                        $("#entrada1").data("kendoMultiSelect").value(data.entrada1);
+                        $("#entrada2").data("kendoMultiSelect").value(data.entrada2);
+                        $("#salida1").data("kendoMultiSelect").value(data.salida1);
+                        $("#salida2").data("kendoMultiSelect").value(data.salida2);
+                    }
+                });
             }
             
             function cargarTabla(){
@@ -414,6 +475,8 @@
                                                                     <select id="entrada2" name="entrada2"
 									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
                                                                     </select>
+                                                                <br>
+                                                                <br>
 								<label>Formula Salida</label>
                                                                     <select id="salida1" name="salida1"
 									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
@@ -428,7 +491,9 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" id="close-popup"
 								data-dismiss="modal">Cerrar</button>
-							<button type="button" class="btn btn-primary" id="save-record">Guardar Cambios</button>
+                                                    <button type="button" class="btn btn-primary" id="elimina" onclick="eliminar();">Eliminar</button>
+                                                    <button type="button" class="btn btn-primary" id="save-record" >Guardar</button>
+                                                        
 						</div>
 					</form>
 				</div>
@@ -436,82 +501,7 @@
 		</div>
 	</div>
 	<!-- Modal -->
-            
-            
-            
-            
-            
-            
-            <div>    
-                    <div id="Contenidos" class="row">
-                    <div align="left">
-                            <button id="regresar" type="button" class="btn btn-default" onclick="javascript:location.reload();">Regresar</button>
-                        </div>
-                    <div align="right">
-                            <button id="eliminar" type="button" class="btn btn-danger" onclick="eliminarRegistro();">Eliminar</button>
-                    </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-7">
-                         <br>
-                        <form class="form-horizontal">
-                                <div class="form-group">
-                                  <label for="palabra" class="col-sm-6 control-label">Palabra</label>
-                                  <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="palabra" placeholder="auto,casa" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" >
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label for="idioma" class="col-sm-6 control-label">Idioma</label>
-                                  <div class="col-sm-6">
-                                    <select class="form-control required" id="idioma"onchange="carga(this)"  > 
-                                        
-                                    </select>
-                                  </div>
-                                </div>
-                            
-                                <div class="form-group">
-                                  <label for="tipo" class="col-sm-6 control-label">Tipo</label>
-                                  <div class="col-sm-6">
-                                    <select class="form-control required" id="tipo"> 
-                                       
-                                    </select>
-                                  </div>
-                                </div>
-                            
-                                <div class="form-group">
-                                  <label for="eltiempo" class="col-sm-6 control-label">Tiempo</label>
-                                  <div class="col-sm-6">
-                                    <select class="form-control required" id="eltiempo"> 
-                                        
-                                    </select>
-                                  </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                  <label for="traducion" class="col-sm-6 control-label">Traducción</label>
-                                  <div class="col-sm-6">
-                                     
-                                        <input id="traducion" class="form-control required" style="width: 100%;" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                                 <br>
-                                <div class="form-group">
-                                  <div class="col-sm-offset-6 col-sm-10">
-                                    <input type="hidden" class="form-control" id="idPalabra">
-                                    <button type="button" id="guardar" class="btn btn-primary">Guardar</button>
-                                  </div>
-                                </div>
-                                 
-                              </form>
-                         
-                    </div>
-                    <div class="col-md-3"></div>
-                    
-                </div>   
-
-
+          
         </div>
         <!-- /.row -->
 
