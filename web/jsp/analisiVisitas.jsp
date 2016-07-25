@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Estructura</title>
+        <title>Visitas</title>
         <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
         <link href="../css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
@@ -35,82 +35,9 @@
             var salidaList2 = "";
             
             $(document).ready(function () {  
-              $("#msgPopup").hide();
-               cargarTabla();
-               $('#Contenidos').hide();
-               
-                $("#idioma").kendoMultiSelect({
-                    dataTextField : "nombre",
-                    dataValueField : "codigo",
-                    animation : false,
-                    maxSelectedItems : 1
-                });
                 
-               $("#entrada1").kendoMultiSelect({
-                    dataTextField : "nombre",
-                    dataValueField : "codigo",
-                    animation : false,
-                    maxSelectedItems : 1
-                });
-	
-               $("#salida1").kendoMultiSelect({
-                    dataTextField : "nombre",
-                    dataValueField : "codigo",
-                    animation : false,
-                    maxSelectedItems : 1
-                });
-               
-               $("#entrada2").kendoMultiSelect({
-                    dataTextField : "nombre",
-                    dataValueField : "codigo",
-                    animation : false,
-                    maxSelectedItems : 1
-                });
-	
-               $("#salida2").kendoMultiSelect({
-                    dataTextField : "nombre",
-                    dataValueField : "codigo",
-                    animation : false,
-                    maxSelectedItems : 1
-                });
-               
-                entradaList1 = $("#entrada1").data(
-                        "kendoMultiSelect");
-                salidaList1 = $("#salida1").data(
-                        "kendoMultiSelect");
-               entradaList2 = $("#entrada2").data(
-                        "kendoMultiSelect");
-                salidaList2 = $("#salida2").data(
-                        "kendoMultiSelect");
-               CargarInicial ();
-               
-                $("#save-record").bind({click: function(){
-                    
-                     var validator = $("#formCrud").kendoValidator().data("kendoValidator"); 
-                     $(".required").css("border", "1px solid #ccc");
-                      if (validator.validate() === false) {     
-                             $(".required").each(function(index) {
-                                             var cadena = $(this).val();
-                                             if (cadena.length <= 0) {
-                                                     $(this).css("border", "1px solid red");
-                                                     alert("Por favor ingrese el campo requerido");
-                                                     $(this).focus();
-                                                     return false;
-                                             }		
-                                     });
-                        }else{
-                                identificadorCot = $("#UsuarioId").val();
-                                if(identificadorCot === "")
-                                    tipoConsulta = "crear";
-                                else
-                                    tipoConsulta = "editar";
-                                enviarDatos(tipoConsulta);
-                   }
-		}
-               
-               
-                });
-                
+                cargarGrafico();
+                                
              });
             function enviarDatos(tipoProceso){
                 var entrada1=$("#entrada1 option:selected").val();
@@ -201,13 +128,6 @@
                 });	                
              }
             
-            function redireccionaInsertar(){
-                    limpiar();
-                   $('#add').modal('show'); 
-                   $('#elimina').hide();
-                   $("#msgPopup").hide();
-            }
-            
             function fnEventoClick(e) {
                 e.preventDefault();
                 
@@ -265,6 +185,42 @@
                     }
                 });
             }
+            
+            
+            function cargarGrafico(){
+                $("#chart").kendoChart({
+                    dataSource: {
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        serverFiltering: true,
+                        pageSize: 20,
+                        transport:{
+                                read: {
+                                        url: "../analisiVistas_Controller",
+                                        data: {
+                                                 "tipoConsulta" : "encontrarTodos"
+                                            }
+                                    }
+
+                        },
+                        schema: {
+                                data: "Data"
+                        }
+                    },
+                    seriesDefaults: {
+                        type: "column"
+                    },
+                    series: [{
+                        
+                            field: "value",
+                            name: "value"
+                        
+                    }]
+                });
+            }
+            
+            
             
             function cargarTabla(){
                 <%--Creamos la tabla tipo kendo--%>
@@ -410,8 +366,8 @@
                 <div class="list-group">
                     <a href="administradorPrincipal.jsp" class="list-group-item ">Tipos Palabras</a>
                     <a href="palabras.jsp" class="list-group-item ">Palabras</a> 
-                    <a href="estructura.jsp" class="list-group-item active">Estructura</a>
-                    <a href="analisiVisitas.jsp" class="list-group-item ">Visitas</a>
+                    <a href="estructura.jsp" class="list-group-item">Estructura</a>
+                    <a href="analisiVisitas.jsp" class="list-group-item active">Visitas</a>
                 </div>
             </div>
             <!-- Content Column -->
@@ -419,9 +375,8 @@
                 <div class="row" id="formIncial">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <h2>Estructura</h2>
-                        <p>La estructura permite configurar el orden de la compasicion gramatical.</p>
-                        <!--<button id="cargar" type="button" class="btn btn-danger" onclick="cargarTabla();">Cargar</button>-->
+                        <h2>Analisis de Visitas realizadas diarimente</h2>
+                        <p>Se muestra el analisis de las visitas realizadas entre fechas .</p><!--<button id="cargar" type="button" class="btn btn-danger" onclick="cargarTabla();">Cargar</button>-->
                     </div>
                     <div class="col-md-2">
                         
@@ -436,73 +391,14 @@
                 <div class="row">
                         <div class="col-lg-12">
                                 <div class="table-responsive">
-                                        <div id="grid"></div>
+                                       <div id="chart"></div>
                                 </div>
                         </div>
                 </div>
             </div>
-            
-            <!-- Modal -->
-		<div class="modal fade" id="add" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form id="formCrud">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">Kutipak traductor Online</h4>
-						</div>
-						<div class="modal-body">
-							<div class="alert alert-success" id="msgPopup">La configuraci&oacute;n se guardo con &eacute;xito.</div>
-							<div class="status"> </div>	
-							<div class="form-group">
-								<input type="hidden"class="form-control" id="UsuarioId">										
-																
-								<select id="idioma" name="idioma"
-									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>
-                                                                     <option value="1">Español</option>
-                                                                     <option value="2">Kichwa</option>
-								</select>
-								<br>
-								<label>Nombre Estructura</label>
-									<input type="text" class="form-control required" id="nombre" validationMessage="Campo requerido!!!" required>
-								
-								<label>Formula Entrada</label>
-                                                                    <select id="entrada1" name="entrada1"
-									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
-                                                                    </select>
-                                                                    <select id="entrada2" name="entrada2"
-									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
-                                                                    </select>
-                                                                <br>
-                                                                <br>
-								<label>Formula Salida</label>
-                                                                    <select id="salida1" name="salida1"
-									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
-                                                                    </select>
-                                                                    <select id="salida2" name="salida2"
-									data-placeholder="Seleccione una opción..." validationMessage="Campo requerido!!!" required>											
-                                                                    </select>
-								 
-								<br />																						
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" id="close-popup"
-								data-dismiss="modal">Cerrar</button>
-                                                    <button type="button" class="btn btn-primary" id="elimina" onclick="eliminar();">Eliminar</button>
-                                                    <button type="button" class="btn btn-primary" id="save-record" >Guardar</button>
-                                                        
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal -->
           
+            
+            
         </div>
         <!-- /.row -->
 

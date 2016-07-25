@@ -415,6 +415,7 @@
                     <a href="administradorPrincipal.jsp" class="list-group-item ">Tipos Palabras</a>
                     <a href="palabras.jsp" class="list-group-item active">Palabras</a> 
                     <a href="estructura.jsp" class="list-group-item ">Estructura</a>
+                    <a href="analisiVisitas.jsp" class="list-group-item">Visitas</a>
                 </div>
             </div>
             <!-- Content Column -->
