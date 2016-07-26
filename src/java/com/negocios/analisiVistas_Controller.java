@@ -88,11 +88,17 @@ public class analisiVistas_Controller extends HttpServlet {
         String tipoConsulta = request.getParameter("tipoConsulta") == null ? "": request.getParameter("tipoConsulta");
        
         if(tipoConsulta.equalsIgnoreCase("encontrarTodos")){
+            
+            String fechaInicio = request.getParameter("dp1") == null ? "": request.getParameter("dp1");
+            String fechaFin = request.getParameter("dp2") == null ? "": request.getParameter("dp2");
+       
+            
+            
             ContadorDAO contadorDAO = new ContadorDAO();
             ContadorRecord contadorRecord = new ContadorRecord();
             int total=0;
             try {
-                total=contadorDAO.consultar();
+                total=contadorDAO.consultar(fechaInicio,fechaFin);
             } catch (Exception ex) {
                 ex.printStackTrace();
             } 
@@ -101,11 +107,7 @@ public class analisiVistas_Controller extends HttpServlet {
             contador elContador = new contador();
             elContador.setValue(total);
             contadorList.add(elContador);
-            
-            contador elContador2 = new contador();
-            elContador.setValue(total);
-            
-            contadorList.add(elContador2);
+                      
             
             DataSourceResult pg = new DataSourceResult();
             pg.setData(contadorList);
@@ -117,7 +119,8 @@ public class analisiVistas_Controller extends HttpServlet {
         }
         
     }
-
+    
+    
     /**
      * Returns a short description of the servlet.
      *
