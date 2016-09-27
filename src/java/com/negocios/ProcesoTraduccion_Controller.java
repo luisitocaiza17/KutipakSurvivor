@@ -6,27 +6,29 @@
 package com.negocios;
 
 import Utils.Utilitarios;
+import com.datos.DAO.ConectarBD;
 import com.datos.DAO.ContadorDAO;
 import com.datos.DAO.PalabrasDAO;
 import com.datos.DAO.SugerenciasDAO;
 import com.motorTraduccion.Descompositor;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import persistencia.tables.Contador;
 import persistencia.tables.records.ContadorRecord;
 import persistencia.tables.records.PalabrasRecord;
-import persistencia.tables.records.PantallapalabrasRecord;
 import persistencia.tables.records.SugerenciasRecord;
 
 /**
@@ -74,7 +76,7 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+       doPost(request, response);
     }
 
     /**
@@ -93,8 +95,7 @@ public class ProcesoTraduccion_Controller extends HttpServlet {
         String palabra = request.getParameter("palabra") == null ? "" : request.getParameter("palabra");
         String idioma = request.getParameter("idioma") == null ? "" : request.getParameter("idioma");
         String proceso = request.getParameter("proceso") == null ? "" : request.getParameter("proceso");
-        
-       
+               
         try{
             if(proceso.equals("normal")){
                 palabra= palabra.toUpperCase();
