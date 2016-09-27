@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="traductor kichwa-español, quichua-español, quichua-español, taductor online Ecuador, que permite traducir palabras y oraciones">
-  <meta name="keywords" content="kichwa - quechua - quichua - traductor - KICHWA - QUECHUA - QUICHUA - TRADUCTOR">
+  <meta name="description" content="traductor kichwa-español, traductor quichua-español, traductor quichua-español, traductor online Ecuador, que permite traducir palabras y oraciones">
+  <meta name="keywords" content=" traductor kichwa - traductor quechua - traductor quichua - traductor - KICHWA - traductor QUECHUA - traductor QUICHUA - traductor TRADUCTOR">
   
   <title>Kutipak UTC</title>
   <link href="Cliente/css/bootstrap.min.css" rel="stylesheet">
@@ -122,42 +122,40 @@
                     }                    
             });
    }
-   
-   function guardarComentarios(tiempo,sirvio,comentario,proceso){
-       $.ajax({
+   function enviarMail(nombre,email,Asunto,message){
+        $.ajax({
             url: 'ProcesoTraduccion_Controller',
             data: {
-                "tiempo":tiempo,
-                "sirvio":sirvio,
-                "comentario":comentario,
-                "proceso":proceso
+                "nombre":nombre,
+                "email":email,
+                "Asunto":Asunto,
+                "message":message,
+                "proceso":"correo"
             },
             async: false,
             type: 'POST',
             datatype: 'json',
             success: function (data) {
-                        var comentariosRegitrados = data.comentariosRegitrados;
+                        
                          var selogro=data.success;
                          if(selogro===true){
-                             
-                            $("#susComentarios").children().remove();
-                            $.each(comentariosRegitrados, function (index) {
-
-                                 $("#susComentarios").append("<tr>" +
-                                 "<td style='width: 10%'>" + comentariosRegitrados[index].comentario + "</td>" +        
-                                 "</tr>");
-                             });
-                            $("#comentariosTotales").text(data.contadorSugerencias);
-                            $("#rapidas").text(data.rapidas);
-                            $("#comentariosBuenos").text(data.comentariosBuenos); 
-                            alert("Sugerencia Guardada muchas gracias ;)");
+                           alert("Correo Enviado muchas gracias ;)");
                         }else{
-                            alert("Ups. tuvimos un problema por favor intentalo en unos minutos :(");
+                           alert("Ups. tuvimos un problema por favor intentalo en unos minutos :(");
                         }
                     }                    
             });
    }
    
+   /**Para descargar el diccionario**/
+   
+   function descargarDiccionario(){
+        window.open('Reporte_controller?proceso=diccionario');
+    }
+    
+     function descargarDiccionarioExcel(){
+        alert("Estamos trabajando en este reporte, esperalo muy pronto :)");
+    }
    function contador(proceso){
         $.ajax({
             url: 'ProcesoTraduccion_Controller',
@@ -393,6 +391,8 @@
                       <span class="glyphicon glyphicon-random active" aria-hidden="true"> <B> TRADUCIR </B></span>
                      </button>
                       <br>
+                      
+                      <br>
                       <a href="#MEJORANDO"  class="scroll" >ay&uacute;danos a Mejorar</a>
                   </div>
                   <div class="col-sm-4">
@@ -400,7 +400,24 @@
                 </div>
               </form>
           </div>
-          <div class="col-md-2"></div>
+               <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10">
+                             <h5>Diccionario <small> (Descarga)</small></h5>
+                             <div class="btn-group-vertical" role="group">
+                                <button type="button" id="diccionario" class="btn btn-success"  onclick="descargarDiccionario();">
+                                   <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"> Descarga PDF......</span> 
+                                </button>
+                                <button type="button" id="diccionario" class="btn btn-success" onclick="descargarDiccionarioExcel();">
+                                   <span class="glyphicon glyphicon-sort-by-attributes-alt"  aria-hidden="true"> Descarga EXCEL</span> 
+                                </button>
+                            </div>
+                        </div>
+                        
+                     </div>
+               </div>
+          
         </div>
       </div>
     </div>

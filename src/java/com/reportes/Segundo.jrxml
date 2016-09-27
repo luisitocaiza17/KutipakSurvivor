@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="15535888-fc02-40a3-abc5-49e0012b571e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     diccionario.`PALABRA` AS diccionario_PALABRA,
+     diccionario.`SIGNIFICADO` AS diccionario_SIGNIFICADO,
+     diccionario.`IDIOMA` AS diccionario_IDIOMA,
+     diccionario.`TIPO` AS diccionario_TIPO
+FROM
+     `diccionario` diccionario]]>
+	</queryString>
+	<field name="diccionario_PALABRA" class="java.lang.String"/>
+	<field name="diccionario_SIGNIFICADO" class="java.lang.String"/>
+	<field name="diccionario_IDIOMA" class="java.lang.String"/>
+	<field name="diccionario_TIPO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="77" y="10" width="186" height="53" forecolor="#9900FF" uuid="154768f9-0d4e-44ea-9f4f-21979cc915f0"/>
+				<box>
+					<pen lineStyle="Double" lineColor="#9900FF"/>
+					<topPen lineStyle="Double" lineColor="#9900FF"/>
+					<leftPen lineStyle="Double" lineColor="#9900FF"/>
+					<bottomPen lineStyle="Double" lineColor="#9900FF"/>
+					<rightPen lineStyle="Double" lineColor="#9900FF"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DICCIONARIO KUTIPAK (Español-Kichwa)]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="91" height="63" uuid="a14f952a-b7a5-4ac7-8d07-46529af8e2cc"/>
+				<imageExpression><![CDATA["E:\\KutipakSurvivor\\web\\Reportes\\color3.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="281" y="0" width="274" height="63" uuid="97a14c1b-1d11-4c8f-a1be-8f6e532178a1"/>
+				<imageExpression><![CDATA["E:\\KutipakSurvivor\\web\\Reportes\\leaf_banner_violet.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="48" y="2" width="100" height="20" forecolor="#6600CC" uuid="508fa3e8-2509-4d1e-82e8-7eb5251037fe"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[PALABRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="2" width="100" height="20" forecolor="#6600CC" uuid="ae5025e2-58ec-43e6-86b0-469c1f5bd38c"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[DICCIONARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="2" width="100" height="20" forecolor="#6600CC" uuid="88044970-595a-4744-8f03-00c0711837f5"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[IDIOMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="2" width="100" height="20" forecolor="#6600CC" uuid="0430f9ec-954e-4f14-8696-687cf28db46b"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="48" y="0" width="100" height="20" uuid="fbd255f1-5d6e-4b22-a909-8a47fbe97327"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diccionario_PALABRA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="0" width="100" height="20" uuid="17e1d4e2-2413-4264-86eb-0e3d0f9e113f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diccionario_SIGNIFICADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="309" y="0" width="100" height="20" uuid="41e6eda8-866b-4512-896d-7261dffc92ef"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diccionario_IDIOMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="0" width="100" height="20" uuid="ef516946-ad16-4b9a-97a1-ac5204ee7b70"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diccionario_TIPO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="437" y="0" width="62" height="20" uuid="d6d5c0e3-70be-4825-9b73-d2655addbdda"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="501" y="0" width="54" height="20" uuid="75408acd-61a1-49a9-8894-b18ffebb8382"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
