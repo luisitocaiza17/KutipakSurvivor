@@ -122,6 +122,40 @@
                     }                    
             });
    }
+   function guardarComentarios(tiempo,sirvio,comentario,proceso){
+       $.ajax({
+            url: 'ProcesoTraduccion_Controller',
+            data: {
+                "tiempo":tiempo,
+                "sirvio":sirvio,
+                "comentario":comentario,
+                "proceso":proceso
+            },
+            async: false,
+            type: 'POST',
+            datatype: 'json',
+            success: function (data) {
+                        var comentariosRegitrados = data.comentariosRegitrados;
+                         var selogro=data.success;
+                         if(selogro===true){
+                             
+                            $("#susComentarios").children().remove();
+                            $.each(comentariosRegitrados, function (index) {
+
+                                 $("#susComentarios").append("<tr>" +
+                                 "<td style='width: 10%'>" + comentariosRegitrados[index].comentario + "</td>" +        
+                                 "</tr>");
+                             });
+                            $("#comentariosTotales").text(data.contadorSugerencias);
+                            $("#rapidas").text(data.rapidas);
+                            $("#comentariosBuenos").text(data.comentariosBuenos); 
+                            alert("Sugerencia Guardada muchas gracias ;)");
+                        }else{
+                            alert("Ups. tuvimos un problema por favor intentalo en unos minutos :(");
+                        }
+                    }                    
+            });
+   }
    function enviarMail(nombre,email,Asunto,message){
         $.ajax({
             url: 'ProcesoTraduccion_Controller',
