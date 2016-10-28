@@ -25,6 +25,9 @@
   <link rel="shortcut icon" href="Cliente/images/icono.png">
   <script>
     $(document).ready(function () { 
+               $('#add').modal({
+                    show: 'true'
+                });
                 $("#idioma").val("1");
                 $("#cambiar").click(function () {
                   var idioma=$("#original2").text();
@@ -802,6 +805,54 @@
       </div>
     </div>        
   </section><!--/#contact-->
+  
+  <!-- Modal -->
+		<div class="modal fade" id="add" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="formCrud">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Comunicado Importante</h4>
+						</div>
+						<div class="modal-body">
+							<div class="alert alert-danger" id="msgPopup"><strong>PRONTO SALDREMOS DEL AIRE</strong> Lo sentimos muchooooooooooooo </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4"></div>
+                                                            <div class="col-md-4"><img src="Cliente/images/triste2.jpg" alt="" height="200" width="200"/></div>
+                                                            <div class="col-md-4"></div>
+                                                        </div>   
+                                                        <div class="alert alert-warning" role="alert">
+                                                            <strong>Estamos muy tristes!</strong> El traductor Kutipak empezó como un proyecto de tesis,
+                                                            sin embargo por la ayuda que tuvieron nuestros usuarios nos financiamos para mantenerlo al 
+                                                            aire todo el tiempo posible, sin embargo no podemos mantenerlo con nuestros propios recursos
+                                                            por más tiempo.   Saldremos de aire el 20 de noviembre del 2016                                                     
+                                                        </div>	
+                                                        <div class="alert alert-info" role="alert">
+                                                            <strong>Gracias a ti y por tu apoyo!</strong>
+                                                            tus visitas y comentarios nos motivo a no dejar morir la aplicación, te queremos dar la gracias
+                                                            por habernos visitado y por ser parte de nuestra historia, extrañaremos tus visitas, y esperamos
+                                                            de corazón tengas éxitos en cada meta que te propongas. cuidate mucho. 
+                                                        </div>
+                                                        <div class="alert alert-success" role="alert">
+                                                            <strong>"Hijo mio sigue tus sueños" </strong>H.Caiza
+                                                        </div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" id="close-popup"
+								data-dismiss="modal">Cerrar</button>
+							
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	
+	<!-- Modal -->
+  
   <footer id="footer">
     
     <div class="footer-bottom">
